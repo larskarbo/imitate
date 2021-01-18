@@ -1,0 +1,22 @@
+# The following redirect is intended for use with most SPAs that handle
+# routing internally.
+
+[build]
+  command = "gatsby build"
+  functions = "functions"
+  publish = "public"
+
+[dev]
+  # framework = "#custom"
+  # command = "read" # Command to start your dev server
+  # port = 8888 # The port that the netlify dev will be accessible on
+  # targetPort = 1234
+
+# [[redirects]]
+#   from = "/discord"
+#   to = "https://discord.gg/A4BGVFKwJv"
+
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
