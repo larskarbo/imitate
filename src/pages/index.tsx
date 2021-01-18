@@ -27,6 +27,26 @@ export default function () {
       <Helmet>
         <meta property="og:url" content="https://goimitate.com/" />
         <link rel="canonical" href="https://goimitate.com/" />
+        <title>Imitate - Learn perfect pronunciation</title>
+        <meta property="og:title" content={"Imitate - Learn perfect pronunciation"} />
+        <meta name="twitter:title" content={"Imitate - Learn perfect pronunciation"} />
+        <meta name="title" content={"Imitate - Learn perfect pronunciation"} />
+
+        <meta name="description" content="" />
+        <meta property="og:description" content="" />
+        <meta name="twitter:description" content=" " />
+
+        {/* <meta property="og:image" content="https://fileparty.co/fileparty-screenshot.png" />
+        <meta name="twitter:image" content="https://fileparty.co/fileparty-screenshot.png" /> */}
+
+        <meta property="og:site_name" content="Imitate" />
+        <meta name="twitter:card" content="summary_large_image" />
+
+
+        <meta
+          name="twitter:creator"
+          content={"larskarbo"}
+        />
       </Helmet>
 
       <header>
@@ -54,24 +74,41 @@ export default function () {
         <label htmlFor=""><input type="radio" /> Student</label>
         <input type="radio" /> Teacher */}
         {sent ?
-        <div className="text-center text-sm">Awesome! You will be the first to try ⚡</div>
-        :<form ref={formRef} onSubmit={onSubmit}>
-          <div className="flex border border-gray-300 w-96 rounded overflow-hidden shadow-sm text-sm mx-auto">
-            <input name="email" className="flex-grow px-4" type="email" placeholder="Your email" />
-            <input className="px-4 py-2 bg-blue-50 border-l" type="submit" value="Be the first to try ⚡" />
+          <div className="text-center text-sm">Awesome! You will be the first to try ⚡</div>
+          : <form ref={formRef} onSubmit={onSubmit}>
+            <div className="flex border border-gray-300 w-96 rounded overflow-hidden shadow-sm text-sm mx-auto">
+              <input name="email" className="flex-grow px-4" type="email" placeholder="Your email" />
+              <input className="px-4 py-2 bg-blue-50 border-l" type="submit" value="Be the first to try ⚡" />
+            </div>
+          </form>}
+      </div>
+
+      <StaticImage src="./screensh.jpg"
+        // layout="fluid"
+        alt="Screenshot Imitate"
+        maxWidth={448} className="max-w-md rounded-lg" />
+
+      <div className="mt-24">
+
+        <a href="https://larskarbo.no" target="_blank">
+          <div className=" flex items-center border border-gray-200 rounded p-2 px-4
+          hover:border-gray-400 transition-colors duration-150 hover:shadow-sm
+          ">
+            <StaticImage maxWidth={36} className="rounded-full mr-2" src="./pb.jpeg" />
+            <div className="font-light">
+              made by <strong className="font-bold">@larskarbo</strong>
+            </div>
           </div>
-        </form>}
+        </a>
+        {/* 
+        <a href="https://www.producthunt.com/posts/fileparty?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-fileparty" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=279320&theme=light" alt="FileParty - Watch local files together in real time | Product Hunt"
+          //  style="width: 250px; height: 54px;"
+          className="mt-6"
+          width="250" height="54" /></a> */}
+
       </div>
 
-      <StaticImage src="./screensh.jpg" width={448} className="max-w-md rounded-lg" />
-
-      <div className="flex flex-col items-center justify-center">
-        <div className="relative mb-3">
-
-          {/* <button className="rounded mx-2 text-center font-normal w-40 p-3 px-5  bg-blue-500 text-white">Create room</button> */}
-          {/* <Link to="/app/create" className="rounded mx-2 text-center font-normal w-40 p-3 px-5 opacity-0 absolute left-0 z-20" >Create room</Link> */}
-        </div>
-      </div>
+      <div className="pb-24"></div>
     </div>
   );
 }

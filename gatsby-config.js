@@ -36,18 +36,18 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-plugin-image`,
     // `gatsby-plugin-feed`,
-    // {
-    //   resolve: `gatsby-plugin-manifest`,
-    //   options: {
-    //     name: `Slapper`,
-    //     short_name: `Slapper`,
-    //     start_url: `/`,
-    //     background_color: `#ffffff`,
-    //     theme_color: `#663399`,
-    //     display: `minimal-ui`,
-    //     // icon: `content/assets/profile-pic.jpg`,
-    //   },
-    // },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Imitate`,
+        short_name: `Imitate`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+        icon: `pages/logo.svg`,
+      },
+    },
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
