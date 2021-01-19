@@ -12,11 +12,11 @@ export default function () {
     e.preventDefault()
     fetch("/.netlify/functions/newsletter", { method: "POST", body: JSON.stringify({ email: formRef.current.email.value }) })
       .then(a => {
-        console.log("🚀 ~ a", a)
+        
         setSent(true)
       })
       .catch(err => {
-        console.log("🚀 ~ err", err)
+        
 
       })
   }
@@ -36,8 +36,8 @@ export default function () {
         <meta property="og:description" content="" />
         <meta name="twitter:description" content=" " />
 
-        {/* <meta property="og:image" content="https://fileparty.co/fileparty-screenshot.png" />
-        <meta name="twitter:image" content="https://fileparty.co/fileparty-screenshot.png" /> */}
+        <meta property="og:image" content="https://goimitate.com/hero.png" />
+        <meta name="twitter:image" content="https://goimitate.com/hero.png" />
 
         <meta property="og:site_name" content="Imitate" />
         <meta name="twitter:card" content="summary_large_image" />
