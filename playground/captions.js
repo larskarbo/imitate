@@ -5,7 +5,10 @@ require("dotenv").config()
 const axios = require("axios").default;
 
 const cheerio = require("cheerio")
-const videoId = "t-LsjB45tOg"
+const videoId = "EnPYXckiUVg"
+
+const {db} = require("../functions/db/database")
+const { nanoid } = require("nanoid")
 // axios.get(`https://www.googleapis.com/youtube/v3/captions/?videoId=${videoId}&part=snippet&key=${process.env.YOUTUBE_API_KEY}`)
 //     .then(a => {
 //         a.data.items.forEach(d => {
@@ -35,7 +38,7 @@ const videoId = "t-LsjB45tOg"
 //     })
 
 const arr = []
-axios.get(`http://video.google.com/timedtext?lang=fr&v=t-LsjB45tOg`)
+axios.get(`http://video.google.com/timedtext?lang=fr&v=${videoId}`)
     .then(a => {
         console.log("body", a.body)
         console.log("data", a.data)
@@ -45,11 +48,17 @@ axios.get(`http://video.google.com/timedtext?lang=fr&v=t-LsjB45tOg`)
         $('text').each(function (i, text) {
             var start = $(this).attr('start');
             var dur = $(this).attr('dur');
-            arr.push({
-                start:start,
-                dur:dur,
+            db.get("segments")
+            .push({
+                id: nanoid(8),
+                videoId: videoId,
+                from:start * 1000,
+                to:(start * 1000) + (dur * 1000),
                 text: $(this).text()
+                .replaceAll("&quot;", '"')
+                .replaceAll("&#39;", "'")
             })
+            .write()
 
         });
         console.log(arr)

@@ -10,6 +10,8 @@ exports.onCreatePage = async ({ page, actions }) => {
     }
 }
 
+
+// prevent peaks.js from fucking up static build
 exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
     if (stage === "build-html") {
       actions.setWebpackConfig({

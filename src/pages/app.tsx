@@ -46,7 +46,7 @@ function Routing() {
       </Helmet> */}
       <Router basepath="/app">
         <Main path="/" />
-        {/* <Main path="/:segmentId" /> */}
+        <Main path="/:segmentId" />
         <NotFound default />
         {/* <Croaker default loadingUser={loadingUser} user={user} /> */}
       </Router>
