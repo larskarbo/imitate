@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 const router = express.Router();
 
 router.get("/random", require("./random").handler);
-router.post("/rate", require("./rate").handler);
+// router.post("/rate", require("./rate").handler);
 router.get("/getSegment/:segmentId", require("./getSegment").handler);
 
 
