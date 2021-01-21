@@ -23,18 +23,18 @@ export default function SegmentLoader({ segmentId, state }) {
     console.log('segmentId: ', segmentId);
     const [segment, setSegment] = useState(null);
     const divRef = useRef()
-    
+
     useEffect(() => {
-        axios.get("/.netlify/functions/db/getSegment/"+segmentId)
-        .then(r => {
-            console.log('r.data: ', r.data);
-            setSegment(r.data.segment)
-        })
+        axios.get("/.netlify/functions/db/getSegment/" + segmentId)
+            .then(r => {
+                console.log('r.data: ', r.data);
+                setSegment(r.data.segment)
+            })
     }, [segmentId])
 
     return (
         <div ref={divRef} className="w-full">
-        {(segment && divRef) && <Segment segment={segment} width={divRef.current.getBoundingClientRect().width} />}
+            {(segment && divRef) && <Segment segment={segment} width={divRef.current.getBoundingClientRect().width} />}
         </div>
     )
 }
@@ -53,7 +53,7 @@ function Segment({ segment, width }) {
             // playing
             setPlaying(true)
 
-            if(player.getCurrentTime() * 1000 < (segment.from - 1000)){
+            if (player.getCurrentTime() * 1000 < (segment.from - 1000)) {
                 player.seekTo(segment.from / 1000)
             }
             const now = Math.round(player.getCurrentTime() * 1000)
@@ -87,7 +87,7 @@ function Segment({ segment, width }) {
 
         // setTimeout(() => {
         // }, 3000)
-        
+
     }
 
     useEffect(() => {
@@ -115,6 +115,7 @@ function Segment({ segment, width }) {
                                 controls: 0,
                                 modestbranding: 1,
                                 autoplay: 0,
+                                playsinline: 1
                             },
                         }}
                         onReady={setYoutubeElement}
