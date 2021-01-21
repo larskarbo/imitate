@@ -110,7 +110,7 @@ function Segment({ segment, width }) {
                         videoId={segment.videoId}
                         opts={{
                             height: "200",
-                            width: width,
+                            width: "" + Math.min(width,448),
                             playerVars: {
                                 controls: 0,
                                 modestbranding: 1,
