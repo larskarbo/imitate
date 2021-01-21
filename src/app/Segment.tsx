@@ -4,6 +4,7 @@ import YouTube from "react-youtube";
 import { AiOutlineMergeCells, AiOutlinePlayCircle } from "react-icons/ai"
 import RecordBoat from "./RecordBoat";
 import PlaybackBoat from "./PlaybackBoat";
+import expl from "./expl.svg";
 import { IoGitMerge, IoLanguage } from "react-icons/io5";
 import axios from 'axios';
 
@@ -18,7 +19,7 @@ import axios from 'axios';
 // https://www.youtube.com/watch?v=t-LsjB45tOg
 
 let timer
-export default function SegmentLoader({ segmentId, state }) {
+export default function SegmentLoader({ segmentId, state, newSegment }) {
     console.log('state: ', state);
     console.log('segmentId: ', segmentId);
     const [segment, setSegment] = useState(null);
@@ -34,12 +35,12 @@ export default function SegmentLoader({ segmentId, state }) {
 
     return (
         <div ref={divRef} className="w-full">
-            {(segment && divRef) && <Segment segment={segment} width={divRef.current.getBoundingClientRect().width} />}
+            {(segment && divRef) && <Segment segment={segment} width={divRef.current.getBoundingClientRect().width} newSegment={newSegment} />}
         </div>
     )
 }
 
-function Segment({ segment, width }) {
+function Segment({ segment, width, newSegment }) {
     const [youtubeElement, setYoutubeElement] = useState(null);
     const [recordings, setRecordings] = useState([]);
     const [playing, setPlaying] = useState(false);
@@ -110,7 +111,7 @@ function Segment({ segment, width }) {
                         videoId={segment.videoId}
                         opts={{
                             height: "200",
-                            width: "" + Math.min(width,448),
+                            width: "" + Math.min(width, 448),
                             playerVars: {
                                 controls: 0,
                                 modestbranding: 1,
@@ -158,14 +159,36 @@ function Segment({ segment, width }) {
 
             {hasPlayedOnce &&
                 <>
-                    <h2 className="text-center uppercase text-xs text-gray-700 font-bold mb-8">Step 2 - Record yourself</h2>
+                    <h2 className="text-center uppercase text-xs text-gray-700 font-bold mb-8 mt-12">Step 2 - Record yourself</h2>
 
                     <RecordBoat onRecordFinish={(blobUrl) => {
-                        setRecordings([{ blobUrl }, ...recordings])
+                        // setRecordings([{ blobUrl }, ...recordings])
+                        setRecordings([{ blobUrl }])
                     }} />
                     {recordings.map(recording => (
                         <PlaybackBoat key={recording.blobUrl} blobUrl={recording.blobUrl} />
                     ))}
+                </>
+            }
+
+
+            {(recordings.length > 0) &&
+                <>
+                    <h2 className="text-center uppercase text-xs text-gray-700 font-bold mb-8 mt-12">Step 3 - Iterate</h2>
+                    <div className="bg-white px-8 py-4 my-8 rounded border w-full">
+                        <p>Now it's time for <strong>practice</strong>.</p>
+                        <p className="my-2">Listen to the original and re-record yourself. Try to produce the <strong>excact same sounds</strong>.</p>
+                        <img className="mx-auto my-4" src={expl} />
+                        <p className="my-2">👂 Train your ears to recognize sounds.</p>
+                        <p className="my-2">🗣 Train your voice to produce sounds.</p>
+                    </div>
+                    <p>When you are happy, continue with a new sentence:</p>
+                    <button
+                        onClick={newSegment}
+                        className="mt-4 rounded items-center mx-auto justify-center text-sm flex py-3 px-6 bg-gray-white border-2  hover:bg-gray-100 border-gray-600 font-medium text-gray-900  transition duration-150"
+                    >
+                        Get new sentence 🇫🇷
+                    </button>
                 </>
             }
 

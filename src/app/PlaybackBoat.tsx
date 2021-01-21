@@ -45,13 +45,17 @@ export default function PlaybackBoat({ blobUrl }) {
                         // this.peaks = peaks
                         setPeaks(peaks)
                         const view = peaks.views.getView('zoomview');
-                        
+                        peaks.player.playSegment(peaks.segments.getSegments()[0]);
                         view.setZoom({ seconds: info.duration + 0.1 });
                     });
                 })
 
         }
     }, [blobUrl, audioRef, zoomViewRef])
+
+    const play = () => {
+        peaks.player.playSegment(peaks.segments.getSegments()[0]);
+    }
 
     return (
         <div className="w-full mt-4">
@@ -64,7 +68,7 @@ export default function PlaybackBoat({ blobUrl }) {
                         if (playing) {
 
                         } else {
-                            peaks.player.playSegment(peaks.segments.getSegments()[0]);
+                            play()
                         }
                     }}><IoPlaySharp size={24} className="ml-1" /></button>
                 </div>
@@ -76,6 +80,8 @@ export default function PlaybackBoat({ blobUrl }) {
 
 const blobToAudioBuffer = async (blobUrl) => {
     const blob = await fetch(blobUrl).then(r => r.blob());
+    var AudioContext = window.AudioContext // Default
+      || (window as any).webkitAudioContext;// Safari and old versions of Chrome
     const audioContext = new AudioContext()
     const fileReader = new FileReader()
 

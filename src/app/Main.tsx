@@ -60,7 +60,7 @@ export default function Main({ segmentId }) {
                 </button>
 
             {segmentId &&
-                <Segment segmentId={segmentId} />
+                <Segment segmentId={segmentId} newSegment={newSegment} />
             }
         </div>
     );
