@@ -1,5 +1,5 @@
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
 import { AiOutlineMergeCells, AiOutlinePlayCircle } from "react-icons/ai"
 import RecordBoat from "./RecordBoat";
@@ -22,7 +22,8 @@ export default function SegmentLoader({ segmentId, state }) {
     console.log('state: ', state);
     console.log('segmentId: ', segmentId);
     const [segment, setSegment] = useState(null);
-
+    const divRef = useRef()
+    
     useEffect(() => {
         axios.get("/.netlify/functions/db/getSegment/"+segmentId)
         .then(r => {
@@ -32,13 +33,13 @@ export default function SegmentLoader({ segmentId, state }) {
     }, [segmentId])
 
     return (
-        <>
-        {segment && <Segment segment={segment} />}
-        </>
+        <div ref={divRef} className="w-full">
+        {(segment && divRef) && <Segment segment={segment} width={divRef.current.getBoundingClientRect().width} />}
+        </div>
     )
 }
 
-function Segment({ segment }) {
+function Segment({ segment, width }) {
     const [youtubeElement, setYoutubeElement] = useState(null);
     const [recordings, setRecordings] = useState([]);
     const [playing, setPlaying] = useState(false);
@@ -109,7 +110,7 @@ function Segment({ segment }) {
                         videoId={segment.videoId}
                         opts={{
                             height: "200",
-                            width: "448",
+                            width: width,
                             playerVars: {
                                 controls: 0,
                                 modestbranding: 1,

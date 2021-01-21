@@ -14,24 +14,28 @@ export default function RecordBoat({ onRecordFinish }) {
     const audioRef = useRef()
 
     useEffect(() => {
-        navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then((stream) => {
-            setMediaRecorder(new MediaRecorder(stream))
-        })
+
     }, [])
 
     const start = () => {
-        recordedChunks = []
-        mediaRecorder.addEventListener('dataavailable', function (e) {
+        navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then((stream) => {
+            const mediaRecorder = new MediaRecorder(stream)
+
+            recordedChunks = []
+            mediaRecorder.addEventListener('dataavailable', function (e) {
 
 
-            if (e.data.size > 0) {
-                recordedChunks.push(e.data);
-            }
-        });
+                if (e.data.size > 0) {
+                    recordedChunks.push(e.data);
+                }
+            });
 
-        mediaRecorder.start()
+            mediaRecorder.start()
 
-        setRecording(true)
+            setRecording(true)
+            setMediaRecorder(mediaRecorder)
+        })
+
 
     }
 
@@ -42,6 +46,9 @@ export default function RecordBoat({ onRecordFinish }) {
         }
         mediaRecorder.addEventListener('stop', onStop);
 
+
+        mediaRecorder.stream.getTracks() // get all tracks from the MediaStream
+            .forEach(track => track.stop());
         mediaRecorder.stop()
         setRecording(false)
     }

@@ -46,7 +46,7 @@ export default function Main({ segmentId }) {
     }
 
     return (
-        <div className="pt-8 flex flex-col items-center">
+        <div className="pt-8 flex flex-col items-center px-8">
             <div className="text-xs mb-4">
                 {/* Total: ({total}) */}
             </div>
