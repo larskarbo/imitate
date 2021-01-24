@@ -8,18 +8,18 @@ const cheerio = require("cheerio")
 const videoIds = [
     // "K_QKabwLlds",
     // "5CbRL60hHi4",
-    "oB5Vaq2dsEc",
-    "wwNZKfBLAsc",
-    "DxqI1M0hdMg",
-    "kGLI3e6jFNg",
-    "abxAuRdPSCE",
-    "p2Z5x3EmZc8",
-    "UWkyyhxPiiw",
-    "NmInozbd8gA",
-    "GpvP4xI5phk",
-    "mHl--iqe4xw",
-    "M2_tmKz3gBI",
-    "ud91woekqMM"
+    // "oB5Vaq2dsEc",
+    // "wwNZKfBLAsc", nope
+    // "DxqI1M0hdMg", nope
+    // "kGLI3e6jFNg", nope
+    // "abxAuRdPSCE", nope
+    // "p2Z5x3EmZc8", nope
+    // "UWkyyhxPiiw",
+    // "NmInozbd8gA", nope
+    // "GpvP4xI5phk", nope
+    // "mHl--iqe4xw", nope
+    // "M2_tmKz3gBI",
+    // "ud91woekqMM"
 ]
 
 const {db} = require("../functions/db/database")

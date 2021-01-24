@@ -11361,16 +11361,18 @@
     {
       "id": "Ri6sGr71",
       "videoId": "UWkyyhxPiiw",
-      "from": 88020,
-      "to": 91400,
-      "text": "ici plus de 400 policiers sont mobilisés de jour comme de nuit"
+      "from": 87800,
+      "to": 91800,
+      "text": "Ici, plus de 400 policiers sont mobilisés de jour comme de nuit",
+      "rating": 5
     },
     {
       "id": "BYmV0ErD",
       "videoId": "UWkyyhxPiiw",
-      "from": 91400,
+      "from": 91800,
       "to": 94567,
-      "text": "Pour répondre à cette augmentation spectaculaire."
+      "text": "Pour répondre à cette augmentation spectaculaire.",
+      "rating": 5
     },
     {
       "id": "dZONotQl",
@@ -11396,9 +11398,10 @@
     {
       "id": "poPeC7Gb",
       "videoId": "UWkyyhxPiiw",
-      "from": 107280,
-      "to": 110240,
-      "text": "Des actes qui conduisent parfois à la mort des victimes,"
+      "from": 106280,
+      "to": 110000,
+      "text": "Des actes qui conduisent parfois à la mort des victimes,",
+      "rating": 5
     },
     {
       "id": "9dhIlYsb",
@@ -11662,9 +11665,10 @@
     {
       "id": "suS8mjM8",
       "videoId": "M2_tmKz3gBI",
-      "from": 65019.99999999999,
+      "from": 65020,
       "to": 66010,
-      "text": "même pas tout le temps."
+      "text": "Même pas tout le temps.",
+      "rating": 5
     },
     {
       "id": "rI1lBKgb",
@@ -11697,9 +11701,10 @@
     {
       "id": "WFWr2WJB",
       "videoId": "M2_tmKz3gBI",
-      "from": 71320,
+      "from": 71220,
       "to": 72640,
-      "text": "je ne suis pas\nune femme par exemple."
+      "text": "Je ne suis pas\nune femme par exemple.",
+      "rating": 5
     },
     {
       "id": "koGxh1sP",
@@ -11851,16 +11856,10 @@
     {
       "id": "mYM0iusd",
       "videoId": "M2_tmKz3gBI",
-      "from": 109340,
-      "to": 111790,
-      "text": "parce qu'on m'avait dit :\ntu vas voir on est triste"
-    },
-    {
-      "id": "bg_5V8Nk",
-      "videoId": "M2_tmKz3gBI",
-      "from": 111840,
+      "from": 111040,
       "to": 113980,
-      "text": "un peu avant\nles règles et pendant les règles."
+      "text": " on est triste un peu avant les règles et pendant les règles.",
+      "rating": 5
     },
     {
       "id": "EIzieAZw",
@@ -13113,7 +13112,8 @@
       "videoId": "M2_tmKz3gBI",
       "from": 469230,
       "to": 470260,
-      "text": "il doit bander."
+      "text": "Il doit bander.",
+      "rating": 5
     },
     {
       "id": "ACndhrjk",
@@ -13231,7 +13231,7 @@
       "id": "YOK3rmDg",
       "videoId": "M2_tmKz3gBI",
       "from": 499900,
-      "to": 501790,
+      "to": 505790,
       "text": "aucune femme\nne va humilier un mec"
     },
     {
@@ -14289,7 +14289,8 @@
       "videoId": "ud91woekqMM",
       "from": 278800,
       "to": 281380,
-      "text": "la position géographique\nde cette région"
+      "text": "la position géographique\nde cette région",
+      "rating": 5
     },
     {
       "id": "3w_EtgoE",
@@ -14779,7 +14780,8 @@
       "videoId": "ud91woekqMM",
       "from": 534320,
       "to": 538000,
-      "text": "Une fois que cette institution est créée"
+      "text": "Une fois que cette institution est créée",
+      "rating": 5
     },
     {
       "id": "uWzcGdud",
@@ -14835,7 +14837,8 @@
       "videoId": "ud91woekqMM",
       "from": 561580,
       "to": 564540,
-      "text": "Quand on analyse un peu\ncette évolution"
+      "text": "Quand on analyse un peu\ncette évolution",
+      "rating": 5
     },
     {
       "id": "pIZNyqnF",
@@ -14918,8 +14921,9 @@
       "id": "_g6ztCYu",
       "videoId": "ud91woekqMM",
       "from": 604320,
-      "to": 609920,
-      "text": "Et ce qui est intéressant, c'est que\nl'accent est devenu un facteur de discrimination"
+      "to": 610000,
+      "text": "Et ce qui est intéressant, c'est que\nl'accent est devenu un facteur de discrimination",
+      "rating": 5
     },
     {
       "id": "L9As2DWN",
@@ -15087,7 +15091,8 @@
       "videoId": "ud91woekqMM",
       "from": 687740,
       "to": 689700,
-      "text": "les institutions culturelles"
+      "text": "les institutions culturelles",
+      "rating": 5
     },
     {
       "id": "A0ZRH_hv",
@@ -15367,7 +15372,8 @@
       "videoId": "ud91woekqMM",
       "from": 810720,
       "to": 813460,
-      "text": "qui a inventé un terme pour ça"
+      "text": "qui a inventé un terme pour ça",
+      "rating": 5
     },
     {
       "id": "BKkC1lZT",
@@ -15381,7 +15387,8 @@
       "videoId": "ud91woekqMM",
       "from": 815580,
       "to": 819800,
-      "text": "La glottophobie, c'est une forme\nde discrimination négative"
+      "text": "La glottophobie, c'est une forme\nde discrimination négative",
+      "rating": 5
     },
     {
       "id": "WH6uZUWM",
@@ -15576,32 +15583,32 @@
       "to": 68600,
       "text": "Tout le monde été très heureux",
       "rating": 5
-    }
-    ,{
+    },
+    {
       "id": "2ffdujf3",
       "videoId": "5CbRL60hHi4",
       "from": 116200,
       "to": 117800,
       "text": "Elle (n')est pas du tout comme ça",
       "rating": 5
-    }
-    ,{
+    },
+    {
       "id": "3ffdujf1",
       "videoId": "oB5Vaq2dsEc",
       "from": 0,
       "to": 2700,
       "text": "Bienvenue à Paris dans le onzième arrondissement",
       "rating": 5
-    }
-    ,{
+    },
+    {
       "id": "3ffdujf2",
       "videoId": "oB5Vaq2dsEc",
       "from": 86500,
       "to": 88000,
       "text": "Il sort avec deux filles au même temps?",
       "rating": 5
-    }
-    ,{
+    },
+    {
       "id": "3ffdujf3",
       "videoId": "oB5Vaq2dsEc",
       "from": 157500,

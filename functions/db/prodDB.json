@@ -1,1 +1,180 @@
-{"segments":[{"id":"q7Vd5qC6","videoId":"t-LsjB45tOg","from":31460,"to":36980,"text":"Donc j'ai réfléchi sur le sujet et j'ai trouvé 4 critères,","rating":5},{"id":"7F7_nIOo","videoId":"t-LsjB45tOg","from":42260,"to":45680,"text":"Et donc on commence avec le premier critère qui est :","rating":5},{"id":"L4AWJ7z4","videoId":"t-LsjB45tOg","from":76000,"to":79400,"text":"Quand je parle rapidement je dirai : j'peux v'nir c'soir ?","rating":5},{"id":"mqcRd-ms","videoId":"t-LsjB45tOg","from":251840,"to":254400,"text":"Un garçon : un gars.","rating":5},{"id":"oTxl4RSL","videoId":"t-LsjB45tOg","from":281260,"to":291020,"text":"Ciné pour Cinéma, pub pour publicité, d'acc pour d'accord, la fac pour la faculté ou l'université.","rating":5},{"id":"N1FlGRt-","videoId":"t-LsjB45tOg","from":328520,"to":329580,"text":"On va dire ON.","rating":5},{"id":"Y2H70Ivg","videoId":"t-LsjB45tOg","from":342780,"to":347140,"text":"C'est trop formel, donc à l'écrit ça va, dans un contexte plus soutenu ça va.","rating":5},{"id":"KEC5hO6T","videoId":"t-LsjB45tOg","from":401800,"to":406100,"text":"Mais pour quelqu'un qui a 25 ans ça va peut-être être celui des moins de 20 ans.","rating":5},{"id":"nUOsfdXf","videoId":"t-LsjB45tOg","from":517600,"to":519680,"text":"Chelou pour louche.","rating":5},{"id":"8cEB5lJC","videoId":"t-LsjB45tOg","from":572880,"to":577560,"text":"Et finalement, le quatrième critère pour parler comme les Français :","rating":5},{"id":"I_hd0hUY","videoId":"t-LsjB45tOg","from":671280,"to":673540,"text":"Volontairement ou involontairement.","rating":5},{"id":"qNqOLB4J","videoId":"t-LsjB45tOg","from":821760,"to":822960,"text":"Voilà ! ^^","rating":5},{"id":"MC9uL6te","videoId":"v1R5QR1onU4","from":76380,"to":79340,"text":"Déjà, il faut mémoriser du vocabulaire","rating":5},{"id":"kCoIdUi6","videoId":"v1R5QR1onU4","from":547960,"to":550780,"text":"essayez de les utiliser\ndans une conversation","rating":5},{"id":"9WJOfvl8","videoId":"v1R5QR1onU4","from":611680,"to":614980,"text":"La dernière chose que je voudrais vous dire\navant de finir cette vidéo","rating":5},{"id":"THTXmW8B","videoId":"v1R5QR1onU4","from":649000,"to":652120,"text":"vous essayez juste de communiquer\navec des francophones","rating":5},{"id":"MXvzx_yn","videoId":"v1R5QR1onU4","from":678160,"to":682160,"text":"et si cette personne me comprend bien,\nme comprend sans difficulté","rating":5},{"id":"4eyysVyS","videoId":"oTKWwVrCrI8","from":13626,"to":15655,"text":"c'était ma question preferée","rating":5},{"id":"k6o9drZB","videoId":"hfdvXiazsVA","from":95800,"to":97320,"text":"J'avais une opportunité","rating":5},{"id":"1dQzsxl6","videoId":"hfdvXiazsVA","from":555260,"to":557360,"text":"pour les végétariens\net les vegans","rating":5},{"id":"DndWtw1n","videoId":"hfdvXiazsVA","from":668340,"to":670340,"text":"C'est un parc qui est\nsur plusieurs niveaux","rating":5},{"id":"iVPhOPMH","videoId":"T5hbFlMD1MA","from":373070,"to":378940,"text":"Donc, cherche le positif dans le fait que\ncertaines personnes se moquent.","rating":5}]}
+{
+  "segments": [
+    {
+      "id": "q7Vd5qC6",
+      "videoId": "t-LsjB45tOg",
+      "from": 31460,
+      "to": 36980,
+      "text": "Donc j'ai réfléchi sur le sujet et j'ai trouvé 4 critères,",
+      "rating": 5
+    },
+    {
+      "id": "7F7_nIOo",
+      "videoId": "t-LsjB45tOg",
+      "from": 42260,
+      "to": 45680,
+      "text": "Et donc on commence avec le premier critère qui est :",
+      "rating": 5
+    },
+    {
+      "id": "L4AWJ7z4",
+      "videoId": "t-LsjB45tOg",
+      "from": 76000,
+      "to": 79400,
+      "text": "Quand je parle rapidement je dirai : j'peux v'nir c'soir ?",
+      "rating": 5
+    },
+    {
+      "id": "mqcRd-ms",
+      "videoId": "t-LsjB45tOg",
+      "from": 251840,
+      "to": 254400,
+      "text": "Un garçon : un gars.",
+      "rating": 5
+    },
+    {
+      "id": "oTxl4RSL",
+      "videoId": "t-LsjB45tOg",
+      "from": 281260,
+      "to": 291020,
+      "text": "Ciné pour Cinéma, pub pour publicité, d'acc pour d'accord, la fac pour la faculté ou l'université.",
+      "rating": 5
+    },
+    {
+      "id": "N1FlGRt-",
+      "videoId": "t-LsjB45tOg",
+      "from": 328520,
+      "to": 329580,
+      "text": "On va dire ON.",
+      "rating": 5
+    },
+    {
+      "id": "Y2H70Ivg",
+      "videoId": "t-LsjB45tOg",
+      "from": 342780,
+      "to": 347140,
+      "text": "C'est trop formel, donc à l'écrit ça va, dans un contexte plus soutenu ça va.",
+      "rating": 5
+    },
+    {
+      "id": "KEC5hO6T",
+      "videoId": "t-LsjB45tOg",
+      "from": 401800,
+      "to": 406100,
+      "text": "Mais pour quelqu'un qui a 25 ans ça va peut-être être celui des moins de 20 ans.",
+      "rating": 5
+    },
+    {
+      "id": "nUOsfdXf",
+      "videoId": "t-LsjB45tOg",
+      "from": 517600,
+      "to": 519680,
+      "text": "Chelou pour louche.",
+      "rating": 5
+    },
+    {
+      "id": "8cEB5lJC",
+      "videoId": "t-LsjB45tOg",
+      "from": 572880,
+      "to": 577560,
+      "text": "Et finalement, le quatrième critère pour parler comme les Français :",
+      "rating": 5
+    },
+    {
+      "id": "I_hd0hUY",
+      "videoId": "t-LsjB45tOg",
+      "from": 671280,
+      "to": 673540,
+      "text": "Volontairement ou involontairement.",
+      "rating": 5
+    },
+    {
+      "id": "qNqOLB4J",
+      "videoId": "t-LsjB45tOg",
+      "from": 821760,
+      "to": 822960,
+      "text": "Voilà ! ^^",
+      "rating": 5
+    },
+    {
+      "id": "MC9uL6te",
+      "videoId": "v1R5QR1onU4",
+      "from": 76380,
+      "to": 79340,
+      "text": "Déjà, il faut mémoriser du vocabulaire",
+      "rating": 5
+    },
+    {
+      "id": "kCoIdUi6",
+      "videoId": "v1R5QR1onU4",
+      "from": 547960,
+      "to": 550780,
+      "text": "essayez de les utiliser\ndans une conversation",
+      "rating": 5
+    },
+    {
+      "id": "9WJOfvl8",
+      "videoId": "v1R5QR1onU4",
+      "from": 611680,
+      "to": 614980,
+      "text": "La dernière chose que je voudrais vous dire\navant de finir cette vidéo",
+      "rating": 5
+    },
+    {
+      "id": "THTXmW8B",
+      "videoId": "v1R5QR1onU4",
+      "from": 649000,
+      "to": 652120,
+      "text": "vous essayez juste de communiquer\navec des francophones",
+      "rating": 5
+    },
+    {
+      "id": "MXvzx_yn",
+      "videoId": "v1R5QR1onU4",
+      "from": 678160,
+      "to": 682160,
+      "text": "et si cette personne me comprend bien,\nme comprend sans difficulté",
+      "rating": 5
+    },
+    {
+      "id": "4eyysVyS",
+      "videoId": "oTKWwVrCrI8",
+      "from": 13626,
+      "to": 15655,
+      "text": "c'était ma question preferée",
+      "rating": 5
+    },
+    {
+      "id": "k6o9drZB",
+      "videoId": "hfdvXiazsVA",
+      "from": 95800,
+      "to": 97320,
+      "text": "J'avais une opportunité",
+      "rating": 5
+    },
+    {
+      "id": "1dQzsxl6",
+      "videoId": "hfdvXiazsVA",
+      "from": 555260,
+      "to": 557360,
+      "text": "pour les végétariens\net les vegans",
+      "rating": 5
+    },
+    {
+      "id": "DndWtw1n",
+      "videoId": "hfdvXiazsVA",
+      "from": 668340,
+      "to": 670340,
+      "text": "C'est un parc qui est\nsur plusieurs niveaux",
+      "rating": 5
+    },
+    {
+      "id": "iVPhOPMH",
+      "videoId": "T5hbFlMD1MA",
+      "from": 373070,
+      "to": 378940,
+      "text": "Donc, cherche le positif dans le fait que\ncertaines personnes se moquent.",
+      "rating": 5
+    }
+  ]
+}
