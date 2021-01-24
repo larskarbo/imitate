@@ -6,6 +6,7 @@ const prodDB = require("./prodDB.json")
 
 
 exports.handler = async (req, res) => {
+    db.read()
 
     const seg = db.get("segments")
         .find({ id: req.params.segmentId })

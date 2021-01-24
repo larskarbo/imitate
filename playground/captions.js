@@ -6,8 +6,8 @@ const axios = require("axios").default;
 
 const cheerio = require("cheerio")
 const videoIds = [
-    "K_QKabwLlds",
-    "5CbRL60hHi4",
+    // "K_QKabwLlds",
+    // "5CbRL60hHi4",
     "oB5Vaq2dsEc",
     "wwNZKfBLAsc",
     "DxqI1M0hdMg",
@@ -54,8 +54,8 @@ const { nanoid } = require("nanoid")
 
 const arr = []
 const go = async => {
-    for(const videoId of videoIds){
-        await axios.get(`http://video.google.com/timedtext?lang=fr&v=${videoId}`)
+    for (const videoId of videoIds){
+        axios.get(`http://video.google.com/timedtext?lang=fr&v=${videoId}`)
             .then(a => {
                 console.log("body", a.body)
                 console.log("data", a.data)
