@@ -220,7 +220,7 @@ function Segment({ segment, width, newSegment }) {
       </div>
 
 
-      {true && (
+      {false && (
         <button
           className="mb-8 "
           onClick={() => {
