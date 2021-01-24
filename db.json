@@ -369,6 +369,22 @@
       "rating": 5
     },
     {
+      "id": "asdfcRd-ms",
+      "videoId": "B9rVdOLWsak",
+      "from": 688500,
+      "to": 690200,
+      "text": "Et une dernière chose avant de finir",
+      "rating": 5
+    },
+    {
+      "id": "fqcfd-ms",
+      "rating": 5,
+      "videoId": "B9rVdOLWsak",
+      "from": 690200,
+      "to": 694200,
+      "text": "C'est normal d'avoir des jour avec et des jour sans"
+    },
+    {
       "id": "7216lEr8",
       "videoId": "t-LsjB45tOg",
       "from": 254680,
@@ -3817,7 +3833,8 @@
       "videoId": "oTKWwVrCrI8",
       "from": 513865,
       "to": 516079,
-      "text": "tu n'as pas grand-chose à perdre"
+      "text": "Tu n'as pas grand-chose à perdre",
+      "rating": 5
     },
     {
       "id": "kV7uvC9h",

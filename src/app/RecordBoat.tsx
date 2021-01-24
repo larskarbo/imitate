@@ -5,7 +5,7 @@ import Peaks from 'peaks.js';
 // https://www.youtube.com/watch?v=t-LsjB45tOg
 
 let recordedChunks = []
-export default function RecordBoat({ onRecordFinish }) {
+export default function RecordBoat({ onRecordFinish, onRecordingChange }) {
 
     const [mediaRecorder, setMediaRecorder] = useState(null)
     const [audioData, setAudioData] = useState(null)
@@ -33,6 +33,7 @@ export default function RecordBoat({ onRecordFinish }) {
             mediaRecorder.start()
 
             setRecording(true)
+            onRecordingChange(true)
             setMediaRecorder(mediaRecorder)
         })
 
@@ -42,21 +43,22 @@ export default function RecordBoat({ onRecordFinish }) {
     const stop = () => {
         const onStop = () => {
             onRecordFinish(URL.createObjectURL(recordedChunks[0]))
+            onRecordingChange(false)
             mediaRecorder.removeEventListener('stop', onStop);
         }
         mediaRecorder.addEventListener('stop', onStop);
-
-
+        
+        
         mediaRecorder.stream.getTracks() // get all tracks from the MediaStream
-            .forEach(track => track.stop());
+        .forEach(track => track.stop());
         mediaRecorder.stop()
         setRecording(false)
     }
 
     return (
-        <div className="w-full h-24 flex items-center justify-center">
+        <div className="w-full flex-grow flex items-center justify-center">
 
-            <button className={"w-16 h-16 bg-red-500 rounded-full text-white font-bold shadow " + (recording && "animate-pulse")} onClick={() => {
+            <button className={"w-16 h-16 rounded-full text-white font-bold shadow " + (recording ? "bg-gray-500" : "bg-red-500")} onClick={() => {
                 if (recording) {
                     stop()
                 } else {

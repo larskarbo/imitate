@@ -5,7 +5,22 @@ require("dotenv").config()
 const axios = require("axios").default;
 
 const cheerio = require("cheerio")
-const videoId = "EnPYXckiUVg"
+const videoIds = [
+    "K_QKabwLlds",
+    "5CbRL60hHi4",
+    "oB5Vaq2dsEc",
+    "wwNZKfBLAsc",
+    "DxqI1M0hdMg",
+    "kGLI3e6jFNg",
+    "abxAuRdPSCE",
+    "p2Z5x3EmZc8",
+    "UWkyyhxPiiw",
+    "NmInozbd8gA",
+    "GpvP4xI5phk",
+    "mHl--iqe4xw",
+    "M2_tmKz3gBI",
+    "ud91woekqMM"
+]
 
 const {db} = require("../functions/db/database")
 const { nanoid } = require("nanoid")
@@ -38,33 +53,40 @@ const { nanoid } = require("nanoid")
 //     })
 
 const arr = []
-axios.get(`http://video.google.com/timedtext?lang=fr&v=${videoId}`)
-    .then(a => {
-        console.log("body", a.body)
-        console.log("data", a.data)
-        var $ = cheerio.load(a.data, {
-            xmlMode: true
-        });
-        $('text').each(function (i, text) {
-            var start = $(this).attr('start');
-            var dur = $(this).attr('dur');
-            db.get("segments")
-            .push({
-                id: nanoid(8),
-                videoId: videoId,
-                from:start * 1000,
-                to:(start * 1000) + (dur * 1000),
-                text: $(this).text()
-                .replaceAll("&quot;", '"')
-                .replaceAll("&#39;", "'")
+const go = async => {
+    for(const videoId of videoIds){
+        await axios.get(`http://video.google.com/timedtext?lang=fr&v=${videoId}`)
+            .then(a => {
+                console.log("body", a.body)
+                console.log("data", a.data)
+                var $ = cheerio.load(a.data, {
+                    xmlMode: true
+                });
+                $('text').each(function (i, text) {
+                    var start = $(this).attr('start');
+                    var dur = $(this).attr('dur');
+                    db.get("segments")
+                    .push({
+                        id: nanoid(8),
+                        videoId: videoId,
+                        from:start * 1000,
+                        to:(start * 1000) + (dur * 1000),
+                        text: $(this).text()
+                        .replaceAll("&quot;", '"')
+                        .replaceAll("&#39;", "'")
+                    })
+                    .write()
+        
+                });
+                console.log(arr)
             })
-            .write()
+            .catch(err => {
+                // console.log('err: ', err);
+                console.log('err.response.data: ', err.response.data);
+        
+            })
+    }
 
-        });
-        console.log(arr)
-    })
-    .catch(err => {
-        // console.log('err: ', err);
-        console.log('err.response.data: ', err.response.data);
+}
 
-    })
+go()

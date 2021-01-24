@@ -19,7 +19,7 @@ export default function PlaybackBoat({ blobUrl }) {
                 .then(audiobuffer => {
                     const info = getAudioBufferInfo(audiobuffer)
 
-                    
+
                     const options = {
                         containers: {
                             overview: false,
@@ -58,22 +58,20 @@ export default function PlaybackBoat({ blobUrl }) {
     }
 
     return (
-        <div className="w-full mt-4">
+
+        <div className="flex w-full">
             <audio style={{ display: "none" }} src={blobUrl} id="player" controls ref={audioRef}></audio>
+            <div className="w-16 h-16 flex items-center justify-center">
 
-            <div className="flex">
-                <div className="w-24 h-24 flex items-center justify-center">
+                <button className="w-10 h-10 bg-gray-400 rounded-full text-white font-bold shadow flex items-center justify-center" onClick={() => {
+                    if (playing) {
 
-                    <button className="w-14 h-14 bg-gray-400 rounded-full text-white font-bold shadow flex items-center justify-center" onClick={() => {
-                        if (playing) {
-
-                        } else {
-                            play()
-                        }
-                    }}><IoPlaySharp size={24} className="ml-1" /></button>
-                </div>
-                <div ref={zoomViewRef} className={"flex-grow h-24 " + "bg-gray-200"} />
+                    } else {
+                        play()
+                    }
+                }}><IoPlaySharp size={20} className="ml-1" /></button>
             </div>
+            <div ref={zoomViewRef} className={"flex-grow h-16 " + "bg-gray-200"} />
         </div>
     );
 }
@@ -81,7 +79,7 @@ export default function PlaybackBoat({ blobUrl }) {
 const blobToAudioBuffer = async (blobUrl) => {
     const blob = await fetch(blobUrl).then(r => r.blob());
     var AudioContext = window.AudioContext // Default
-      || (window as any).webkitAudioContext;// Safari and old versions of Chrome
+        || (window as any).webkitAudioContext;// Safari and old versions of Chrome
     const audioContext = new AudioContext()
     const fileReader = new FileReader()
 
@@ -117,7 +115,7 @@ const getAudioBufferInfo = (audioBuffer) => {
     // Do something with audioBuffer
     const erp = audioBuffer.getChannelData(0)
     let startOffset = erp.findIndex(a => a > TRESHOLD) - 1500
-    
+
     if (startOffset < 0) {
         startOffset = 0
     }

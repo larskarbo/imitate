@@ -1,7 +1,7 @@
 import { StaticImage } from "gatsby-plugin-image";
 import React, { useRef, useState } from "react";
 
-// import { Link, navigate } from 'gatsby';
+import {  navigate } from 'gatsby';
 import Helmet from 'react-helmet';
 import logo from "./logo.svg"
 
@@ -12,11 +12,13 @@ export default function () {
     e.preventDefault()
     fetch("/.netlify/functions/newsletter", { method: "POST", body: JSON.stringify({ email: formRef.current.email.value }) })
       .then(a => {
-        
+        console.log('a: ', a);
+
         setSent(true)
+        navigate("/app")
       })
       .catch(err => {
-        
+
 
       })
   }
@@ -49,38 +51,45 @@ export default function () {
         />
       </Helmet>
 
-      <header>
-
-        <div className="flex justify-center pt-12">
-          <img src={logo} />
-        </div>
-      </header>
+      <Header />
 
       <h1 className="text-5xl font-medium text-black text-center mt-20 mb-8">
-        <div className="mb-1">Perfect pronounciation.</div>
+        <div className="mb-1">Perfect pronunciation.</div>
         {/* <div className="bg-blue-200 inline-block text-blue-800 rounded-md p-2 px-4">
           play any media in sync
               </div> */}
       </h1>
       <h2 className="text-2xl font-regular max-w-sm text-black text-center mb-8">
-        <div className="mb-1">Train your ears and voice to achieve <span className="bg-blue-200 inline-block text-blue-900 rounded-md px-1">near-native</span> pronounciation.</div>
+        <div className="mb-1 font-light">Train your ears and voice to achieve <span className="font-medium inline-block rounded-md px-1">near-native</span> pronounciation.</div>
         {/* <div className="">
           play any media in sync
               </div> */}
       </h2>
 
       <div className="text-left max-w-md w-full mb-12">
-        {/* <p>I am: </p>
-        <label htmlFor=""><input type="radio" /> Student</label>
-        <input type="radio" /> Teacher */}
-        {sent ?
+        {/* {sent ?
           <div className="text-center text-sm">Awesome! You will be the first to try ⚡</div>
           : <form ref={formRef} onSubmit={onSubmit}>
             <div className="flex border border-gray-300 w-96 rounded overflow-hidden shadow-sm text-sm mx-auto">
               <input name="email" className="flex-grow px-4" type="email" placeholder="Your email" />
               <input className="px-4 py-2 bg-blue-50 border-l" type="submit" value="Be the first to try ⚡" />
             </div>
-          </form>}
+          </form>
+        } */}
+        <div className="bg-blue-50 border border-blue-400 rounded px-8 py-4">
+          <form ref={formRef} onSubmit={onSubmit}>
+            <h2 className="text-black font-bold mb-2 ">Imitate is in beta</h2>
+            <p className="text-black mb-2 ">Put your email to get access to the app.</p>
+            <div className=" mb-4 flex border border-gray-300 w-96 rounded overflow-hidden text-sm">
+              <input name="email" className="flex-grow px-4 py-2" type="email" placeholder="Your email" />
+            </div>
+            <button className=" mb-2 px-4 py-2 bg-blue-100 hover:bg-blue-200 border border-gray-400 hover:border-gray-500 shadow-sm text-sm rounded transition-colors" type="submit">
+              Get early access ⚡
+            </button>
+            <p className="text-xs font-light opacity-60 mb-2 mt-1 ">Currently available for French learners only.</p>
+
+          </form>
+        </div>
       </div>
 
       <StaticImage src="./screensh.jpg"
@@ -111,5 +120,14 @@ export default function () {
       <div className="pb-24"></div>
     </div>
   );
+}
+
+export function Header() {
+  return <header>
+
+    <div className="flex justify-center pt-12">
+      <img src={logo} />
+    </div>
+  </header>;
 }
 

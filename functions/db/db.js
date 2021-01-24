@@ -9,9 +9,12 @@ app.use(bodyParser.json())
 
 const router = express.Router();
 
-router.get("/random", require("./random").handler);
-// router.post("/rate", require("./rate").handler);
-router.get("/getSegment/:segmentId", require("./getSegment").handler);
+router.post("/rate", require("./rate").handler);
+router.get("/random", require("./randomDev").handler);
+router.get("/getSegment/:segmentId", require("./getSegmentDev").handler);
+
+// router.get("/random", require("./random").handler);
+// router.get("/getSegment/:segmentId", require("./getSegment").handler);
 
 
 app.use("/.netlify/functions/db", router);

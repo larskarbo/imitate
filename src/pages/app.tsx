@@ -27,7 +27,7 @@ function Routing() {
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-tr from-gray-100 pt-0 to-yellow-50 min-h-screen w-full">
-      <div className="max-w-md w-full">
+      <div className="max-w-3xl w-full">
 
         <>
           {/* <Helmet>
