@@ -11,15 +11,21 @@ export default function PlaybackBoat({ blobUrl }) {
 
     useEffect(() => {
         if (audioRef) {
-
-            audioRef.current.play()
+            try{
+                audioRef.current.play()
+            } catch(e){
+                console["log"]("Auroplay failed.", e)
+            }
+                
         }
     }, [blobUrl, audioRef])
 
     return (
 
         <div className="flex w-full">
-            <audio className="w-full" src={blobUrl} id="player" controls ref={audioRef}></audio>
+            <audio className="w-full" id="player" controls ref={audioRef}>
+                <source type="audio/mp3" src={blobUrl}></source>
+            </audio>
         </div>
     );
 }
