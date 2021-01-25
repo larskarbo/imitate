@@ -57,7 +57,7 @@ export default function Main({ segmentId }) {
       <div className="pb-8"></div>
       {segmentId && <>
         <Segment segmentId={segmentId} newSegment={newSegment} />
-        <div className="pt-16"></div>
+        <div className="pt-8"></div>
         <div className="pt-8 border-t border-gray-300 w-full"></div>
 
         <div className="flex justify-center w-full">

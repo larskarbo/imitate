@@ -24,24 +24,22 @@ import axios from "axios";
 
 let timer;
 export default function SegmentLoader({ segmentId, state, newSegment }) {
-  
-  
+
+
   const [segment, setSegment] = useState(null);
-  const divRef = useRef();
 
   useEffect(() => {
     axios.get("/.netlify/functions/db/getSegment/" + segmentId).then((r) => {
-      
+
       setSegment(r.data.segment);
     });
   }, [segmentId]);
 
   return (
-    <div ref={divRef} className="w-full">
-      {segment && divRef && (
+    <div className="w-full">
+      {segment && (
         <Segment
           segment={segment}
-          width={divRef.current.getBoundingClientRect().width}
           newSegment={newSegment}
         />
       )}
@@ -49,13 +47,20 @@ export default function SegmentLoader({ segmentId, state, newSegment }) {
   );
 }
 
-function Segment({ segment, width, newSegment }) {
+function Segment({ segment, newSegment }) {
   const [youtubeElement, setYoutubeElement] = useState(null);
   const [recordings, setRecordings] = useState([]);
   const [playing, setPlaying] = useState(false);
   const [recording, setRecording] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const player = youtubeElement?.target;
+
+  const divRef = useRef();
+
+  const [ytWidth, setYtWidth] = useState(448);
+  useEffect(() => {
+    setYtWidth(divRef.current?.getBoundingClientRect().width)
+  }, [divRef.current?.getBoundingClientRect().width])
 
   const onStateChange = ({ data }) => {
     if (data == 1) {
@@ -98,7 +103,7 @@ function Segment({ segment, width, newSegment }) {
 
   useEffect(() => {
     if (player) {
-      
+
       // playSegment()
     }
   }, [segment.id]);
@@ -123,8 +128,8 @@ function Segment({ segment, width, newSegment }) {
         </div>
       </div>
 
-      <div className="flex w-full">
-        <div className="w-1/2 pr-4">
+      <div className="flex w-full flex-col sm:flex-row">
+        <div className="sm:w-1/2 sm:pr-4 mb-8">
           <h2 className="ext-left uppercase text-xs text-gray-700 font-bold mb-2">
             Pronunciation
           </h2>
@@ -135,6 +140,7 @@ function Segment({ segment, width, newSegment }) {
             }}
           >
             <div
+              ref={divRef}
               className={playing ? "opacity-100" : "opacity-100"}
               style={
                 {
@@ -146,7 +152,7 @@ function Segment({ segment, width, newSegment }) {
                 videoId={segment.videoId}
                 opts={{
                   height: "200",
-                  width: "" + Math.min(width, 448) / 2,
+                  width: ytWidth,
                   playerVars: {
                     controls: 0,
                     modestbranding: 1,
@@ -185,7 +191,7 @@ function Segment({ segment, width, newSegment }) {
           </div>
         </div>
 
-        <div className="w-1/2 pl-4">
+        <div className="sm:w-1/2 sm:pl-4 mb-8">
           <h2 className="text-left uppercase text-xs text-gray-700 font-bold mb-2">
             Practice chamber
           </h2>
@@ -227,7 +233,7 @@ function Segment({ segment, width, newSegment }) {
             axios
               .post("/.netlify/functions/db/rate", { segmentId: segment.id })
               .then((r) => {
-                
+
               });
           }}
         >
