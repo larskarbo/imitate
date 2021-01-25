@@ -26,8 +26,7 @@ export default function PlaybackBoat({  blobUrl }) {
     return (
 
         <div className="flex w-full">
-            <audio className="w-full" id="player" controls ref={audioRef}>
-                <source type="audio/mp3" src={blobUrl}></source>
+            <audio className="w-full" src={blobUrl} id="player" controls ref={audioRef}>
             </audio>
         </div>
     );

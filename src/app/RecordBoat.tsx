@@ -49,6 +49,7 @@ export default function RecordBoat({ onRecordFinish, onRecordingChange }) {
     const stop = () => {
         setLoading(true)
         const onStop = () => {
+            console.log('mediaRecorder.mimeType: ', mediaRecorder.mimeType);
             onRecordFinish(URL.createObjectURL(new Blob(recordedChunks, { type: mediaRecorder.mimeType })))
             onRecordingChange(false)
             setLoading(false)
