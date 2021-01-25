@@ -15,7 +15,7 @@ export default function PlaybackBoat({  blobUrl }) {
                 console.log('errorlars: ', error);
             });
             try {
-                audioRef.current.play()
+                // audioRef.current.play()
             } catch (e) {
                 console["log"]("Auroplay failed.", e)
             }
