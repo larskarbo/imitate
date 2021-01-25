@@ -150,7 +150,7 @@ function Segment({ segment, newSegment }) {
           >
             <div
               ref={divRef}
-              className={playing ? "opacity-100" : "opacity-100"}
+              className={playing ? "opacity-100" : "opacity-30"}
               style={
                 {
                   // filter: playing ? "blur(0px)" : "blur(1px)",
@@ -184,7 +184,7 @@ function Segment({ segment, newSegment }) {
                     className="ml-4 rounded items-center shadow-lg
                                 	          justify-center text-sm flex py-2 px-6 bg-green-500 hover:bg-green-600 font-medium text-white  transition duration-150"
                   >
-                    <AiOutlinePlayCircle className="mr-2" /> Play segment
+                    <AiOutlinePlayCircle className="mr-2" /> Listen
                     <span className="opacity-50 ml-1">
                       {" "}
                       (

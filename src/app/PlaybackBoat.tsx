@@ -11,11 +11,8 @@ export default function PlaybackBoat({  blobUrl }) {
 
     useEffect(() => {
         if (audioRef) {
-            audioRef.current.addEventListener('error', function (error) {
-                console.log('errorlars: ', error);
-            });
             try {
-                // audioRef.current.play()
+                audioRef.current.play()
             } catch (e) {
                 console["log"]("Auroplay failed.", e)
             }
@@ -26,7 +23,9 @@ export default function PlaybackBoat({  blobUrl }) {
     return (
 
         <div className="flex w-full">
-            <audio className="w-full" src={blobUrl} id="player" controls ref={audioRef}>
+            <audio onError={() => {
+                alert("Sorry, we have some difficulties making audio recording work on iOS. Try on your laptop!")
+            }} className="w-full" src={blobUrl} id="player" controls ref={audioRef}>
             </audio>
         </div>
     );
