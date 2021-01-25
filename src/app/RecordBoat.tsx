@@ -67,6 +67,7 @@ export default function RecordBoat({ onRecordFinish, onRecordingChange }) {
     return (
         <div className="w-full flex-grow flex items-center justify-center">
 
+            <div className="flex flex-col items-center">
             {loading ?
 
                 <button className={"w-16 h-16 rounded-full text-white font-bold shadow " + "bg-gray-500"}
@@ -81,6 +82,8 @@ export default function RecordBoat({ onRecordFinish, onRecordingChange }) {
                 }}>{recording ? "stop" : "rec"}</button>
 
             }
+            <div className="sm:hidden text-xs pt-2 text-gray-600 font-light">Recording might not work on mobile devices</div>
+            </div>
 
         </div>
     );

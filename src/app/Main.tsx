@@ -68,8 +68,8 @@ export default function Main({ segmentId }) {
             <div className="bg-white px-8 py-4 mb-8 rounded border w-full text-sm">
               <p className="my-2 italic">Imitate is the start of something big.</p>
               <p className="my-2">Do you want to send recordings to your teacher? Input any youtube video? Use other formats like podcasts? Phonetics?</p>
-              <p className="my-2"><strong>Imitate will change the way we learn to pronounce.</strong> We believe it happens through practive, and we need your ideas for how to develop this tool.</p>
-              <p className="my-2">Send us your thoughts here:</p>
+              <p className="my-2"><strong>Imitate will change the way we learn to pronounce.</strong> I believe it happens through practive, and I need your ideas for how to develop this tool.</p>
+              <p className="my-2">Send me your thoughts here:</p>
               <div className="flex justify-center">
                 <Link to="https://docs.google.com/forms/d/e/1FAIpQLScewq4uRUFV6XJcA2KCQavxNxpXw5a_oCNpjr3o2PAQNc5Otw/viewform?usp=sf_link"
                   className="inline-flex rounded items-center my-4 mx-auto justify-center text-sm py-3 px-6 bg-green-50 border-2  hover:bg-green-100 border-green-600 font-medium text-gray-900  transition duration-150"
