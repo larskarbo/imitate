@@ -11,6 +11,9 @@ export default function PlaybackBoat({  blobUrl }) {
 
     useEffect(() => {
         if (audioRef) {
+            audioRef.current.addEventListener('error', function (error) {
+                console.log('errorlars: ', error);
+            });
             try {
                 audioRef.current.play()
             } catch (e) {
