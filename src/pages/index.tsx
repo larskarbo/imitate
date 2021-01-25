@@ -1,13 +1,14 @@
 import { StaticImage } from "gatsby-plugin-image";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import {  navigate } from 'gatsby';
+import { navigate } from 'gatsby';
 import Helmet from 'react-helmet';
 import logo from "./logo.svg"
 
 export default function () {
   const formRef = useRef()
   const [sent, setSent] = useState(false)
+
   const onSubmit = (e) => {
     e.preventDefault()
     fetch("/.netlify/functions/newsletter", { method: "POST", body: JSON.stringify({ email: formRef.current.email.value }) })
@@ -54,7 +55,7 @@ export default function () {
       <Header />
 
       <h1 className="text-5xl font-medium text-black text-center mt-20 mb-8">
-        <div className="mb-1">Perfect pronunciation.</div>
+        <div className="mb-1">Perfect french pronunciation.</div>
         {/* <div className="bg-blue-200 inline-block text-blue-800 rounded-md p-2 px-4">
           play any media in sync
               </div> */}
@@ -66,7 +67,24 @@ export default function () {
               </div> */}
       </h2>
 
+
       <div className="text-left max-w-md w-full mb-12">
+
+        <div className="flex mb-8">
+          <StaticImage maxWidth={36} className="rounded-full mr-2 w-9 h-9 flex-shrink-0" src="./pb.jpeg" />
+          <div className="ml-2">
+            <div className="border py-2 px-4 bg-white rounded mb-4">
+                Hi! 👋 As a <strong>french learner</strong> I know how hard it can be to master pronunciation.
+            </div>
+            <div className={"border py-2 px-4 bg-white rounded mb-4"}>
+                Many people settle on <span className="italic">"good enough"</span>, and never truly learn how to speak like a native.
+            </div>
+            <div className={"border py-2 px-4 bg-white rounded mb-4"}>
+                That's why I created Imitate.<br /><br />It's an app that let's you <strong>practice intonation</strong> with the use of <strong>real-world video</strong>.
+            </div>
+          </div>
+        </div>
+
         {/* {sent ?
           <div className="text-center text-sm">Awesome! You will be the first to try ⚡</div>
           : <form ref={formRef} onSubmit={onSubmit}>
@@ -78,13 +96,13 @@ export default function () {
         } */}
         <div className="bg-blue-50 border border-blue-400 rounded px-8 py-4">
           <form ref={formRef} onSubmit={onSubmit}>
-            <h2 className="text-black font-bold mb-2 ">Imitate is in beta</h2>
-            <p className="text-black mb-2 ">Put your email to get access to the app.</p>
+            <h2 className="text-black font-bold mb-2 ">Imitate is free while in beta</h2>
+            <p className="text-black mb-2 ">Enter your email to be one of the first to try it.</p>
             <div className=" mb-4 flex border border-gray-300 w-96 rounded overflow-hidden text-sm">
               <input name="email" className="flex-grow px-4 py-2" type="email" placeholder="Your email" />
             </div>
             <button className=" mb-2 px-4 py-2 bg-blue-100 hover:bg-blue-200 border border-gray-400 hover:border-gray-500 shadow-sm text-sm rounded transition-colors" type="submit">
-              Get early access ⚡
+              Try Imitate now ⚡
             </button>
             <p className="text-xs font-light opacity-60 mb-2 mt-1 ">Currently available for French learners only.</p>
 
