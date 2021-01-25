@@ -40,14 +40,14 @@ export default function PlaybackBoat({ blobUrl }) {
                         zoomWaveformColor: "#282828"
                     };
 
-                    Peaks.init(options, (err, peaks) => {
-                        // Do something when the waveform is displayed and ready
-                        // this.peaks = peaks
-                        setPeaks(peaks)
-                        const view = peaks.views.getView('zoomview');
-                        peaks.player.playSegment(peaks.segments.getSegments()[0]);
-                        view.setZoom({ seconds: info.duration + 0.1 });
-                    });
+                    // Peaks.init(options, (err, peaks) => {
+                    //     // Do something when the waveform is displayed and ready
+                    //     // this.peaks = peaks
+                    //     setPeaks(peaks)
+                    //     const view = peaks.views.getView('zoomview');
+                    //     peaks.player.playSegment(peaks.segments.getSegments()[0]);
+                    //     view.setZoom({ seconds: info.duration + 0.1 });
+                    // });
                 })
 
         }
@@ -60,8 +60,8 @@ export default function PlaybackBoat({ blobUrl }) {
     return (
 
         <div className="flex w-full">
-            <audio style={{ display: "none" }} src={blobUrl} id="player" controls ref={audioRef}></audio>
-            <div className="w-16 h-16 flex items-center justify-center">
+            <audio  src={blobUrl} id="player" controls ref={audioRef}></audio>
+            {/* <div className="w-16 h-16 flex items-center justify-center">
 
                 <button className="w-10 h-10 bg-gray-400 rounded-full text-white font-bold shadow flex items-center justify-center" onClick={() => {
                     if (playing) {
@@ -71,7 +71,7 @@ export default function PlaybackBoat({ blobUrl }) {
                     }
                 }}><IoPlaySharp size={20} className="ml-1" /></button>
             </div>
-            <div ref={zoomViewRef} className={"flex-grow h-16 " + "bg-gray-200"} />
+            <div ref={zoomViewRef} className={"flex-grow h-16 " + "bg-gray-200"} /> */}
         </div>
     );
 }

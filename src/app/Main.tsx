@@ -39,7 +39,7 @@ export default function Main({ segmentId }) {
 
   const newSegment = () => {
     axios.get("/.netlify/functions/db/random").then((r) => {
-      
+
       setTotal(r.data.total);
       console.log('r.data.total: ', r.data.total);
 
@@ -67,14 +67,13 @@ export default function Main({ segmentId }) {
               <p className="my-2">Do you want to send recordings to your teacher? Input any youtube video? Use other formats like podcasts? Phonetics?</p>
               <p className="my-2"><strong>Imitate will change the way we learn to pronounce.</strong> We believe it happens through practive, and we need your ideas for how to develop this tool.</p>
               <p className="my-2">Send us your thoughts here:</p>
-              <button
-                onClick={() => {
-                  
-                }}
-                className=" rounded items-center my-4 mx-auto justify-center text-sm flex py-3 px-6 bg-green-50 border-2  hover:bg-green-100 border-green-600 font-medium text-gray-900  transition duration-150"
-              >
-                Send feedback 🗣
-            </button>
+              <Link to="https://forms.gle/8sxpqSZzUrBR5Kn9A">
+                <button
+                  className=" rounded items-center my-4 mx-auto justify-center text-sm flex py-3 px-6 bg-green-50 border-2  hover:bg-green-100 border-green-600 font-medium text-gray-900  transition duration-150"
+                >
+                  Send feedback 🗣
+                </button>
+              </Link>
             </div>
           </div>
         </div>
