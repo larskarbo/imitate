@@ -1,6 +1,5 @@
 
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import Peaks from 'peaks.js';
 
 // https://www.youtube.com/watch?v=t-LsjB45tOg
 
