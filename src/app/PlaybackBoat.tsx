@@ -4,19 +4,19 @@ import { IoPlaySharp } from 'react-icons/io5';
 
 // htt>s://www.youtube.com/watch?v=t-LsjB45tOg
 
-export default function PlaybackBoat({ blobUrl }) {
+export default function PlaybackBoat({  blobUrl }) {
 
     const [playing, setPlaying] = useState(false)
     const audioRef = useRef()
 
     useEffect(() => {
         if (audioRef) {
-            try{
+            try {
                 audioRef.current.play()
-            } catch(e){
+            } catch (e) {
                 console["log"]("Auroplay failed.", e)
             }
-                
+
         }
     }, [blobUrl, audioRef])
 

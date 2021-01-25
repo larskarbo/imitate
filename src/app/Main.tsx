@@ -30,6 +30,7 @@ const segmentInfo = {
 
 export default function Main({ segmentId }) {
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   //   useEffect(() => {
   //     if (!segmentId) {
@@ -38,9 +39,11 @@ export default function Main({ segmentId }) {
   //   }, [segmentId]);
 
   const newSegment = () => {
+    setLoading(true)
     axios.get("/.netlify/functions/db/random").then((r) => {
 
       setTotal(r.data.total);
+      setLoading(false)
       console.log('r.data.total: ', r.data.total);
 
       navigate("/app/" + r.data.segment.id, {
@@ -56,7 +59,7 @@ export default function Main({ segmentId }) {
       </Link>
       <div className="pb-8"></div>
       {segmentId && <>
-        <Segment segmentId={segmentId} newSegment={newSegment} />
+        <Segment loading={loading} segmentId={segmentId} newSegment={newSegment} />
         <div className="pt-8"></div>
         <div className="pt-8 border-t border-gray-300 w-full"></div>
 

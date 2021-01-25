@@ -23,26 +23,35 @@ import axios from "axios";
 // https://www.youtube.com/watch?v=t-LsjB45tOg
 
 let timer;
-export default function SegmentLoader({ segmentId, state, newSegment }) {
+export default function SegmentLoader({ loading, segmentId, newSegment }) {
 
+  const [loadingHere, setLoadingHere] = useState(false);
 
   const [segment, setSegment] = useState(null);
 
   useEffect(() => {
+    setLoadingHere(true)
     axios.get("/.netlify/functions/db/getSegment/" + segmentId).then((r) => {
-
+      setLoadingHere(false)
       setSegment(r.data.segment);
     });
   }, [segmentId]);
 
   return (
     <div className="w-full">
-      {segment && (
-        <Segment
-          segment={segment}
-          newSegment={newSegment}
-        />
-      )}
+      {(loading || loadingHere) ?
+      <div className="w-full h-16 animate-pulse bg-gray-100"></div>
+    :
+    
+      <>
+        {segment && (
+          <Segment
+            segment={segment}
+            newSegment={newSegment}
+          /> )}
+      
+      </> 
+    }
     </div>
   );
 }
