@@ -5,6 +5,7 @@ import RecordBoat from "./RecordBoat";
 import PlaybackBoat from "./PlaybackBoat";
 import { IoGitMerge, IoLanguage } from "react-icons/io5";
 import axios from "axios";
+import EventEmitter from "eventemitter3";
 
 // const segment = {
 //     videoId: "B9rVdOLWsak",
@@ -23,35 +24,29 @@ import axios from "axios";
 // https://www.youtube.com/watch?v=t-LsjB45tOg
 
 let timer;
-export default function SegmentLoader({ loading, segmentId, newSegment }) {
 
+const YTEventEmitter = new EventEmitter();
+
+export default function SegmentLoader({ loading, segmentId, newSegment }) {
   const [loadingHere, setLoadingHere] = useState(false);
 
   const [segment, setSegment] = useState(null);
 
   useEffect(() => {
-    setLoadingHere(true)
+    setLoadingHere(true);
     axios.get("/.netlify/functions/db/getSegment/" + segmentId).then((r) => {
-      setLoadingHere(false)
+      setLoadingHere(false);
       setSegment(r.data.segment);
     });
   }, [segmentId]);
 
   return (
     <div className="w-full">
-      {(loading || loadingHere) ?
-      <div className="w-full h-16 animate-pulse bg-gray-100"></div>
-    :
-    
-      <>
-        {segment && (
-          <Segment
-            segment={segment}
-            newSegment={newSegment}
-          /> )}
-      
-      </> 
-    }
+      {loading || loadingHere ? (
+        <div className="w-full h-16 animate-pulse bg-gray-100"></div>
+      ) : (
+        <>{segment && <Segment segment={segment} newSegment={newSegment} />}</>
+      )}
     </div>
   );
 }
@@ -68,10 +63,11 @@ function Segment({ segment, newSegment }) {
 
   const [ytWidth, setYtWidth] = useState(448);
   useEffect(() => {
-    setYtWidth(divRef.current?.getBoundingClientRect().width)
-  }, [divRef.current?.getBoundingClientRect().width])
+    setYtWidth(divRef.current?.getBoundingClientRect().width);
+  }, [divRef.current?.getBoundingClientRect().width]);
 
   const onStateChange = ({ data }) => {
+    console.log("data: ", data);
     if (data == 1) {
       // playing
       setPlaying(true);
@@ -81,10 +77,11 @@ function Segment({ segment, newSegment }) {
       }
       const now = Math.round(player.getCurrentTime() * 1000);
       clearTimeout(timer);
+      const timeMultiplier = 1/player.getPlaybackRate()
       timer = setTimeout(() => {
         player.pauseVideo();
         setHasPlayedOnce(true);
-      }, segment.to - now);
+      }, timeMultiplier * (segment.to - now));
     } else if (data == 2) {
       // paused
       setPlaying(false);
@@ -96,26 +93,45 @@ function Segment({ segment, newSegment }) {
     }
   };
 
+  const playSegmentSlow = () => {
+    if (player.getPlaybackRate() == 0.75) {
+      playSegment();
+      return;
+    }
+
+    player.setPlaybackRate(0.75);
+    YTEventEmitter.once("playbackChange", () => {
+      playSegment();
+    });
+  };
+
+  const playSegmentNormalSpeed = () => {
+    if (player.getPlaybackRate() == 1) {
+      playSegment();
+      return;
+    }
+
+    player.setPlaybackRate(1);
+    YTEventEmitter.once("playbackChange", () => {
+      playSegment();
+    });
+  };
+
   const playSegment = () => {
     player.seekTo(segment.from / 1000);
     player.playVideo();
     player.seekTo(segment.from / 1000);
-    // player.loadVideoById({
-    //     videoId: segment.videoId,
-    //     from: segment.from / 1000,
-    //     to: segment.to / 1000
-    // })
-
-    // setTimeout(() => {
-    // }, 3000)
   };
 
   useEffect(() => {
     if (player) {
-
-      // playSegment()
+      // player.getAvailablePlaybackRates()
+      console.log(
+        "player.getAvailablePlaybackRates(): ",
+        player.getAvailablePlaybackRates()
+      );
     }
-  }, [segment.id]);
+  }, [player, segment.id]);
 
   return (
     <>
@@ -171,17 +187,19 @@ function Segment({ segment, newSegment }) {
                 }}
                 onReady={setYoutubeElement}
                 onStateChange={onStateChange}
-              // onPlaybackRateChange={({ data }) => {
-              //   setPlaybackRate(data);
-              // }}
+                onPlaybackRateChange={({ data: rate }) => {
+                  console.log("pbrate: ", rate);
+                  player.setPlaybackRate(rate);
+                  YTEventEmitter.emit("playbackChange");
+                }}
               />
             </div>
             {!playing && (
               <div className="pb-8 pt-8 absolute left-0 bottom-0 right-0 top-0 flex justify-center items-center">
-                <div>
+                <div className="flex flex-col items-center">
                   <button
-                    onClick={playSegment}
-                    className="ml-4 rounded items-center shadow-lg
+                    onClick={playSegmentNormalSpeed}
+                    className="mb-4 ml-4 rounded items-center shadow-lg
                                 	          justify-center text-sm flex py-2 px-6 bg-green-500 hover:bg-green-600 font-medium text-white  transition duration-150"
                   >
                     <AiOutlinePlayCircle className="mr-2" /> Listen
@@ -194,6 +212,15 @@ function Segment({ segment, newSegment }) {
                       s)
                     </span>
                   </button>
+                  {hasPlayedOnce && (
+                    <button
+                      onClick={playSegmentSlow}
+                      className="ml-4 rounded items-center shadow-lg
+                                	          justify-center text-sm flex py-2 px-6 bg-gray-500 hover:bg-gray-600 font-medium text-white  transition duration-150"
+                    >
+                      <AiOutlinePlayCircle className="mr-2" /> Listen slow
+                    </button>
+                  )}
                 </div>
               </div>
             )}
@@ -234,22 +261,18 @@ function Segment({ segment, newSegment }) {
         </div>
       </div>
 
-
       {false && (
         <button
           className="mb-8 "
           onClick={() => {
             axios
               .post("/.netlify/functions/db/rate", { segmentId: segment.id })
-              .then((r) => {
-
-              });
+              .then((r) => {});
           }}
         >
           Rate 👍
         </button>
       )}
-
     </>
   );
 }
