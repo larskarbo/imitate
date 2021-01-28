@@ -336,7 +336,7 @@ export function Other() {
                 className=" mb-2 px-4 py-2 bg-yellow-100 hover:bg-yellow-200 border border-gray-400 hover:border-gray-500 shadow-sm text-sm rounded transition-colors"
                 type="submit"
               >
-                Sign up for {language.name} wait list ⚡
+                Sign up for the {language.name} wait list ⚡
               </button>
             </>
           )}
