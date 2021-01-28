@@ -14,7 +14,7 @@ export default function PlaybackBoat({  blobUrl }) {
             try {
                 audioRef.current.play()
             } catch (e) {
-                console["log"]("Auroplay failed.", e)
+                console["log"]("Autoplay failed.", e)
             }
 
         }
