@@ -133,7 +133,7 @@ export default function () {
               Imitate is free while in beta
             </h2>
             <p className="text-black mb-2 ">
-              Enter your email to be try it right now.
+              Enter your email to try it right now.
             </p>
             <div className=" mb-4 flex border border-gray-300 w-96 rounded overflow-hidden text-sm">
               <input
