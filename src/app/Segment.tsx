@@ -48,7 +48,9 @@ export default function SegmentLoader({ loading, segmentId, newSegment }) {
   return (
     <div className="w-full">
       {loading || loadingHere ? (
-        <div className="w-full h-16 animate-pulse bg-gray-100"></div>
+        <div className="h-96">
+          <div className="w-full h-16 animate-pulse bg-gray-100"></div>
+        </div>
       ) : (
         <>{segment && <Segment segment={segment} newSegment={newSegment} />}</>
       )}
