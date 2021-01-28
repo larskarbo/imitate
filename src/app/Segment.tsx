@@ -1,11 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
-import { AiOutlineMergeCells, AiOutlinePlayCircle } from "react-icons/ai";
+import {
+  AiFillYoutube,
+  AiOutlineMergeCells,
+  AiOutlinePlayCircle,
+} from "react-icons/ai";
 import RecordBoat from "./RecordBoat";
 import PlaybackBoat from "./PlaybackBoat";
 import { IoGitMerge, IoLanguage } from "react-icons/io5";
 import axios from "axios";
 import EventEmitter from "eventemitter3";
+import { Link } from "gatsby";
 
 // const segment = {
 //     videoId: "B9rVdOLWsak",
@@ -77,7 +82,7 @@ function Segment({ segment, newSegment }) {
       }
       const now = Math.round(player.getCurrentTime() * 1000);
       clearTimeout(timer);
-      const timeMultiplier = 1/player.getPlaybackRate()
+      const timeMultiplier = 1 / player.getPlaybackRate();
       timer = setTimeout(() => {
         player.pauseVideo();
         setHasPlayedOnce(true);
@@ -155,9 +160,19 @@ function Segment({ segment, newSegment }) {
 
       <div className="flex w-full flex-col sm:flex-row">
         <div className="sm:w-1/2 sm:pr-4 mb-8">
-          <h2 className="ext-left uppercase text-xs text-gray-700 font-bold mb-2">
-            Pronunciation
-          </h2>
+          <div className="flex justify-between items-end h-6">
+            <h2 className="ext-left uppercase text-xs text-gray-700 font-bold mb-2">
+              Pronunciation
+            </h2>
+            <Link
+              to={"https://youtu.be/" + segment.videoId}
+              target="_blank"
+              className="flex items-center text-xs bg-white border rounded-lg mb-2 py-1 px-2"
+            >
+              <AiFillYoutube className="mr-1" /> {segment.channel.channelTitle}{" "}
+              ↗
+            </Link>
+          </div>
           <div
             className="relative bg-black rounded overflow-hidden"
             style={{
@@ -228,9 +243,11 @@ function Segment({ segment, newSegment }) {
         </div>
 
         <div className="sm:w-1/2 sm:pl-4 mb-8">
-          <h2 className="text-left uppercase text-xs text-gray-700 font-bold mb-2">
-            Practice chamber
-          </h2>
+          <div className="flex justify-between items-end h-6">
+            <h2 className="text-left uppercase text-xs text-gray-700 font-bold mb-2">
+              Practice chamber
+            </h2>
+          </div>
           <div
             className={
               "rounded border flex flex-col justify-between " +

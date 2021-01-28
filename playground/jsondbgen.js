@@ -14,4 +14,4 @@ const segments = db.get("segments")
     .filter({ rating: 5 })
     .value()
 
-fs.writeJSON("prodDB.json", { segments: segments })
+fs.writeJSON("functions/db/prodDB.json", { segments: segments })
