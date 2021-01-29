@@ -43,9 +43,9 @@ export default function () {
         />
         <meta name="title" content={"Imitate - Learn perfect pronunciation"} />
 
-        <meta name="description" content="" />
-        <meta property="og:description" content="" />
-        <meta name="twitter:description" content=" " />
+        <meta name="description" content="Imitate is a pronunciation learning tool that lets you achieve near-native pronunciation with the help of real-life video." />
+        <meta property="og:description" content="Imitate is a pronunciation learning tool that lets you achieve near-native pronunciation with the help of real-life video." />
+        <meta name="twitter:description" content="Imitate is a pronunciation learning tool that lets you achieve near-native pronunciation with the help of real-life video." />
 
         <meta property="og:image" content="https://goimitate.com/hero.png" />
         <meta name="twitter:image" content="https://goimitate.com/hero.png" />
@@ -182,11 +182,19 @@ export default function () {
             </div>
           </div>
         </a>
-        {/* 
-        <a href="https://www.producthunt.com/posts/fileparty?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-fileparty" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=279320&theme=light" alt="FileParty - Watch local files together in real time | Product Hunt"
-          //  style="width: 250px; height: 54px;"
-          className="mt-6"
-          width="250" height="54" /></a> */}
+        <a
+          href="https://www.producthunt.com/posts/imitate?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-imitate"
+          target="_blank"
+        >
+          <img
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=282675&theme=light"
+            alt="Imitate | Product Hunt"
+            //  style="width: 250px; height: 54px;"
+            className="mt-6"
+            width="250"
+            height="54"
+          />
+        </a>
       </div>
 
       <div className="pb-24"></div>
