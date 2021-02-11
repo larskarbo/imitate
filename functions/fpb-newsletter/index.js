@@ -1,21 +1,33 @@
 var axios = require('axios');
 var FormData = require('form-data');
 
+function getUrlParams(search) {
+  const hashes = search.split('&')
+  const params = {}
+  hashes.map(hash => {
+      const [key, val] = hash.split('=')
+      params[key] = decodeURIComponent(val)
+  })
+  return params
+}
+
+// Works with Gumroad PING
+
 const handler = async (event) => {
   try {
-    console.log('event.body: ', event.body);
-    const product_id = JSON.parse(event.body).product_id
-    console.log('product_id: ', product_id);
-    const full_name = JSON.parse(event.body).full_name
-    console.log('full_name: ', full_name);
-    const email = JSON.parse(event.body).email
+    const params = getUrlParams(event.body)
+    console.log('params: ', params);
+    const permalink = params.permalink
+    console.log('permalink: ', permalink);
+    const email = params.email
     console.log('email: ', email);
 
-    if(product_id == "zXdoq"){
+
+
+    if(permalink == "zXdoq"){
       var data = new FormData();
       data.append('api_key', process.env.SENDY_API);
       data.append("email", email);
-      data.append('name', full_name);
       data.append('list', process.env.SENDY_FPB_LIST);
   
       var config = {
