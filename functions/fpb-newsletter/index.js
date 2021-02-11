@@ -3,6 +3,7 @@ var FormData = require('form-data');
 
 const handler = async (event) => {
   try {
+    console.log('event.body: ', event.body);
     const product_id = JSON.parse(event.body).product_id
     console.log('product_id: ', product_id);
     const full_name = JSON.parse(event.body).full_name
@@ -46,6 +47,7 @@ const handler = async (event) => {
       // isBase64Encoded: true,
     }
   } catch (error) {
+    console.log('error.toString(): ', error.toString());
     return { statusCode: 500, body: error.toString() }
   }
 }
