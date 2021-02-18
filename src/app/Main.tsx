@@ -53,7 +53,8 @@ export default function Main({ segmentId }) {
   };
 
   return (
-    <div className=" flex flex-col items-center px-8 w-full pb-24">
+    
+    <div className="max-w-3xl flex flex-col items-center px-8 w-full pb-24">
       <Link to="/app">
         <Header />
       </Link>

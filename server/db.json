@@ -1,0 +1,398 @@
+{
+  "users": [
+    {
+      "username": "larskarbo",
+      "passwordHash": "$2b$10$wRhMBOV0vwE1qSKAk8seCeY/hZ6beRYkF1Bcluebqiil70dXpzjnq",
+      "role": "user"
+    },
+    {
+      "username": "admin",
+      "passwordHash": "$2b$10$cJsEvUhi0Wep15eLj8RWOu8vNg1B.YWQrkJDZ61EjcBKKiDEfyVSi",
+      "role": "admin"
+    },
+    {
+      "username": "Cyri49",
+      "passwordHash": "$2b$10$cJsEvUhi0Wep15eLj8RWOu8vNg1B.YWQrkJDZ61EjcBKKiDEfyVSi",
+      "role": "user"
+    },
+    {
+      "username": "user123",
+      "passwordHash": "$2b$10$cU29AZB9cFALkhKTsrLaueNSPRAYjIrDYuMUU/fQH9vUr0N36BZve",
+      "role": "user"
+    },
+    {
+      "username": "user654",
+      "passwordHash": "$2b$10$kPWqibCOtrvAd/YOTYIhEOA.LLN0WSUj..YWgFnjzGR2n.AYeMPB6",
+      "role": "user"
+    },
+    {
+      "username": "user6543",
+      "passwordHash": "$2b$10$5QVTFpNw72TWmVSqTe0tH.MCYV//yfpSK4tCgFKZFE2CPlF06muLG",
+      "role": "user"
+    },
+    {
+      "username": "larskarboo",
+      "passwordHash": "$2b$10$THP9vIQhxlXd4aJBq1aZ3uvYRpHdh29Wu6pHRWncOiWLdqOazRfmq",
+      "role": "user"
+    }
+  ],
+  "restaurants": [
+    {
+      "id": "27dd8e52-c005-4feb-afe6-1c6715a2e58b",
+      "name": "Mission Chinese Food",
+      "owner": "owner1234",
+      "description": "Labore id aute ipsum eiusmod cupidatat ea non laboris minim ut ullamco sint consequat do.",
+      "img": "1.jpg",
+      "deleted": true
+    },
+    {
+      "id": "cc37a73f-2d31-4e59-ad89-7a61de121280",
+      "name": "Emily",
+      "owner": "superowner",
+      "description": "Tempor occaecat cupidatat tempor sit enim aute irure nisi consectetur in.",
+      "img": "2.jpg",
+      "deleted": true
+    },
+    {
+      "id": "9a165087-51e1-4b7d-8651-cdc41fcba622",
+      "name": "Kang Ho Dong Baekjeong",
+      "owner": "superowner",
+      "description": "Officia ut minim quis minim commodo aliquip aliquip laborum officia cupidatat ipsum ut.",
+      "img": "3.jpg",
+      "deleted": true
+    },
+    {
+      "id": "7bb3fa34-3014-47d4-b324-d6ae4ef033bf",
+      "name": "Katz's Delicatessen",
+      "owner": "superowner",
+      "description": "Reprehenderit deserunt elit ut ea.",
+      "img": "4.jpg",
+      "deleted": true
+    },
+    {
+      "id": "f9c6cf78-d2b6-4004-b9cd-168aca51a278",
+      "name": "Roberta's Pizza",
+      "owner": "owner1234",
+      "description": "Dolor enim culpa ad velit duis ad amet elit.",
+      "img": "5.jpg",
+      "deleted": true
+    },
+    {
+      "id": "b366d235-fbe4-4ea8-a0d5-a7ad0a1a9926",
+      "name": "Hometown BBQ",
+      "owner": "owner1234",
+      "description": "Velit do et adipisicing et veniam eu consequat esse exercitation nisi officia aute ad cillum.",
+      "img": "6.jpg",
+      "deleted": true
+    },
+    {
+      "id": "b612ced2-809d-4c3a-922d-e509c910fc4f",
+      "name": "Superiority Burger",
+      "owner": "superowner",
+      "description": "Ad amet sint ullamco eiusmod Lorem culpa nostrud culpa sit ad fugiat cupidatat.",
+      "img": "7.jpg",
+      "deleted": true
+    },
+    {
+      "id": "2cc31497-89e0-4fb3-8769-785f464668b9",
+      "name": "The Dutch",
+      "owner": "superowner",
+      "description": "Dolore ullamco tempor laboris nisi consectetur in in amet ipsum consectetur in Lorem.",
+      "img": "8.jpg",
+      "deleted": true
+    },
+    {
+      "id": "b1aab406-45ea-41d4-8a4c-edaca92b0e27",
+      "name": "Mu Ramen",
+      "owner": "owner1234",
+      "description": "Id dolore qui consectetur consequat ex mollit magna exercitation.",
+      "img": "9.jpg",
+      "deleted": true
+    },
+    {
+      "id": "384bfebf-9a6b-4322-b8aa-3df21454e544",
+      "name": "Casa Enrique",
+      "owner": "superowner",
+      "description": "Dolor nisi aute enim ipsum ullamco veniam commodo.",
+      "img": "10.jpg",
+      "deleted": true
+    }
+  ],
+  "reviews": [
+    {
+      "id": "e4290210-a149-40e1-9e6f-427f066088e3",
+      "user": "larskarbo",
+      "rating": 4,
+      "text": "Mission Chinese Food has grown up from its scrappy Orchard Street days into a big, two story restaurant equipped with a pizza oven, a prime rib cart, and a much broader menu. Yes, it still has all the hits — the kung pao pastrami, the thrice cooked bacon —but chef/proprietor Danny Bowien and executive chef Angela Dimayuga have also added a raw bar, two generous family-style set menus, and showstoppers like duck baked in clay. And you can still get a lot of food without breaking the bank.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "27dd8e52-c005-4feb-afe6-1c6715a2e58b"
+    },
+    {
+      "id": "a66b2b9b-88de-4b37-8c4d-8cbfd83b62a2",
+      "user": "[deleted]",
+      "rating": 4,
+      "text": "This place is a blast. Must orders: GREEN TEA NOODS, sounds gross (to me at least) but these were incredible!, Kung pao pastrami (but you already knew that), beef tartare was a fun appetizer that we decided to try, the spicy ma po tofu SUPER spicy but delicous, egg rolls and scallion pancake i could have passed on... I wish we would have gone with a larger group, so much more I would have liked to try!",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "27dd8e52-c005-4feb-afe6-1c6715a2e58b"
+    },
+    {
+      "id": "bc0019fe-7adf-4541-bf29-cd87abf63f30",
+      "user": "[deleted]",
+      "rating": 3,
+      "text": "I was VERY excited to come here after seeing and hearing so many good things about this place. Having read much, I knew going into it that it was not going to be authentic Chinese. The place was edgy, had a punk rock throwback attitude, and generally delivered the desired atmosphere. Things went downhill from there though. The food was okay at best and the best qualities were easily overshadowed by what I believe to be poor decisions by the kitchen staff.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "27dd8e52-c005-4feb-afe6-1c6715a2e58b"
+    },
+    {
+      "id": "8b52dd82-13f2-4e56-bcbe-7f14d55859a9",
+      "user": "[deleted]",
+      "rating": 4,
+      "text": "Five star food, two star atmosphere. I would definitely get takeout from this place - but dont think I have the energy to deal with the hipster ridiculousness again. By the time we left the wait was two hours long.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "cc37a73f-2d31-4e59-ad89-7a61de121280"
+    },
+    {
+      "id": "08d843b8-b9ac-4a8b-b96e-2a7417ea96fa",
+      "user": "[deleted]",
+      "rating": 4,
+      "text": "This cozy Clinton Hill restaurant excels at both straightforward and unusual wood-fired pizzas. If you want a taste of the latter, consider ordering the Emily, which is topped with mozzarella, pistachios, truffled sottocenere cheese, and honey. The menu includes salads and a handful of starters, as well as a burger that some meat connoisseurs consider to be among the best in the city.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "cc37a73f-2d31-4e59-ad89-7a61de121280"
+    },
+    {
+      "id": "c0faf8d4-472d-4af0-9491-11deb0483737",
+      "user": "[deleted]",
+      "rating": 5,
+      "text": "5 star atmosphere as it is very cozy with great staff. 5 star food as their Emmy burger is outrageously good. and its on a pretzel bun.. Too juicy for its own good and downright addicting. Also try the Colony pizza. Many others looked like worth competitors, but the Colony really found its way to my heart. when you start with a great crust, top it with top notch cheese and sauce, you've got a winner. But, if you go a step further and add the salty from the pepperoni, the sweet from the honey, and the spicy from the chili oil.... your mouth is confused and happy at the same time.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "cc37a73f-2d31-4e59-ad89-7a61de121280"
+    },
+    {
+      "id": "c2c0735c-b6c9-475f-a30c-6b68101121ef",
+      "user": "larskarbo",
+      "rating": 4,
+      "text": "The tables at this 32nd Street favorite are outfitted with grills for cooking short ribs, brisket, beef tongue, rib eye, and pork jowl. The banchan plates are uniformly good, and Deuki Hong’s menu also includes winning dishes like stir-fried squid noodles, kimchi stew, and seafood pancakes. If it’s available, make sure to order the kimchi and rice “lunchbox.” Baekjeong is a great place for large groups and birthday parties.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "9a165087-51e1-4b7d-8651-cdc41fcba622"
+    },
+    {
+      "id": "0bd84d60-b45c-4304-b0fc-5cb27e95ec76",
+      "user": "[deleted]",
+      "rating": 5,
+      "text": "I've been to Korea before and many other Korean BBQ places. We had the regular pork belly and a beef (forgot which cut) and a seafood tofu soup. Two meat and a soup was just prefect for the two of us. We could have done one meat and one soup. The portions of the meat are great! The beef was juicy, tender and so good. The sides were excellent. ",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "9a165087-51e1-4b7d-8651-cdc41fcba622"
+    },
+    {
+      "id": "dce2ab28-5ce7-4aac-9beb-170e403205c5",
+      "user": "[deleted]",
+      "rating": 2,
+      "text": "MEH. I've tried their Jersey location as well but Kang Ho Dong meat quality is severely decreasing. A Korean bbq place with whatever meat? I think NOT!",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "9a165087-51e1-4b7d-8651-cdc41fcba622"
+    },
+    {
+      "id": "1710f86d-cc06-4c2b-ae2b-da78f0555c29",
+      "user": "[deleted]",
+      "rating": 5,
+      "text": "In 127 years, little has changed at Katz's. It remains one of New York's — and the country's — essential Jewish delicatessens. Every inch of the massive Lower East Side space smells intensely of pastrami and rye loaves. The sandwiches are massive, so they are best when shared. Order at the counter, and don't forget to tip your slicer — your sandwich will be better for it.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "7bb3fa34-3014-47d4-b324-d6ae4ef033bf",
+      "commentFromOwner": "Thanks, nice review!"
+    },
+    {
+      "id": "33688d29-f500-4a10-9945-aa3c85f3dc1d",
+      "user": "larskarbo",
+      "rating": 5,
+      "text": "If I lived in NY and got diabetes from eating here every single time I ate, I would do it over and over and over again just for that first bite. These guys know how to make a sandwich. The heart attack comes free of charge! Came by while I was visiting NYC. First pit-stop when I come back :)!",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "7bb3fa34-3014-47d4-b324-d6ae4ef033bf"
+    },
+    {
+      "id": "e59ae18f-a9c4-42b4-a330-b2f360083dee",
+      "user": "larskarbo",
+      "rating": 2,
+      "text": "Ok so four of us came. One more later who didn't order becauase it's so expensive and simple. Seriously, a bunch of meat albeit you can sample beforehand on rye/white/wheat bread. Cheese extra. Pickles free, you can just ask them at the pickup counter. But seriously 20 bucks gone for an non-flavored half sandwich. And a line that is long, especially if you want seating. I'm down to just take a quick look where Sally and Harry sat and leave to the other delis all around NYC. Oh and they accept Samsung pay.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "7bb3fa34-3014-47d4-b324-d6ae4ef033bf"
+    },
+    {
+      "id": "04514a8e-f443-4829-837e-4141a0732106",
+      "user": "larskarbo",
+      "rating": 4,
+      "text": "Roberta's is the epicenter of the modern Brooklyn food scene.The pizzas are fantastic, but the restaurant really flexes its muscles with the vegetable dishes. In addition to the pies, consider ordering the radishes, the romaine salad, the roasted beets, and some of the charcuterie.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "f9c6cf78-d2b6-4004-b9cd-168aca51a278",
+      "commentFromOwner": "Happy you liked it! See you soon ✌🏼\n"
+    },
+    {
+      "id": "69841b1e-a582-4b2b-84b2-e598bc0f0521",
+      "user": "[deleted]",
+      "rating": 4,
+      "text": "Roberta's, one of the better pizzas I have had in my life. Very trendy and hipsterish spot. Came here for lunch on a random weekday afternoon and when we arrived, there was a line forming already. The space is a bit cramped. You'll get to know your neighbors soon enough. The pizza is just delightful and delicious. It's a ncie plus that you get to see them firing up the pizzas in the corner. The major issue with Roberta's is the trek out to the Williamsburg/Bushwick.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "f9c6cf78-d2b6-4004-b9cd-168aca51a278"
+    },
+    {
+      "id": "7c1d11dc-638b-4938-9711-b601d69ee250",
+      "user": "[deleted]",
+      "rating": 4,
+      "text": "The pizza is fantastic, not THE best I've ever had, but would definitely go back since it has great food and great ambiance. Definitely worth going to. It has A LOT of hype in the New York food scene, and I question if it deserves all of it, but it's still a totally great spot to hit up when in the area!!",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "f9c6cf78-d2b6-4004-b9cd-168aca51a278"
+    },
+    {
+      "id": "ceb5dc12-b77d-4e39-931a-f1c1bc69f466",
+      "user": "larskarbo",
+      "rating": 4,
+      "text": "Barbecue aficionados agree that Billy Durney is cooking up some of the best Texas-style barbecue in the city. Straightforward classics like smoked brisket and baby back ribs are always a strong choice, but there are also options like pork belly tacos and a lamb belly banh mi. The space is sprawling in a way that feels like the real deal, and Durney himself can usually be found working the room, and keeping a watchful eye on the smoking meats. It's counter service only, and there's often a line, but for the scene and certainly for the meat, it's easily worth the trip to Red Hook.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "b366d235-fbe4-4ea8-a0d5-a7ad0a1a9926"
+    },
+    {
+      "id": "c3d78071-1ed5-420e-ae80-648666dc33cc",
+      "user": "[deleted]",
+      "rating": 4,
+      "text": "Overall, a great try of New York BBQ. The restaurant décor is rustic with a good amount of seats to sit and enjoy the meal. I definitely would love to come back and try that monster of a beef rib!",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "b366d235-fbe4-4ea8-a0d5-a7ad0a1a9926"
+    },
+    {
+      "id": "bf1f3f73-128f-4617-a3a8-3360dd57b359",
+      "user": "[deleted]",
+      "rating": 4,
+      "text": "mmmmmm, what a gem this is in bklyn! I loveeee how soft their brisket is here. Their pork tacos are to die for, their different variety of ribs and lastly, their lamb is not gamey at all. Super wallet friendly for the amount they give you. I highly recommend this spot- after eating here, you can definitely walk over for Steve's key lime pies.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "b366d235-fbe4-4ea8-a0d5-a7ad0a1a9926"
+    },
+    {
+      "id": "3ebced15-0ed5-4640-9cbf-5af6b777ca06",
+      "user": "larskarbo",
+      "rating": 4,
+      "text": "Brooks Headley’s tiny East Village cafe is so much more than a veggie burger spot — it's one of the best bang-for-your-buck restaurants in Lower Manhattan. Headley and his crew turn seasonal vegetables into delectable salads and riffs on American comfort food favorites. The specials menu changes daily, and the rest of the menu is constantly evolving. You can get a lot of food to eat here for under $15 per person.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "b612ced2-809d-4c3a-922d-e509c910fc4f"
+    },
+    {
+      "id": "8268c8a7-9680-4dac-8eb7-43210c2a92c6",
+      "user": "larskarbo",
+      "rating": 5,
+      "text": "I was turned on to this place following the glowing NYT review. Its near my area of the city so I figured why not go? Man they weren't kidding, Superiority Burger is probably the best vegetarian experience I've ever had!",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "b612ced2-809d-4c3a-922d-e509c910fc4f"
+    },
+    {
+      "id": "89571305-b236-4527-b183-3b628b3d304d",
+      "user": "[deleted]",
+      "rating": 4,
+      "text": "Great flavors and very satisfying. Craving a sandwich, I stopped by on a Friday night with a vegetarian friend. Super small location with just a few seats inside. Ambiance is a bit industrial, good is definitely much more sophisticated than the look of the place! Ordered the superiority burger anda side of potato salad. The potato salad was very light and tasted clean ( less mayo, lots of dill and some cucumber) -- refreshing for a humid summer night! Sandwich was surprisingly delicious - it is very small ( funny allusion to a White Castle burger) but it packs a punch! Not only are there layers of flavors ( amazing sauces) but the party itself had a great texture Ahmed flavor-- well done and so wonderful! Will definitely stop by again for an overall amazing burger/sandwich. Staff was super nice and accommodating but not out of the way friendly.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "b612ced2-809d-4c3a-922d-e509c910fc4f"
+    },
+    {
+      "id": "8f746536-4113-4fd2-819c-a1ff0c571865",
+      "user": "[deleted]",
+      "rating": 4,
+      "text": "Over the last five years, The Dutch has turned into the quintessential American restaurant that chef Andrew Carmellini and partners Josh Pickard and Luke Ostrom sought to evoke when it first opened. It’s a great choice when you’re craving a steak, a burger, or oysters, and the menu always includes plentiful seafood options as well as pastas. The Dutch is now an indelible part of the Soho landscape.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "2cc31497-89e0-4fb3-8769-785f464668b9"
+    },
+    {
+      "id": "97343410-d093-439a-b80d-0bfdc111c83f",
+      "user": "[deleted]",
+      "rating": 4,
+      "text": "I randomly came here on a Saturday night. I was pleasantly surprised with the food and the service. We had the calamari and the ceviche with avocado, and then the catfish. Oh! Then we had the banana soufflé for dessert with ice cream. It was all delicious and well put together. Would love to eat here again.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "2cc31497-89e0-4fb3-8769-785f464668b9"
+    },
+    {
+      "id": "d73c7af7-5af7-4eea-baf5-687e2c4e70b4",
+      "user": "larskarbo",
+      "rating": 4,
+      "text": "Aside from the slightly claustrophobic dining area and the fact that you may have difficulty hearing your dining companion, I'd return to The Dutch without hesitation. The food is surprisingly well-executed and conceived, and our dinner service flowed smoothly without a hitch. Just make sure to get a reservation in advance, as I'm sure more than just a few other people will have the same idea.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "2cc31497-89e0-4fb3-8769-785f464668b9"
+    },
+    {
+      "id": "a13d0cdc-695e-4b5b-b1d9-fc6a29c56abf",
+      "user": "larskarbo",
+      "rating": 4,
+      "text": "Joshua Smookler’s two-year-old ramen shop serves one of the best tonkotsu broths around. Beyond ramen, Mu also offers some high minded plates, like foie gras-stuffed chicken wings, as well as dry-aged Japanese Wagyu beef specials. Mu is just 10 short minutes away from Midtown via the 7-train.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "b1aab406-45ea-41d4-8a4c-edaca92b0e27"
+    },
+    {
+      "id": "00bbcf7e-6534-4127-91c5-e37aba55acab",
+      "user": "larskarbo",
+      "rating": 4,
+      "text": "Overall, I would definitely recommend this place if you enjoy thick curly noodles with a thick, intense broth.  If you don't there are still other options but I can't vouch for those.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "b1aab406-45ea-41d4-8a4c-edaca92b0e27"
+    },
+    {
+      "id": "732b6fa9-d540-4368-8f15-4448388e291b",
+      "user": "larskarbo",
+      "rating": 4,
+      "text": "One of the tastiest and most unique ramen places I've been to in NYC, but also the priciest. I think overall its worth the try. Not an everyday casual ramen shop though.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "b1aab406-45ea-41d4-8a4c-edaca92b0e27"
+    },
+    {
+      "id": "22c9f79d-10c9-43b7-83e1-44e064ea1fb6",
+      "user": "[deleted]",
+      "rating": 5,
+      "text": "Head to this laid-back Long Island City restaurant for beef tongue tacos, chicken smothered in a heady mole sauce, and a monster crab tostada. New York's only Michelin-starred Mexican restaurant is an especially cool choice for lunch during the week or drinks after work. Eater critic Ryan Sutton awarded this restaurant two stars.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "384bfebf-9a6b-4322-b8aa-3df21454e544",
+      "commentFromOwner": "horse jaja\n"
+    },
+    {
+      "id": "8cf595a1-a38b-40e3-98a3-6027a00c6262",
+      "user": "[deleted]",
+      "rating": 5,
+      "text": "The hype was real. Please go. Get the ceviche. And the tres leches. You're welcome",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "384bfebf-9a6b-4322-b8aa-3df21454e544"
+    },
+    {
+      "id": "883cc3d7-cb44-42cd-801b-f6933fb5ed63",
+      "user": "[deleted]",
+      "rating": 4,
+      "text": "For a Michelin star restaurant, it's fairly priced and the food is fairly good. Started with a strawberry margarita which was good in flavor but not much alcohol. Had the chicken enchiladas with salsa verde and it was really good. Great balance in flavor and a good portion. Extra tasty with their hot sauces. My wife had the lamb but it was a bit too salty for our taste. Although, it was cooked very well and fell off the bone. The highlight of the night was the tres leches cake. Probably the best I've ever had to be honest. Not too sweet and very milky. Overall, one of my top 3 favorite Mexican in NY.",
+      "dateOfVisit": "2020-12-04",
+      "restaurant": "384bfebf-9a6b-4322-b8aa-3df21454e544"
+    },
+    {
+      "rating": "5",
+      "text": "This restaurant was pretty awesome!! Perfect for a wedding party! 😋",
+      "user": "Cyri49",
+      "restaurant": "7bb3fa34-3014-47d4-b324-d6ae4ef033bf",
+      "dateOfVisit": "2020-12-15",
+      "id": "150711bb-281e-47d2-8955-4ea150e93369"
+    },
+    {
+      "rating": "2",
+      "text": "Bad rest.",
+      "user": "user123",
+      "restaurant": "384bfebf-9a6b-4322-b8aa-3df21454e544",
+      "dateOfVisit": "2020-12-10",
+      "id": "8e083562-6920-498c-ad28-2c11d0b68d56"
+    },
+    {
+      "rating": "4",
+      "text": "good rest.",
+      "user": "user6543",
+      "restaurant": "27dd8e52-c005-4feb-afe6-1c6715a2e58b",
+      "dateOfVisit": "2020-12-04",
+      "id": "a8789b8f-0d25-418f-bf97-d08e01eb3d6f"
+    },
+    {
+      "rating": "4",
+      "text": "Attack.<script>alert()</script>",
+      "user": "user6543",
+      "restaurant": "27dd8e52-c005-4feb-afe6-1c6715a2e58b",
+      "dateOfVisit": "2020-12-04",
+      "id": "486d64b9-a3ab-491b-b491-c1032837f963"
+    }
+  ]
+}

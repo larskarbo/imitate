@@ -52,13 +52,26 @@ export default function SegmentLoader({ loading, segmentId, newSegment }) {
           <div className="w-full h-16 animate-pulse bg-gray-100"></div>
         </div>
       ) : (
-        <>{segment && <Segment segment={segment} newSegment={newSegment} />}</>
+        <>
+          {segment && (
+            <>
+              <button
+                onClick={newSegment}
+                className="rounded items-center mb-8 text-xs mx-auto justify-center flex py-2 px-4 bg-gray-50 border  hover:bg-blue-100 border-gray-400 hover:border-blue-600 font-medium text-gray-900  transition duration-150"
+              >
+                New sentence 🇫🇷
+              </button>
+              <Segment segment={segment} newSegment={newSegment} />
+            </>
+          )}
+        </>
       )}
     </div>
   );
 }
 
-function Segment({ segment, newSegment }) {
+export function Segment({ segment, newSegment }) {
+  console.log('segment: ', segment);
   const [youtubeElement, setYoutubeElement] = useState(null);
   const [recordings, setRecordings] = useState([]);
   const [playing, setPlaying] = useState(false);
@@ -143,12 +156,6 @@ function Segment({ segment, newSegment }) {
   return (
     <>
       {/* <h2 className="text-center uppercase text-xs text-gray-700 font-bold mb-8">Step 1 - Listen</h2> */}
-      <button
-        onClick={newSegment}
-        className="rounded items-center mb-8 text-xs mx-auto justify-center flex py-2 px-4 bg-gray-50 border  hover:bg-blue-100 border-gray-400 hover:border-blue-600 font-medium text-gray-900  transition duration-150"
-      >
-        New sentence 🇫🇷
-      </button>
       <div className="bg-white px-8 py-4 mb-8 rounded border w-full">
         <div
           className={
@@ -279,19 +286,6 @@ function Segment({ segment, newSegment }) {
           </div>
         </div>
       </div>
-
-      {false && (
-        <button
-          className="mb-8 "
-          onClick={() => {
-            axios
-              .post("/.netlify/functions/db/rate", { segmentId: segment.id })
-              .then((r) => {});
-          }}
-        >
-          Rate 👍
-        </button>
-      )}
     </>
   );
 }
