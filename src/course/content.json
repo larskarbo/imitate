@@ -1,8 +1,23 @@
 [
-  { "title": "Intro", "slug": "intro" },
-  { "title": "Making sounds", "slug": "making-sounds" },
-  { "title": "Spelling", "slug": "spelling" },
-  { "title": "Using Imitate", "slug": "using-imitate" },
+  {
+    "title": "Intro",
+    "slug": "intro",
+    "video": "https://vimeo.com/514712104/a37dc439b6"
+  },
+  {
+    "title": "Making sounds",
+    "slug": "making-sounds",
+    "video": "https://vimeo.com/514712104/a37dc439b6"
+  },
+  {
+    "title": "Spelling",
+    "slug": "spelling",
+    "video": "https://vimeo.com/514712586/f68459d9e9"
+  },
+  {
+    "title": "Using Imitate",
+    "slug": "using-imitate"
+  },
   {
     "spellingRules": ["i like in v**i**e", "y like in st**y**le", "î, ï"],
     "phonetic": "i",
@@ -10,10 +25,25 @@
     "slug": "lit",
     "explainerVideo": "fpb/i-explain",
     "exercises": [
-      { "id": "i", "text": "i" },
-      { "id": "lit", "text": "Lit", "translation": "Bed" },
-      { "id": "va_au_lit", "text": "Va au lit", "translation": "Go to bed" },
-      { "id": "jaime_ton_style", "text": "J'aime ton style", "translation": "I like your style" },
+      {
+        "id": "i",
+        "text": "i"
+      },
+      {
+        "id": "lit",
+        "text": "Lit",
+        "translation": "Bed"
+      },
+      {
+        "id": "va_au_lit",
+        "text": "Va au lit",
+        "translation": "Go to bed"
+      },
+      {
+        "id": "jaime_ton_style",
+        "text": "J'aime ton style",
+        "translation": "I like your style"
+      },
       {
         "id": "la_vie_est_plus_jolie_si_tu_souris",
         "text": "La vie est plus jolie si tu souris",
@@ -27,11 +57,30 @@
     "word": "fondue",
     "slug": "fondue",
     "exercises": [
-      { "id": "u", "text": "U" },
-      { "id": "jus", "text": "Jus", "translation": "Juice" },
-      { "id": "jus_du_fruit", "text": "Jus du fruit", "translation": " Fruit juice" },
-      { "id": "tu_aimes_le_jus", "text": "Tu aimes le jus", "translation": "You like the juice" },
-      { "id": "jai_eu_des_chocolats", "text": "J'ai eu des chocolats", "translation": "I have got some chocolates" }
+      {
+        "id": "u",
+        "text": "U"
+      },
+      {
+        "id": "jus",
+        "text": "Jus",
+        "translation": "Juice"
+      },
+      {
+        "id": "jus_du_fruit",
+        "text": "Jus du fruit",
+        "translation": "Fruit juice"
+      },
+      {
+        "id": "tu_aimes_le_jus",
+        "text": "Tu aimes le jus",
+        "translation": "You like the juice"
+      },
+      {
+        "id": "jai_eu_des_chocolats",
+        "text": "J'ai eu des chocolats",
+        "translation": "I have got some chocolates"
+      }
     ]
   },
   {
@@ -40,17 +89,40 @@
     "word": "loup",
     "slug": "loup",
     "exercises": [
-      { "id": "ou", "text": "Ou" },
-      { "id": "loup", "text": "Loup", "translation": "Wolf" },
-      { "id": "un_loup", "text": "Un loup", "translation": "a wolf" },
-      { "id": "un_grand_loup", "text": "Un grand loup", "translation": "a big wolf" },
-      { "id": "nous_jouons_au_boul", "text": "Nous jouons aux boules", "translation": "We play bowls" },
+      {
+        "id": "ou",
+        "text": "Ou"
+      },
+      {
+        "id": "loup",
+        "text": "Loup",
+        "translation": "Wolf"
+      },
+      {
+        "id": "un_loup",
+        "text": "Un loup",
+        "translation": "a wolf"
+      },
+      {
+        "id": "un_grand_loup",
+        "text": "Un grand loup",
+        "translation": "a big wolf"
+      },
+      {
+        "id": "nous_jouons_au_boul",
+        "text": "Nous jouons aux boules",
+        "translation": "We play bowls"
+      },
       {
         "id": "nous_jouons_beaucoup_au_boul",
         "text": "Nous jouons beaucoup aux boules",
         "translation": "We play bowls a lot"
       },
-      { "id": "jaime_beaucoup_le_poulet", "text": "J'aime beaucoup le poulet", "translation": "I really like chicken" }
+      {
+        "id": "jaime_beaucoup_le_poulet",
+        "text": "J'aime beaucoup le poulet",
+        "translation": "I really like chicken"
+      }
     ]
   },
   {
@@ -64,10 +136,33 @@
     "word": "thé",
     "slug": "thé",
     "exercises": [
-      { "text": "Le thé", "translation": "The tea" },
-      { "text": "Il a acheté du thé", "translation": "He bought tea" },
-      { "text": "Du thé et du café", "translation": "Tea and coffee" },
-      { "text": "Vous avez du thé et du café", "translation": "You have tea and coffee" }
+      {
+        "text": "é"
+      },
+      {
+        "text": "Thé",
+        "translation": "Tea"
+      },
+      {
+        "text": "Le thé",
+        "translation": "The tea"
+      },
+      {
+        "text": "Il a acheté du thé",
+        "translation": "He bought tea"
+      },
+      {
+        "text": "Je veux manger",
+        "translation": "I want to eat"
+      },
+      {
+        "text": "Du thé et du café",
+        "translation": "Tea and coffee"
+      },
+      {
+        "text": "Vous avez du thé et du café",
+        "translation": "You have tea and coffee"
+      }
     ]
   },
   {
@@ -84,13 +179,70 @@
     "word": "mère",
     "slug": "mère",
     "exercises": [
-      { "text": "C'est ma mère", "translation": "It's my mother" },
-      { "text": "C'est l'anniversaire de ma mère", "translation": "It's my mother's birthday" },
-      { "text": "C'est ma mère", "translation": "It's my mother" },
-      { "text": "C'est ma mère", "translation": "It's my mother" }
+      {
+        "text": "è"
+      },
+      {
+        "text": "Mère",
+        "translation": "Mother"
+      },
+      {
+        "text": "C'est ma mère",
+        "translation": "It's my mother"
+      },
+      {
+        "text": "C'est l'anniversaire de ma mère",
+        "translation": "It's my mother's birthday"
+      },
+      {
+        "text": "J'ai un souhait",
+        "translation": "I have a wish"
+      },
+      {
+        "text": "Il est beau et gentil",
+        "translation": "He is beautiful and kind"
+      },
+      {
+        "text": "J'aime les crêpes",
+        "translation": "I like pancakes"
+      },
+      {
+        "text": "La neige est belle",
+        "translation": "Snow is beautiful"
+      },
+      {
+        "text": "Je connais toutes les voyelles en français",
+        "translation": "I know all the vowels in french"
+      }
     ]
   },
-  { "spellingRules": ["eu"], "phonetic": "ø", "word": "feu", "slug": "feu", "exercises": [] },
+  {
+    "spellingRules": ["eu"],
+    "phonetic": "ø",
+    "word": "feu",
+    "slug": "feu",
+    "exercises": [
+      {
+        "text": "eu"
+      },
+      {
+        "text": "Feu",
+        "translation": "Fire"
+      },
+      {
+        "text": "Il mange des oeufs",
+        "translation": "He eats eggs"
+      },
+      {
+        "text": "Un grand feu",
+        "translation": "A big fire"
+      },
+      {
+        "text": "Il veut des oeufs et un peu de bleu",
+        "translation": "He wants eggs and a bit of bluecheese"
+      }
+    ]
+  },
   {
     "spellingRules": [
       "œ like c**œ**ur",
@@ -101,9 +253,63 @@
     "phonetic": "œ",
     "word": "cœure",
     "slug": "cœure",
-    "exercises": []
+    "exercises": [
+      {
+        "text": "œ"
+      },
+      {
+        "text": "Cœure",
+        "translation": "Heart"
+      },
+      {
+        "text": "C'est ma sœur",
+        "translation": "She is my sister"
+      },
+      {
+        "text": "Ma sœur va chez le coiffeur",
+        "translation": "My sister goes to the hairdresser"
+      },
+      {
+        "text": "Ma sœur passe des heures chez le coiffeur",
+        "translation": "My sister spends hours at the hairdresser"
+      },
+      {
+        "text": "Ma sœur est jeune",
+        "translation": "My sister is young"
+      },
+      {
+        "text": "Ce club est fun",
+        "translation": "This club is fun"
+      }
+    ]
   },
-  { "spellingRules": ["a, like pl**a**ge", "à"], "phonetic": "a", "word": "plage", "slug": "plage", "exercises": [] },
+  {
+    "spellingRules": ["a, like pl**a**ge", "à"],
+    "phonetic": "a",
+    "word": "plage",
+    "slug": "plage",
+    "exercises": [
+      {
+        "text": "a"
+      },
+      {
+        "text": "Plage",
+        "translation": "Beach "
+      },
+      {
+        "text": "Tu vas au bar",
+        "translation": "You go to the bar"
+      },
+      {
+        "text": "Tu vas à la plage",
+        "translation": "You go to the beach"
+      },
+      {
+        "text": "Tu vas au bar de la plage",
+        "translation": "You go to the beach bar"
+      }
+    ]
+  },
   {
     "spellingRules": [
       "eau → cointr**eau** (/kwɛ̃tro/)",
@@ -115,16 +321,85 @@
     "phonetic": "o",
     "word": "bateau",
     "slug": "bateau",
-    "exercises": []
+    "exercises": [
+      {
+        "text": "o (closed)"
+      },
+      {
+        "text": "Bateau",
+        "translation": "Boat"
+      },
+      {
+        "text": "Il fait beau",
+        "translation": "The weather is nice"
+      },
+      {
+        "text": "Il fait beau et chaud",
+        "translation": "It's nice and warm"
+      },
+      {
+        "text": "Il fait beau mais trop chaud",
+        "translation": "It's nice but too hot"
+      }
+    ]
   },
-  { "spellingRules": ["o"], "phonetic": "ɔ", "word": "corps", "slug": "cofasdrps", "exercises": [] },
-  { "title": "Nasal vowels", "slug": "nasals" },
+  {
+    "spellingRules": ["o"],
+    "phonetic": "ɔ",
+    "word": "corps",
+    "slug": "corps",
+    "exercises": [
+      {
+        "text": "o (open)"
+      },
+      {
+        "text": "Corps",
+        "translation": "Body"
+      },
+      {
+        "text": "Paul est fort",
+        "translation": "Paul is strong"
+      },
+      {
+        "text": "Paul sort encore",
+        "translation": "Paul goes out again"
+      },
+      {
+        "text": "Paul et Laure viennent du Nord",
+        "translation": "Paul and Laure come from the North"
+      }
+    ]
+  },
+  {
+    "title": "Nasal vowels",
+    "slug": "nasals"
+  },
   {
     "spellingRules": ["aim, ain - f**aim**", "ien - b**ien**", "ein, pl**ein**", "im - **im**porter", "in - v**in**"],
     "phonetic": "ɛ̃",
-    "word": "corps",
-    "slug": "cforps",
-    "exercises": []
+    "word": "pain",
+    "slug": "pain",
+    "exercises": [
+      {
+        "text": "in"
+      },
+      {
+        "text": "Pain",
+        "translation": "Bread"
+      },
+      {
+        "text": "Du pain et du vin",
+        "translation": "Bread and wine"
+      },
+      {
+        "text": "Le chien mange du pain",
+        "translation": "The dog is eating bred"
+      },
+      {
+        "text": "Il tient le pain à la main",
+        "translation": "He holds the bred with his hands"
+      }
+    ]
   },
   {
     "spellingRules": [
@@ -135,10 +410,93 @@
       "NB: double n or m after gives a"
     ],
     "phonetic": "ɑ̃",
-    "word": "corps",
-    "slug": "corps",
-    "exercises": []
+    "word": "plante",
+    "slug": "plante",
+    "exercises": [
+      {
+        "text": "an"
+      },
+      {
+        "text": "Plante",
+        "translation": "Plant"
+      },
+      {
+        "text": "Les parents attendent",
+        "translation": "Parents are waiting"
+      },
+      {
+        "text": "Les parents attendent les enfants",
+        "translation": "Parents are waiting for children"
+      },
+      {
+        "text": "Les parents attendent les enfants en lisant",
+        "translation": "Parents wait for children while reading"
+      }
+    ]
   },
-  { "spellingRules": ["on"], "phonetic": "ɔ̃", "word": "bonjour", "slug": "bonjour", "exercises": [] },
-  { "title": "BONUS:", "spellingRules": ["oi"], "phonetic": "wa", "word": "doigt", "slug": "doigt", "exercises": [] }
+  {
+    "spellingRules": ["on"],
+    "phonetic": "ɔ̃",
+    "word": "bonjour",
+    "slug": "bonjour",
+    "exercises": [
+      {
+        "text": "On"
+      },
+      {
+        "text": "Bonjour!",
+        "translation": "Hi!"
+      },
+      {
+        "text": "Bonjour, ça va?",
+        "translation": "Hi, how are you?"
+      },
+      {
+        "text": "Un bon poisson",
+        "translation": "A good fish"
+      },
+      {
+        "text": "Son poisson est bon",
+        "translation": "His fish is good"
+      },
+      {
+        "text": "Nous aimons son bon poisson",
+        "translation": "We like his good fish"
+      }
+    ]
+  },
+  {
+    "title": "BONUS:",
+    "spellingRules": ["oi"],
+    "phonetic": "wa",
+    "word": "doigt",
+    "slug": "doigt",
+    "exercises": [
+      {
+        "text": "oi"
+      },
+      {
+        "text": "Doigts",
+        "translation": "Fingers"
+      },
+      {
+        "text": "Trois doigts",
+        "translation": "Three fingers"
+      },
+      {
+        "text": "Les oiseaux sont trois",
+        "translation": "The birds are three"
+      },
+      {
+        "text": "Le roi habite dans son royaume",
+        "translation": "The king lives in his kingdom"
+      }
+    ]
+  },
+
+  {
+    "title": "Thank you",
+    "slug": "thank-you",
+    "video": "https://vimeo.com/514713136/64fb29c917"
+  }
 ]
