@@ -5,6 +5,7 @@ import RecordBoat from "../app/RecordBoat";
 import { axios } from "axios";
 
 export default function SegmentPro({ segment }) {
+  console.log('segment: ', segment.videoId);
   const [recordings, setRecordings] = useState([]);
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(null);
@@ -61,6 +62,10 @@ export default function SegmentPro({ segment }) {
     // player.seekTo(segment.from / 1000);
   };
 
+  console.log("https://res.cloudinary.com/dfzqjzusj/video/upload/v1613399890/" +
+  segment.videoId +
+  ".mp4")
+
   return (
     <>
       {/* <h2 className="text-center uppercase text-xs text-gray-700 font-bold mb-8">Step 1 - Listen</h2> */}
@@ -113,7 +118,7 @@ export default function SegmentPro({ segment }) {
               >
                 <source
                   src={
-                    "https://res.cloudinary.com/dfzqjzusj/video/upload/v1613399890/" +
+                    "https://res.cloudinary.com/dfzqjzusj/video/upload/" +
                     segment.videoId +
                     ".mp4"
                   }
@@ -130,14 +135,14 @@ export default function SegmentPro({ segment }) {
                                 	          justify-center text-sm flex py-2 px-6 bg-green-500 hover:bg-green-600 font-medium text-white  transition duration-150"
                   >
                     <AiOutlinePlayCircle className="mr-2" /> Listen
-                    <span className="opacity-50 ml-1">
+                    {/* <span className="opacity-50 ml-1">
                       {" "}
                       (
                       {(
                         Math.round((segment.to - segment.from) / 100) / 10
                       ).toFixed(1)}
                       s)
-                    </span>
+                    </span> */}
                   </button>
                   {/* <button
                       onClick={playSegmentSlow}

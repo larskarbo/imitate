@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { navigate } from "gatsby";
 import Helmet from "react-helmet";
-import logo from "./logo.svg";
 import { AiFillQuestionCircle } from "react-icons/ai";
+import { Header } from "../course/Header";
 
 export default function () {
   const formRef = useRef();
@@ -199,16 +199,6 @@ export default function () {
 
       <div className="pb-24"></div>
     </div>
-  );
-}
-
-export function Header() {
-  return (
-    <header>
-      <div className="flex justify-center pt-12">
-        <img src={logo} />
-      </div>
-    </header>
   );
 }
 

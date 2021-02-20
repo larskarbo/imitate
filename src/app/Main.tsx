@@ -8,7 +8,7 @@ import Segment from "./Segment";
 import axios from "axios";
 import { Router, Redirect } from "@reach/router";
 import { navigate, Link } from "gatsby";
-import { Header } from "../pages";
+import { Header } from "../course/Header";
 import expl from "./expl.svg";
 
 // const segmentInfo = {

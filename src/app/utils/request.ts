@@ -17,11 +17,7 @@ export function request(method, functionName, data?) {
     method: method,
     json: data,
     headers,
+    credentials: "include",
+    mode: "cors"
   }).json()
-//   .catch(async error => {
-    
-  
-//     throw new Error(`${functionName} statusCode:${error.response?.status} ${error.message} ${(await error.response?.json())?.error?.message}`);
-
-//   })
 }

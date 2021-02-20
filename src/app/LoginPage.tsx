@@ -21,7 +21,7 @@ export default function LoginPage({ }) {
     })
   },[])
 
-  const [state, setState] = useState("signup");
+  const [state, setState] = useState("login");
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -71,12 +71,21 @@ export default function LoginPage({ }) {
     const email = formRef.current.email.value;
     const password = formRef.current.password.value;
 
-    loginUser(email, password)
-      .then((user) => {
-        console.log("Success! Signed up", user);
-        navigate("/app");
-      })
-      .catch((err) => setMsg("Error: " + err.message));
+    request("POST", "/login", {
+      email,
+      password
+    }).then(res => {
+      console.log("🚀 ~ res", res)
+      // onUser(res)
+      navigate("/french/pronunciation-course")
+
+    }).catch(error => {
+      if (error.message == "Unauthorized") {
+        setMsg("Wrong username or password, please try again.")
+      } else {
+        setMsg(error.message)
+      }
+    })
   };
 
   let { from } = location?.state || { from: { pathname: "/s" } };

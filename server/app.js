@@ -97,7 +97,7 @@ app.post("/setProgress/:courseId/:itemId", verify, async (req, res) => {
     [req.user.id, req.params.courseId, req.params.itemId, progress]
   );
 
-  return res.send(progress);
+  return res.send({progress});
 });
 
 app.post("/uploadRecording/:courseId/:itemId", verify, upload.single("recording"), function (req, res, next) {

@@ -5,6 +5,7 @@ import { Link, navigate } from "gatsby";
 import Main from "../app/Main";
 import LoginPage from '../app/LoginPage';
 import { useUser } from "../user-context";
+import { request } from '../app/utils/request';
 
 const url = "https://slapper.io";
 
@@ -65,7 +66,7 @@ const LoginRoute = ({ component: Component, ...rest }) => {
 const NotFound = () => <div>not found</div>;
 
 const LogOut = () => {
-  const  logoutUser  = () => {};
+  const {logoutUser} = useUser()
 
   useEffect(() => {
     logoutUser();

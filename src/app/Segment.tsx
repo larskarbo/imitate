@@ -170,7 +170,7 @@ export function Segment({ segment, newSegment }) {
       <div className="flex w-full flex-col sm:flex-row">
         <div className="sm:w-1/2 sm:pr-4 mb-8">
           <div className="flex justify-between items-end h-6">
-            <h2 className="ext-left uppercase text-xs text-gray-700 font-bold mb-2">
+            <h2 className="ext-left smallcase mb-2">
               Pronunciation
             </h2>
             <Link
