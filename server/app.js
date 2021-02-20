@@ -79,8 +79,9 @@ app.get("/progress/:courseId", verify, async (req, res) => {
   return res.send(progress);
 });
 
-app.post("/setProgress/:courseId/:itemId", verify, async (req, res) => {
+app.post("/setProgress/:courseId", verify, async (req, res) => {
   const progress = req.body.progress;
+  const key = req.body.key;
 
   if (!progress || !(progress >= 0 && progress <= 100)) {
     return res.status(400).send({ message: "progress is missing" });
@@ -94,7 +95,7 @@ app.post("/setProgress/:courseId/:itemId", verify, async (req, res) => {
    DO 
     UPDATE SET progress = EXCLUDED.progress;
   `,
-    [req.user.id, req.params.courseId, req.params.itemId, progress]
+    [req.user.id, req.params.courseId, key, progress]
   );
 
   return res.send({progress});

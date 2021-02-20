@@ -5,7 +5,7 @@ import RecordBoat from "../app/RecordBoat";
 import { axios } from "axios";
 
 export default function SegmentPro({ segment }) {
-  console.log('segment: ', segment.videoId);
+  
   const [recordings, setRecordings] = useState([]);
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(null);
@@ -21,7 +21,7 @@ export default function SegmentPro({ segment }) {
   }, [playerRef?.current]);
 
   // const onStateChange = ({ data }) => {
-  //   console.log("data: ", data);
+  //   
   //   if (data == 1) {
   //     // playing
   //     setPlaying(true);
@@ -61,10 +61,6 @@ export default function SegmentPro({ segment }) {
     playerRef.current.play();
     // player.seekTo(segment.from / 1000);
   };
-
-  console.log("https://res.cloudinary.com/dfzqjzusj/video/upload/v1613399890/" +
-  segment.videoId +
-  ".mp4")
 
   return (
     <>
@@ -109,7 +105,7 @@ export default function SegmentPro({ segment }) {
                 onPlay={() => setPlaying(true)}
                 onPause={() => setPlaying(false)}
                 onLoadedData={t => {
-                  console.log('t: ', t);
+                  
 
                 }}
                 // muted
