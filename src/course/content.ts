@@ -2,6 +2,7 @@ export default [
   {
     title: "Intro",
     slug: "intro",
+    video: "https://vimeo.com/514660969",
   },
   {
     title: "Making sounds",
