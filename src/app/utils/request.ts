@@ -1,6 +1,7 @@
 import ky from "ky";
 
-export const BASE = `http://localhost:3200`;
+const isLocal = (typeof location != "undefined") && location?.host?.includes("localhost")
+export const BASE = isLocal ? `http://localhost:3200` : `https://server.goimitate.com`
 
 
 let headers = {};

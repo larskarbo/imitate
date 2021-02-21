@@ -1,6 +1,4 @@
-require("dotenv").config({
-  path: __dirname + "/.env",
-});
+require("dotenv").config();
 console.log(__dirname);
 var ses = require("node-ses");
 var client = ses.createClient({ key: process.env.SES_KEY, secret: process.env.SES_SECRET });

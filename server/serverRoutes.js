@@ -1,21 +1,23 @@
 const express = require("express");
 const app = express();
 var cors = require("cors");
-app.use(cors({ credentials: true, origin: ["http://localhost:8000","http://localhost:8888"] }));
+app.use(
+  cors({ credentials: true, origin: ["http://localhost:8000", "http://localhost:8888", "https://goimitate.com"] })
+);
 var multer = require("multer");
-var path = require('path')
-const mkdirp = require('mkdirp')
-mkdirp(path.join(__dirname, "uploads"))
-var fs = require('fs')
+var path = require("path");
+const mkdirp = require("mkdirp");
+mkdirp(path.join(__dirname, "uploads"));
+var fs = require("fs");
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)) //Appending extension
-  }
-})
+    cb(null, Date.now() + path.extname(file.originalname)); //Appending extension
+  },
+});
 
 var upload = multer({ storage: storage });
 
@@ -29,7 +31,6 @@ app.use(
   })
 );
 app.use(cookieParser());
-
 
 // middleware imports
 const { verify } = require("./verify");
@@ -99,7 +100,7 @@ app.post("/setProgress/:courseId", verify, async (req, res) => {
     [req.user.id, req.params.courseId, key, progress]
   );
 
-  return res.send({progress});
+  return res.send({ progress });
 });
 
 app.post("/uploadRecording/:courseId/:itemId", verify, upload.single("recording"), function (req, res, next) {
@@ -110,13 +111,13 @@ app.post("/uploadRecording/:courseId/:itemId", verify, upload.single("recording"
       req.params.courseId,
       req.params.itemId,
       req.file.path,
-      req.user.id
+      req.user.id,
     ])
     .then((hey) => {
-      console.log('hey: ', hey);
+      console.log("hey: ", hey);
       res.send({
         message: "wihu",
-        fileId: hey.rows[0].file_id
+        fileId: hey.rows[0].file_id,
       });
     });
 
@@ -130,14 +131,12 @@ app.post("/deleteRecording/:courseId/:itemId", verify, upload.single("recording"
   }
 
   db.pool
-    .query("DELETE from recordings where course_id = $1 and item_id = $2 and user_id = $3 and file_id = $4 RETURNING file_id", [
-      req.params.courseId,
-      req.params.itemId,
-      req.user.id,
-      req.body.file_id,
-    ])
+    .query(
+      "DELETE from recordings where course_id = $1 and item_id = $2 and user_id = $3 and file_id = $4 RETURNING file_id",
+      [req.params.courseId, req.params.itemId, req.user.id, req.body.file_id]
+    )
     .then((hey) => {
-      if(hey.rows.length == 0){
+      if (hey.rows.length == 0) {
         res.send({
           message: "already gone!",
         });
@@ -146,8 +145,7 @@ app.post("/deleteRecording/:courseId/:itemId", verify, upload.single("recording"
           res.send({
             message: "deleted it!",
           });
-        })
-
+        });
       }
     });
 
