@@ -8,7 +8,7 @@ export default function CourseNotLoggedIn({ slug, subslug }) {
       <Header />
 
       <div className="pb-8"></div>
-      <main className={`md:block w-full`}>
+      <main className={`md:block max-w-screen-lg w-full`}>
         <article>
           <h1 className="text-2xl font-bold pb-4">French Pronunciation Basics</h1>
           <p>You can buy access to this course <Link target="_blank" to={"https://gum.co/zXdoq"}>here</Link>.</p>

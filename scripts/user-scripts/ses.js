@@ -7,15 +7,14 @@ module.exports.sendEmail = (to, subject, message) => {
   return new Promise((resolve) => {
     client.sendEmail(
       {
-        to: "",
+        to: to,
         from: process.env.SES_FROM,
-        subject: "greetings",
-        message: "your <b>message</b> goes here",
-        altText: "plain text",
+        subject: subject,
+        message: message
       },
       function (err, data, res) {
-        console.log("err: ", err);
         if (err) {
+          console.log("err: ", err);
           throw err;
         }
         resolve();

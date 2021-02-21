@@ -1,14 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import YouTube from "react-youtube";
-import { AiOutlineMergeCells, AiOutlinePlayCircle } from "react-icons/ai";
-import RecordBoat from "./RecordBoat";
-import PlaybackBoat from "./PlaybackBoat";
-import { IoGitMerge, IoLanguage } from "react-icons/io5";
 import Segment from "./Segment";
 import axios from "axios";
-import { Router, Redirect } from "@reach/router";
 import { navigate, Link } from "gatsby";
-import { Header } from "../course/Header";
 import expl from "./expl.svg";
 
 // const segmentInfo = {
