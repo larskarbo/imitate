@@ -46,7 +46,6 @@ function Course({ slug, subslug }) {
     <div className=" flex flex-col items-center px-8 w-full pb-24">
       <Header />
 
-      <div className="pb-8"></div>
       <div className="w-full max-w-screen-lg md:flex">
         <div className="md:hidden">
           <Button onClick={() => setMenuOpen(!menuOpen)}>
@@ -57,7 +56,7 @@ function Course({ slug, subslug }) {
           </Button>
         </div>
         <div className="pb-4"></div>
-        <div className={`${menuOpen ? "" : "hidden"} md:block md:w-40 flex-shrink-0 border-r font-light text-gray-700 pr-2`}>
+        <div className={`${menuOpen ? "" : "hidden"} md:block md:w-40 md:pt-8 flex-shrink-0 border-r font-light text-gray-700 pr-2`}>
           <ul>
             {content.map((c) => (
               <SidebarElement onGo={() => setMenuOpen(false)} key={c.slug} content={c} active={c.slug == overPage.slug} />
@@ -65,7 +64,7 @@ function Course({ slug, subslug }) {
           </ul>
         </div>
 
-        <main className={`${menuOpen ? "hidden" : ""} md:block md:pl-12 w-full`}>
+        <main className={`${menuOpen ? "hidden" : ""} md:block md:pl-12 w-full md:pt-8`}>
           {subslug && (
             <>
               <h1 className="text-4xl font-light pb-8">
@@ -92,7 +91,7 @@ function Course({ slug, subslug }) {
 
           {page.type == "article" && (
             <>
-              {page.title && <h1 className="text-4xl pt-4 font-bold pb-8">{page.title}</h1>}
+              {page.title && <h1 className="text-4xl font-bold pb-8">{page.title}</h1>}
               {page.video && !subslug && <Vimeo id={page.video} />}
               {page.slug == "using-imitate" && (
                 <article>

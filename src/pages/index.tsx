@@ -80,7 +80,8 @@ export default function () {
       <div className="text-left max-w-md w-full mb-12">
         <div className="flex mb-8">
           <StaticImage
-            maxWidth={36}
+            alt="imitate"
+            width={36}
             className="rounded-full mr-2 w-9 h-9 flex-shrink-0"
             src="./pb.jpeg"
           />
@@ -173,6 +174,7 @@ export default function () {
           "
           >
             <StaticImage
+              alt="Lars"
               maxWidth={36}
               className="rounded-full mr-2"
               src="./pb.jpeg"

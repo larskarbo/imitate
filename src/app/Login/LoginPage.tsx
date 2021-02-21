@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { navigate } from "gatsby";
+import { Link, navigate } from "gatsby";
 import { request } from "../utils/request";
 import { FormElement } from "./FormElement";
 import { SubmitButton } from "./SubmitButton";
 import LoginLayout from "./LoginLayout";
 import { useUser } from "../../user-context";
+import { BASEPATH } from '../../pages/french/pronunciation-course';
 
 export default function LoginPage() {
   const {tryAgainUser } = useUser()
@@ -43,6 +44,7 @@ export default function LoginPage() {
 
   return (
     <LoginLayout msg={msg}>
+      <div className="pb-4 text-xs text-gray-700 font-light">You need to buy the <Link to={BASEPATH}>French Pronunciation Basic</Link> course to get an account.</div>
       <form ref={formRef} onSubmit={onLogin}>
         <FormElement title={"Email address"} type="email" name="email" placeholder="you@email.com" />
 

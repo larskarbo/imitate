@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 var cors = require("cors");
-app.use(cors({ credentials: true, origin: "http://localhost:8000" }));
+app.use(cors({ credentials: true, origin: ["http://localhost:8000","http://localhost:8888"] }));
 var multer = require("multer");
 var path = require('path')
 const mkdirp = require('mkdirp')

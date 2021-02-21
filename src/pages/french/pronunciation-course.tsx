@@ -1,21 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Router, Redirect } from "@reach/router"
-import { Link, navigate } from "gatsby"
-import Main from '../../course/Course';
+import { Router, Redirect } from "@reach/router";
+import { Link, navigate } from "gatsby";
+import Main from "../../course/Course";
 import content from "../../course/content.json";
+import { useUser } from "../../user-context";
+import CourseNotLoggedIn from "../../course/CourseNotLoggedIn";
 
-export const BASEPATH = "/french/pronunciation-course"
+export const BASEPATH = "/french/pronunciation-course";
 
 export default function AppRouter() {
-  return (
-    <Routing />
-  );
+  return <Routing />;
 }
 
 function Routing() {
-
   const [hasMounted, setHasMounted] = useState(false);
+  const { user, isLoading } = useUser();
+  console.log("user, isLoading: ", user, isLoading);
 
   useEffect(() => {
     setHasMounted(true);
@@ -25,10 +26,14 @@ function Routing() {
     return null;
   }
 
+  if (!user && !isLoading) {
+    // navigate("https://gumroad.com/l/zXdoq", {replace:true})
+  }
+
+
   return (
     <div className="flex flex-col items-center bg-gradient-to-tr from-gray-100 pt-0 to-yellow-50 min-h-screen w-full">
       <div className="w-full">
-
         <>
           {/* <Helmet>
         <meta
@@ -46,17 +51,25 @@ function Routing() {
       </Helmet> */}
           <Router basepath={BASEPATH}>
             <Redirect noThrow from="/" to={BASEPATH + "/intro"} />
-            {content.filter(c => c.phonetic).filter(c => c.exercises?.length).map(c => (
-              <Redirect key={c.slug} noThrow from={"/"+c.slug} to={BASEPATH + "/" + c.slug + "/intro"} />
-            ))}
-            <Main path="/:slug" />
-            <Main path="/:slug/:subslug" />
+            {content
+              .filter((c) => c.phonetic)
+              .filter((c) => c.exercises?.length)
+              .map((c) => (
+                <Redirect key={c.slug} noThrow from={"/" + c.slug} to={BASEPATH + "/" + c.slug + "/intro"} />
+              ))}
+            {user && (
+              <>
+                <Main path="/:slug" />
+                <Main path="/:slug/:subslug" />
+              </>
+            )}
+            {!user && !isLoading && <CourseNotLoggedIn path="/*" />}
             <NotFound default />
             {/* <Croaker default loadingUser={loadingUser} user={user} /> */}
           </Router>
         </>
-
-      </div></div>
+      </div>
+    </div>
   );
 }
 

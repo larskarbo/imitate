@@ -36,7 +36,7 @@ export function UserProvider({ children }) {
 
   const isAuthenticated = false;
 
-  return <UserContext.Provider value={{ user, isAuthenticated, logoutUser, tryAgainUser }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user, isAuthenticated, isLoading:loadingUser, logoutUser, tryAgainUser }}>{children}</UserContext.Provider>;
 }
 
 export function useUser() {
