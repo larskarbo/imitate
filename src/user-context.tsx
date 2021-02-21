@@ -16,7 +16,6 @@ export function UserProvider({ children }) {
   useEffect(() => {
     request("GET", "/getUser")
       .then((user) => {
-        console.log("🚀 ~ user", user);
         setUser(user);
       })
       .finally(() => {

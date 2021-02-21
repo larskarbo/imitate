@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^1.11.0",
+    "@u-wave/react-vimeo": "^0.9.3",
     "autoprefixer": "^10.1.0",
     "canvas-confetti": "^1.3.3",
     "dotenv": "^8.2.0",

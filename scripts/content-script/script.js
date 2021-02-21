@@ -33,12 +33,13 @@ const COLOR = "en"
 const content = require("../../src/course/content.json")
 
 const exercises = content.reduce((acc, cur) => {
-  if(cur.exercises){
-    return [...acc, ...cur.exercises]
+  if(cur.children){
+    return [...acc, ...cur.children.filter(c => c.type == "exercise")]
   }
   return acc
 }, [])
-const names = exercises.map(e => e.id);
+
+let names = exercises.map(e => e.slug);
 
 // INIT
 fs.emptyDirSync(OUT);
@@ -50,7 +51,11 @@ code = execSync("csvtojson tl.csv > tl.json");
 
 const tl = require("./tl.json");
 
-const segments = tl.filter((t) => t.V == "V1").filter((t) => t.Color == COLOR);
+let segments = tl.filter((t) => t.V == "V1").filter((t) => t.Color == COLOR);
+
+names = [names[0], names[0]]
+segments = [segments[0], segments[1]]
+
 if(segments.length != names.length){
   throw new Error("wrong" + segments.length + " " + names.length)
 }

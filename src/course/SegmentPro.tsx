@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { AiOutlinePlayCircle } from "react-icons/ai";
 import PlaybackBoat from "../app/PlaybackBoat";
 import RecordBoat from "../app/RecordBoat";
-import { axios } from "axios";
 
 export default function SegmentPro({ segment }) {
+  console.log('segment: ', segment);
   
   const [recordings, setRecordings] = useState([]);
   const [playing, setPlaying] = useState(false);
@@ -80,7 +80,7 @@ export default function SegmentPro({ segment }) {
         <div className="sm:w-1/2 sm:pr-4 mb-8">
           <div className="flex justify-between items-end h-6">
             <h2 className="ext-left uppercase text-xs text-gray-700 font-bold mb-2">
-              Pronunciation
+              Pronunciation {segment.videoId}
             </h2>
           </div>
           <div
@@ -108,18 +108,15 @@ export default function SegmentPro({ segment }) {
                   
 
                 }}
+                src={
+                  "https://res.cloudinary.com/dfzqjzusj/video/upload/" +
+                  segment.videoId +
+                  ".mp4"
+                }
                 // muted
                 // loop
                 // autoPlay
               >
-                <source
-                  src={
-                    "https://res.cloudinary.com/dfzqjzusj/video/upload/" +
-                    segment.videoId +
-                    ".mp4"
-                  }
-                />
-                Sorry, your browser doesn't support embedded videos.
               </video>
             </div>
             {!playing && (
