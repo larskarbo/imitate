@@ -20,6 +20,9 @@ samplex.xcworkspace
 
 public
 
+*.mp4
+*.mov
+
 Podfile.lock# Logs
 logs
 *.log

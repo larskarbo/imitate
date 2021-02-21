@@ -1,11 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import YouTube from "react-youtube";
-import { AiOutlineMergeCells, AiOutlinePlayCircle } from "react-icons/ai";
-import { IoGitMerge, IoLanguage } from "react-icons/io5";
-import axios from "axios";
-import { Router, Redirect } from "@reach/router";
+import React, { useEffect } from "react";
 import { navigate, Link } from "gatsby";
-import content from "./content";
+import content from "./content.json";
 import SegmentPro from "./SegmentPro";
 import { Header } from "./Header";
 import { FaCheck } from "react-icons/fa";
@@ -13,7 +8,12 @@ import { celebrate } from "./celebrate";
 import { ProgressProvider, useProgress } from "./progress-context";
 import tutorial from "./tutorial.png";
 
+import urlParser from "js-video-url-parser/lib/base";
+import "js-video-url-parser/lib/provider/vimeo";
+import { VimeoParseResult } from "js-video-url-parser/lib/provider/vimeo";
 import ReactMarkdown from "react-markdown";
+import { Redirect } from "@reach/router";
+import { BASEPATH } from "../pages/french/pronunciation-course";
 
 export default function CourseWrapper(props) {
   return (
@@ -23,9 +23,31 @@ export default function CourseWrapper(props) {
   );
 }
 
-function Course({ slug }) {
-  const page = content.find((c) => c.slug == slug);
-  const isSound = page.phonetic;
+function Course({ slug, subslug }) {
+  console.log("subslug: ", subslug);
+  console.log("slug: ", slug);
+  if (!slug) {
+    // return <Redirect to="/french/pronunciation-course/intro" />
+  }
+
+  const overPage = content.find((c) => c.slug == slug);
+  console.log("overPage: ", overPage);
+
+  let page;
+  let path;
+  if (subslug) {
+    page = overPage.children.find((c) => c.slug == subslug);
+    path = slug + "/" + subslug;
+  } else {
+    page = overPage;
+    path = slug;
+  }
+
+  if (page.type == "collection" && !subslug) {
+    return <Redirect to={"/french/pronunciation-course/" + slug + "/" + page.children[0].slug} />;
+  }
+
+  const video = page.video && (urlParser.parse(page.video) as VimeoParseResult);
 
   return (
     <div className=" flex flex-col items-center px-8 w-full pb-24">
@@ -36,14 +58,38 @@ function Course({ slug }) {
         <div className={"w-40 flex-shrink-0 border-r font-light text-gray-700 pr-2"}>
           <ul>
             {content.map((c) => (
-              <SidebarElement content={c} active={c.slug == page.slug} />
+              <SidebarElement key={c.slug} content={c} active={c.slug == overPage.slug} />
             ))}
           </ul>
         </div>
         <main className="pl-12">
-          {!isSound && (
+          {subslug && (
             <>
-              <h1 className="text-4xl pt-4 font-bold pb-8">{page.title}</h1>
+              <h1 className="text-4xl pt-4 font-light pb-8">
+                <span className="font-bold">
+                  The <span className="font-mono bg-gray-200 rounded-md font-bold">[{overPage.phonetic}]</span> sound
+                </span>{" "}
+                like in {overPage.word}
+              </h1>
+
+              <div className="flex">
+                {overPage.children.map((child, i) => (
+                  <SmallNavElement
+                    index={i}
+                    parent={overPage}
+                    element={child}
+                    key={child.slug}
+                    active={subslug == child.slug}
+                  />
+                ))}
+              </div>
+              <div className="pb-8"></div>
+            </>
+          )}
+          {page.type == "article" && (
+            <>
+              {page.title && <h1 className="text-4xl pt-4 font-bold pb-8">{page.title}</h1>}
+              {page.video && !subslug && <Vimeo id={video.id} />}
               {page.slug == "using-imitate" && (
                 <article>
                   <p>Each sound you learn follows this structure:</p>
@@ -81,79 +127,74 @@ function Course({ slug }) {
                 </article>
               )}
 
-              <SelfAssessment id={page.slug} type={"article"} />
-              <NextChapter id={page.slug} />
+              {subslug == "intro" && (
+                <>
+                  <h2 className="text-2xl font-semibold py-4">How to make this sound:</h2>
+                  {video && <Vimeo id={video.id} />}
+                  {page.spellingRules && (
+                    <div className="pt-8">
+                      <h2 className="text-2xl font-semibold pb-4">Spelling rules:</h2>
+                      <ul className="list-disc pl-8 font-mono">
+                        {page.spellingRules.map((spelling) => (
+                          <li className="pt-2">
+                            <ReactMarkdown>{spelling}</ReactMarkdown>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </>
+              )}
+
+              <div className="pb-8"></div>
+              <SelfAssessment id={path} type={"article"} />
+              <NextChapter slug={slug} subslug={subslug} path={path} />
             </>
           )}
-          {isSound && (
+          {page.type == "exercise" && (
             <>
-              <h1 className="text-4xl pt-4 font-light pb-8">
-                <span className="font-bold">
-                  The <span className="font-mono bg-gray-200 rounded-md font-bold">[{page.phonetic}]</span> sound
-                </span>{" "}
-                like in {page.word}
-              </h1>
+              <SegmentPro
+                segment={{
+                  text: page.text,
+                  videoHost: "cloudinary",
+                  videoId: "fpb/" + page.slug,
+                }}
+              />
 
-              <h2 className="text-2xl font-semibold py-4">How to make this sound:</h2>
+              <SelfAssessment id={path} />
 
-              {page.explainerVideo && (
-                <>
-                  <video
-                    className="w-full max-w-xl"
-                    controls={true}
-                    // muted
-                    // loop
-                    // autoPlay
-                  >
-                    <source
-                      src={
-                        "https://res.cloudinary.com/dfzqjzusj/video/upload/v1613399890/" + page.explainerVideo + ".mp4"
-                      }
-                    />
-                    Sorry, your browser doesn't support embedded videos.
-                  </video>
-                </>
-              )}
-
-              {page.spellingRules && (
-                <div className="py-16">
-                  <h2 className="text-2xl font-semibold py-4">Spelling rules:</h2>
-                  <ul className="list-disc pl-8 font-mono">
-                    {page.spellingRules.map((spelling) => (
-                      <li className="pt-2">
-                        <ReactMarkdown>{spelling}</ReactMarkdown>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {page.exercises && (
-                <>
-                  <h2 className="text-2xl font-semibold py-4">Exercises:</h2>
-                  {page.exercises.map((exercise) => (
-                    <div key={exercise.id}>
-                      <SegmentPro
-                        segment={{
-                          text: exercise.text,
-                          videoHost: "cloudinary",
-                          videoId: "fpb/" + exercise.id,
-                        }}
-                      />
-                      <SelfAssessment id={page.slug + "/" + exercise.id} />
-                      <div className="py-32">
-                        <hr />
-                      </div>
-                    </div>
-                  ))}
-                </>
-              )}
+              <NextChapter slug={slug} subslug={subslug} path={path} />
             </>
           )}
         </main>
       </div>
     </div>
   );
+}
+
+const SmallNavElement = ({ parent, element, active, index }) => {
+  const { getProgress } = useProgress();
+  const progress = getProgress(parent.slug + "/" + element.slug);
+  const link = BASEPATH + "/" + parent.slug + "/" + element.slug;
+
+  return (
+    <Link to={link}>
+      <button className={`h-8 w-8 flex items-center justify-center mr-2 border ${active && "border-gray-800"} ${progress >1 && progressToColor(progress)} bg-opacity-50 rounded ` + (active ? "font-bold" : "")}>{index + 1}</button>
+    </Link>
+  );
+};
+
+const progressToColor = (progress) => {
+  if(progress == 0){
+    return "bg-gray-200"
+  }
+  if(progress < 40){
+    return "bg-yellow-200"
+  }
+  if(progress < 100){
+    return "bg-yellow-400"
+  }
+  return "bg-green-300"
 }
 
 const SidebarElement = ({ content: contentElement, active }) => {
@@ -166,8 +207,12 @@ const SidebarElement = ({ content: contentElement, active }) => {
       <span className="font-mono ">[{contentElement.phonetic}]</span> {contentElement.word}
     </span>
   );
+  let link = BASEPATH + "/" + contentElement.slug;
+  if (contentElement.type == "collection") {
+    link = BASEPATH + "/" + contentElement.slug + "/" + contentElement.children[0].slug;
+  }
   return (
-    <Link key={contentElement.slug} to={"/french/pronunciation-course/" + contentElement.slug}>
+    <Link to={link}>
       <li
         className={
           " flex items-center justify-between py-1 px-2 rounded transition-colors  " +
@@ -175,24 +220,25 @@ const SidebarElement = ({ content: contentElement, active }) => {
         }
       >
         {title}
-        {progress == 0 && <div className="rounded-full bg-gray-200 border-gray-600  border w-4 h-4"></div>}
-        {progress > 0 && progress <= 40 && (
-          <div className="rounded-full bg-yellow-200 border-gray-600  border w-4 h-4"></div>
-        )}
-        {progress > 40 && progress < 100 && (
-          <div className="rounded-full bg-yellow-400 border-gray-600  border w-4 h-4"></div>
-        )}
-        {progress == 100 && <div className="rounded-full bg-green-300 border-gray-600  border w-4 h-4"></div>}
+        <div className={`rounded-full ${progressToColor(progress)} border-gray-600  border w-4 h-4`}></div>
       </li>
     </Link>
   );
 };
 
-const NextChapter = ({ id }: { id: string }) => {
-  const { progress, getProgress, setProgress } = useProgress();
-  const progressHere = getProgress(id);
+const NextChapter = ({ slug, subslug, path }) => {
+  const { getProgress } = useProgress();
+  const progressHere = getProgress(path);
 
-  const ourIndex = content.findIndex((c) => c.slug == id);
+  const ourIndex = content.findIndex((c) => c.slug == slug);
+  let ourChildrenIndex;
+  let nextIsChapter = true;
+  if (subslug) {
+    ourChildrenIndex = content[ourIndex]?.children?.findIndex((c) => c.slug == subslug);
+    if (ourChildrenIndex < content[ourIndex].children.length - 1) {
+      nextIsChapter = false;
+    }
+  }
 
   return (
     progressHere > 0 && (
@@ -200,10 +246,14 @@ const NextChapter = ({ id }: { id: string }) => {
         className={`mt-8 flex font-light items-center border border-gray-400 rounded p-2 px-4
     hover:border-gray-600 transition-colors duration-150 hover:shadow-sm`}
         onClick={() => {
-          navigate("/french/pronunciation-course/" + content[ourIndex + 1].slug);
+          if (nextIsChapter) {
+            navigate(BASEPATH + "/" + content[ourIndex + 1].slug);
+          } else {
+            navigate(BASEPATH + "/" + slug + "/" + content[ourIndex].children[ourChildrenIndex + 1].slug);
+          }
         }}
       >
-        Go to the next chapter →
+        Go to the next {nextIsChapter ? "chapter" : "exercise"} →
       </button>
     )
   );
@@ -258,3 +308,14 @@ const SelfAssessment = ({ id, type = "sound" }: { id: string; type?: "sound" | "
     </div>
   );
 };
+
+const Vimeo = ({ id }) => (
+  <iframe
+    src={"https://player.vimeo.com/video/" + id}
+    width="640"
+    height="360"
+    frameBorder="0"
+    allow="autoplay; fullscreen; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+);

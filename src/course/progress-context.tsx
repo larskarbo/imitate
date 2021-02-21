@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { request } from '../app/utils/request';
-import content from "./content";
+import content from "./content.json";
 
 const ProgressContext = React.createContext(null);
 
@@ -31,25 +31,21 @@ export function ProgressProvider({ children }) {
   }
 
   const getProgress = (id, p, cb) => {
-    console.log('id: ', id);
-    const page = content.find(c => c.slug == id)
-    // console.log('page: ', page);
-    if(page){
-      if(page.title){
+    const overPage = content.find(c => c.slug == id)
+    // console.log('overPage: ', overPage);
+    if(overPage){
+      if(overPage.type == "article"){
         return progress?.[id] || 0
       } else {
-        if(page.exercises.length == 0){
-          return 0
-        }
         let progressTotal = 0;
   
-        page.exercises?.forEach((e) => {
-          if (progress?.[page.slug + "/" + e.id]) {
-            progressTotal += progress[page.slug + "/" + e.id];
+        overPage.children?.forEach((child) => {
+          if (progress?.[overPage.slug + "/" + child.slug]) {
+            progressTotal += progress[overPage.slug + "/" + child.slug];
           }
         });
 
-        return progressTotal / page.exercises.length
+        return progressTotal / overPage.children.length
 
       }
 
