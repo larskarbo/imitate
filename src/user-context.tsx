@@ -11,6 +11,7 @@ const UserContext = React.createContext(null);
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
+  const [updater, setUpdater] = useState(0);
 
   useEffect(() => {
     request("GET", "/getUser")
@@ -21,7 +22,7 @@ export function UserProvider({ children }) {
       .finally(() => {
         setLoadingUser(false);
       });
-  }, []);
+  }, [updater]);
 
   const logoutUser = () => {
     request("GET", "/logout").then(() => {
@@ -30,9 +31,13 @@ export function UserProvider({ children }) {
     })
   }
 
+  const tryAgainUser = () => {
+    setUpdater(Math.random())
+  }
+
   const isAuthenticated = false;
 
-  return <UserContext.Provider value={{ user, isAuthenticated, logoutUser }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user, isAuthenticated, logoutUser, tryAgainUser }}>{children}</UserContext.Provider>;
 }
 
 export function useUser() {

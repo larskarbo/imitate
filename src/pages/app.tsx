@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Router, Redirect } from "@reach/router";
-import { Link, navigate } from "gatsby";
+import { Router } from "@reach/router";
 import Main from "../app/Main";
-import LoginPage, { regType } from '../app/Login/LoginPage';
+import LoginPage from '../app/Login/LoginPage';
 import { useUser } from "../user-context";
-import { request } from '../app/utils/request';
 import SetPasswordPage from "../app/Login/SetPasswordPage";
 
 const url = "https://slapper.io";
@@ -44,7 +42,7 @@ function Routing() {
       </Helmet> */}
           <Router basepath="/app">
             <LogOut path="/logout" />
-            <LoginRoute component={LoginPage} path="/login" mode={regType.LOGIN} />
+            <LoginRoute component={LoginPage} path="/login" />
             <LoginRoute component={SetPasswordPage} path="/set-password" />
             <Main path="/" />
             <Main path="/:segmentId" />
