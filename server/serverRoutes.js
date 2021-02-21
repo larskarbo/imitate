@@ -30,7 +30,6 @@ app.use(
 );
 app.use(cookieParser());
 
-require("dotenv").config();
 
 // middleware imports
 const { verify } = require("./verify");
