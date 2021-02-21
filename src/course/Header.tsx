@@ -1,6 +1,6 @@
 import React from "react";
 import { useUser } from "../user-context";
-import logo from "./logo.svg";
+import logo from "../pages/logo.svg";
 import { Link } from "gatsby";
 import { useMatch } from "@reach/router";
 import { BASEPATH } from "../pages/french/pronunciation-course";
