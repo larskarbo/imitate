@@ -10,6 +10,7 @@ export function Header() {
 
   const isHome = useMatch("/");
   const isApp = useMatch("/app/*");
+  const isLogin = useMatch("/app/login");
   const isFPB = useMatch(BASEPATH + "/*");
   return (
     <header className="md:flex justify-between items-center w-full pt-8 max-w-screen-lg border-b pb-4 border-gray-300">
@@ -33,7 +34,7 @@ export function Header() {
       <div className="flex justify-center pt-4 md:pt-0">
         {!user && !loadingUser && (
           <Link to="/app/login">
-            <div className=" font-light  w-20">Log in</div>
+            <div className={` font-light  w-20 ${isLogin && "font-semibold"}`}>Log in</div>
           </Link>
         )}
         {user && (

@@ -31,3 +31,7 @@ article > ol {
 article > h2 {
   @apply mt-8 mb-4 text-xl font-bold;
 }
+
+article  a {
+  @apply text-blue-600 underline;
+}

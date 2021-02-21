@@ -14,6 +14,7 @@ import { SelfAssessment } from "./SelfAssessment";
 import { Vimeo } from "./Vimeo";
 import { Button } from "./Button";
 import { FaBars, FaHamburger, FaTimes } from "react-icons/fa";
+import { Link } from "gatsby";
 
 export default function CourseWrapper(props) {
   return (
@@ -24,7 +25,7 @@ export default function CourseWrapper(props) {
 }
 
 function Course({ slug, subslug }) {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
   const overPage = content.find((c) => c.slug == slug);
 
   let page;
@@ -41,7 +42,6 @@ function Course({ slug, subslug }) {
     return <Redirect to={"/french/pronunciation-course/" + slug + "/" + page.children[0].slug} />;
   }
 
-
   return (
     <div className=" flex flex-col items-center px-8 w-full pb-24">
       <Header />
@@ -49,17 +49,31 @@ function Course({ slug, subslug }) {
       <div className="w-full max-w-screen-lg md:flex">
         <div className="md:hidden">
           <Button onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ?
-            <><FaTimes className="mr-1" /> Close</>:
-            <><FaBars className="mr-1" /> Contents</>
-          }
+            {menuOpen ? (
+              <>
+                <FaTimes className="mr-1" /> Close
+              </>
+            ) : (
+              <>
+                <FaBars className="mr-1" /> Contents
+              </>
+            )}
           </Button>
         </div>
         <div className="pb-4"></div>
-        <div className={`${menuOpen ? "" : "hidden"} md:block md:w-40 md:pt-8 flex-shrink-0 border-r font-light text-gray-700 pr-2`}>
+        <div
+          className={`${
+            menuOpen ? "" : "hidden"
+          } md:block md:w-40 md:pt-8 flex-shrink-0 border-r font-light text-gray-700 pr-2`}
+        >
           <ul>
             {content.map((c) => (
-              <SidebarElement onGo={() => setMenuOpen(false)} key={c.slug} content={c} active={c.slug == overPage.slug} />
+              <SidebarElement
+                onGo={() => setMenuOpen(false)}
+                key={c.slug}
+                content={c}
+                active={c.slug == overPage.slug}
+              />
             ))}
           </ul>
         </div>
@@ -169,10 +183,17 @@ function Course({ slug, subslug }) {
               <NextChapter slug={slug} subslug={subslug} path={path} />
             </>
           )}
+          <div className="flex justify-end w-full">
+            <Link
+              target="_blank"
+              to="https://forms.gle/vYxYHtg3NpTibdtH8"
+              className="inline-flex rounded items-center my-4 mx-auto justify-center text-sm py-3 px-6 bg-green-50 border-2  hover:bg-green-100 border-green-600 font-medium text-gray-900  transition duration-150"
+            >
+              Send feedback 🗣
+            </Link>
+          </div>
         </main>
       </div>
     </div>
   );
 }
-
-
