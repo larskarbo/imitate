@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 const db = require("../database");
+const { encrypt } = require("./encrypt");
 
 const register = async (req, res) => {
   var name = req.body.name;
@@ -18,18 +18,9 @@ const register = async (req, res) => {
   if (userExists) {
     res.status(409).send({ success: false, message: "email already in use" });
   } else {
-    const passwordHash = await new Promise((resolve) => {
-      bcrypt.hash(password, 10, function (err, hash) {
-        // Store hash in your password DB.
-        resolve(hash);
-      });
-    });
+    const passwordHash = await encrypt(password)
 
-    const userValue = {
-      email,
-      passwordHash,
-    };
-    db.pool.query("INSERT INTO users (name, email, passwordHash) VALUES ($1, $2, $3)", [name, email, passwordHash]).then((hey) => {
+    db.pool.query(`INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3)`, [name, email, passwordHash]).then((hey) => {
       console.log("hey: ", hey.rows);
       //use the payload to store information about the user such as email, user role, etc.
       let payload = { email: email };
@@ -46,7 +37,6 @@ const register = async (req, res) => {
         email,
       });
     }).catch(err => {
-
       if(err?.constraint == "users_email_key"){
         res.status(400).send({ message: "Email already exists" });
         return
@@ -56,3 +46,4 @@ const register = async (req, res) => {
   }
 };
 exports.register = register;
+

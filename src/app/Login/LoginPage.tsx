@@ -2,33 +2,47 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { FaGoogle } from "react-icons/fa";
 import { navigate } from "gatsby";
-import { useUser } from "../user-context";
-import { request } from './utils/request';
+import { useUser } from "../../user-context";
+import { request } from "../utils/request";
+import { useLocation } from "@reach/router";
+import { parse } from "query-string";
 
+export enum regType {
+  LOGIN = "login",
+  SET_PASSWORD = "set-password",
+}
 
-
-export default function LoginPage({ }) {
-  const {user} = useUser()
-  console.log('user: ', user);
-  console.log('useUser: ', useUser);
+export default function LoginPage({ mode }) {
+  const { user } = useUser();
   const formRef = useRef();
   const [msg, setMsg] = useState("");
 
+  const location = useLocation();
+  console.log('location: ', location);
+  
+  const [state, setState] = useState(mode);
+
+  const searchParams = parse(location.search);
+  if(state == regType.SET_PASSWORD && (!searchParams.email || !searchParams.token)){
+    alert("Link is malformed, double check that you have the right link")
+    navigate("/app/login")
+  }
+
+  console.log('searchParams: ', searchParams);
+
   useEffect(() => {
-    request("GET", "/users").then(asdf=>{
-      console.log('asdf: ', asdf);
+    request("GET", "/users").then((asdf) => {
+      console.log("asdf: ", asdf);
+    });
+  }, []);
 
-    })
-  },[])
-
-  const [state, setState] = useState("login");
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (state == "login") {
+    if (state == regType.LOGIN) {
       return login();
-    } else if (state == "signup") {
+    } else if (state == regType.SET_PASSWORD) {
       return signup();
     }
 
@@ -40,7 +54,7 @@ export default function LoginPage({ }) {
     // ).then((hey: any) => {
     //   console.log("hey: ", hey);
     //   if (hey.exists) {
-    //     setState("login");
+    //     setState(regType.LOGIN);
     //   } else {
     //     setState("signup");
     //   }
@@ -54,15 +68,14 @@ export default function LoginPage({ }) {
     request("POST", "/register", {
       name: "horseman",
       email,
-      password
-    })
-    .then((user) => {
-      console.log('user: ', user);
+      password,
+    }).then((user) => {
+      console.log("user: ", user);
       console.log("Success! Signed up", user);
       // setState("emailVerification");
 
       // navigate("/dashboard");
-    })
+    });
     // signupUser(email, password)
     //   .catch((err) => setMsg("Error: " + err.message));
   };
@@ -73,43 +86,35 @@ export default function LoginPage({ }) {
 
     request("POST", "/login", {
       email,
-      password
-    }).then(res => {
-      console.log("🚀 ~ res", res)
-      // onUser(res)
-      navigate("/french/pronunciation-course")
-
-    }).catch(error => {
-      if (error.message == "Unauthorized") {
-        setMsg("Wrong username or password, please try again.")
-      } else {
-        setMsg(error.message)
-      }
+      password,
     })
+      .then((res) => {
+        console.log("🚀 ~ res", res);
+        // onUser(res)
+        navigate("/french/pronunciation-course");
+      })
+      .catch((error) => {
+        if (error.message == "Unauthorized") {
+          setMsg("Wrong username or password, please try again.");
+        } else {
+          setMsg(error.message);
+        }
+      });
   };
-
-  let { from } = location?.state || { from: { pathname: "/s" } };
-  if (!from.pathname.includes("/s")) {
-    from = { pathname: "/s" };
-  }
 
   let content = (
     <>
       <form ref={formRef} onSubmit={onSubmit}>
-        {state == "signup" && (
-          <div className="font-medium mb-2">Creating a new account:</div>
-        )}
+        {state == "signup" && <div className="font-medium mb-2">Creating a new account:</div>}
         <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium leading-5 text-gray-700"
-          >
+          <label htmlFor="email" className="block text-sm font-medium leading-5 text-gray-700">
             Email address
           </label>
           <div className="mt-1 rounded-md shadow-sm">
             <input
               id="email"
               type="email"
+              disabled={state == regType.SET_PASSWORD}
               tabIndex="1"
               name="email"
               placeholder="you@domain.com"
@@ -120,12 +125,9 @@ export default function LoginPage({ }) {
             />
           </div>
 
-          {(state == "login" || state == "signup") && (
+          {(state == regType.LOGIN || state == "signup") && (
             <div className="mt-2">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium leading-5 text-gray-700"
-              >
+              <label htmlFor="password" className="block text-sm font-medium leading-5 text-gray-700">
                 Password
               </label>
               <div className="mt-1 rounded-md shadow-sm">
@@ -153,6 +155,7 @@ export default function LoginPage({ }) {
           >
             {state == "email" && "Continue"}
             {state == "login" && "Log in"}
+            {state == regType.SET_PASSWORD && "Set password"}
             {state == "signup" && "Sign up"}
           </button>
         </div>
@@ -184,9 +187,7 @@ export default function LoginPage({ }) {
   if (state == "emailVerification") {
     content = (
       <div className="pt-4 text-sm">
-        <div className="text-lg font-bold mb-2">
-          Verification email is sent!
-        </div>
+        <div className="text-lg font-bold mb-2">Verification email is sent!</div>
         <div>Click the link in the email to continue to Slapper.</div>
       </div>
     );
@@ -198,11 +199,13 @@ export default function LoginPage({ }) {
         <span className="font-bold">Imitate</span> is waiting for you
       </h1>
 
-      <div className="w-full px-4 py-8 pt-5 mx-3 bg-white rounded-lg shadow sm:w-96">
-
-        {content}
-      </div>
-      <span className="my-2 text-sm opacity-50">No account yet? <a className="underline" href="/register">Register</a></span>
+      <div className="w-full px-4 py-8 pt-5 mx-3 bg-white rounded-lg shadow sm:w-96">{content}</div>
+      <span className="my-2 text-sm opacity-50">
+        No account yet?{" "}
+        <a className="underline" href="/register">
+          Register
+        </a>
+      </span>
 
       <div className="pb-16"></div>
     </div>

@@ -1,4 +1,4 @@
-const app = require('./app.js');
+const app = require('./serverRoutes.js');
 const http = require('http')
 const server = http.createServer(app);
 const PORT = 3200;

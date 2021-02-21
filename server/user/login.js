@@ -6,15 +6,14 @@ const login = async (req, res) => {
   var email = req.body.email;
   var password = req.body.password;
   const userValue = (await db.pool.query("SELECT * FROM users WHERE email = $1", [email]))?.rows?.[0]
-  console.log('userValue: ', userValue);
   if (!userValue) {
     res.status(401).send({ success: false, message: "email not found" });
     return;
   }
 
   const result = await new Promise(resolve => {
-    console.log('userValue.passwordHash: ', userValue.passwordHash);
-    bcrypt.compare(password, userValue.passwordHash, function (err, result) {
+    console.log('userValue.password_hash: ', userValue.password_hash);
+    bcrypt.compare(password, userValue.password_hash, function (err, result) {
       resolve(result);
     });
   });

@@ -41,6 +41,8 @@ const { logout } = require("./user/logout");
 const { register } = require("./user/register");
 
 const db = require("./database");
+const { registerWithToken } = require("./user/registerWithToken");
+const { setPassword } = require("./user/setPassword");
 
 app.get("/", async (req, res) => {
   res.send({ status: "Ok" });
@@ -175,6 +177,8 @@ app.get("/getRecordings/:courseId/:itemId", verify, upload.single("recording"), 
 app.post("/login", login);
 app.get("/logout", logout);
 app.post("/register", register);
+app.post("/registerWithToken", registerWithToken);
+app.post("/setPassword", setPassword);
 
 app.all("/*", (req, res) => {
   return res.status(404).send({
