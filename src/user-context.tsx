@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { request } from "./app/utils/request";
 import { navigate } from 'gatsby';
 
-const UserContext = React.createContext(null);
+const UserContext = React.createContext({});
 
 // const spotifyOriginal = new Spotify()
 
