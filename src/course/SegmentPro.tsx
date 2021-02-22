@@ -4,21 +4,18 @@ import PlaybackBoat from "../app/PlaybackBoat";
 import RecordBoat from "../app/RecordBoat";
 
 export default function SegmentPro({ segment }) {
-  console.log('segment: ', segment);
   
   const [recordings, setRecordings] = useState([]);
   const [playing, setPlaying] = useState(false);
-  const [duration, setDuration] = useState(null);
   const [recording, setRecording] = useState(false);
-  const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
 
   const playerRef = useRef();
 
+
   useEffect(() => {
-    if (playerRef?.current) {
-      setDuration(playerRef.duration);
-    }
-  }, [playerRef?.current]);
+    setRecordings([]);
+    setPlaying(false);
+  }, [segment.text]);
 
   // const onStateChange = ({ data }) => {
   //   
@@ -80,7 +77,7 @@ export default function SegmentPro({ segment }) {
         <div className="sm:w-1/2 sm:pr-4 mb-8">
           <div className="flex justify-between items-end h-6">
             <h2 className="ext-left uppercase text-xs text-gray-700 font-bold mb-2">
-              Pronunciation {segment.videoId}
+              Pronunciation
             </h2>
           </div>
           <div
