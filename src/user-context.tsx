@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { request } from "./app/utils/request";
-import { navigate } from 'gatsby';
+import { navigate } from "gatsby";
 
 const UserContext = React.createContext({});
 
@@ -18,6 +18,9 @@ export function UserProvider({ children }) {
       .then((user) => {
         setUser(user);
       })
+      .catch(() => {
+        console.log("Not authed");
+      })
       .finally(() => {
         setLoadingUser(false);
       });
@@ -25,18 +28,22 @@ export function UserProvider({ children }) {
 
   const logoutUser = () => {
     request("GET", "/logout").then(() => {
-      navigate("/")
-      setUser(null)
-    })
-  }
+      navigate("/");
+      setUser(null);
+    });
+  };
 
   const tryAgainUser = () => {
-    setUpdater(Math.random())
-  }
+    setUpdater(Math.random());
+  };
 
   const isAuthenticated = false;
 
-  return <UserContext.Provider value={{ user, isAuthenticated, isLoading:loadingUser, logoutUser, tryAgainUser }}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ user, isAuthenticated, isLoading: loadingUser, logoutUser, tryAgainUser }}>
+      {children}
+    </UserContext.Provider>
+  );
 }
 
 export function useUser() {

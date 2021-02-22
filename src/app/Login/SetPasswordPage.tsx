@@ -9,7 +9,7 @@ import { parse } from "query-string";
 import LoginLayout from "./LoginLayout";
 import { FormElement } from "./FormElement";
 import { SubmitButton } from "./SubmitButton";
-
+import Sentry  from "@sentry/gatsby"
 export enum regType {
   LOGIN = "login",
   SET_PASSWORD = "set-password",
@@ -63,13 +63,22 @@ export default function SetPasswordPage({ mode }) {
     })
     .catch(async asdf=>{
       const response = await asdf?.response?.json()
+      Sentry.captureException(new Error("wrong token"), {
+        extra: {
+          section: "articles",
+          token,
+          passwordTwo,
+          password,
+          email,
+          response
+        },
+      });
       if(response?.message == "email not found"){
         alert("Email not found in database...")
         return
       }
       if(response?.message == "wrong token"){
         alert("The token is wrong or outdated...")
-        throw new Error("wrong token")
         return
       }
 
