@@ -9,7 +9,8 @@ import { parse } from "query-string";
 import LoginLayout from "./LoginLayout";
 import { FormElement } from "./FormElement";
 import { SubmitButton } from "./SubmitButton";
-import Sentry  from "@sentry/gatsby"
+import * as Sentry from "@sentry/gatsby"
+console.log('Sentry: ', Sentry);
 export enum regType {
   LOGIN = "login",
   SET_PASSWORD = "set-password",
@@ -52,6 +53,7 @@ export default function SetPasswordPage({ mode }) {
       return;
     }
 
+    console.log('email: ', email);
     request("POST", "/setPassword", {
       email,
       password,
@@ -62,7 +64,6 @@ export default function SetPasswordPage({ mode }) {
 
     })
     .catch(async asdf=>{
-      const response = await asdf?.response?.json()
       Sentry.captureException(new Error("wrong token"), {
         extra: {
           section: "articles",
@@ -70,9 +71,10 @@ export default function SetPasswordPage({ mode }) {
           passwordTwo,
           password,
           email,
-          response
+          response: asdf?.response
         },
       });
+      const response = await asdf?.response?.json()
       if(response?.message == "email not found"){
         alert("Email not found in database...")
         return
