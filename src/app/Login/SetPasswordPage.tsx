@@ -69,6 +69,7 @@ export default function SetPasswordPage({ mode }) {
       }
       if(response?.message == "wrong token"){
         alert("The token is wrong or outdated...")
+        throw new Error("wrong token")
         return
       }
 

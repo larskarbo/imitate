@@ -15,6 +15,13 @@ module.exports = {
     //     path: `${__dirname}/src/content`, <- gave error on netlify, check fileparty
     //   },
     // },
+    {
+      resolve: "@sentry/gatsby",
+      options: {
+        dsn: "https://b0ae189020a5488d88c18ec67d678c7d@o524534.ingest.sentry.io/5647182",
+        sampleRate: 0.7,
+      },
+    },
     'gatsby-plugin-postcss',
     `gatsby-plugin-netlify`,
     {

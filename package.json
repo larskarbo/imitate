@@ -5,6 +5,7 @@
     "build": "gatsby build"
   },
   "dependencies": {
+    "@sentry/gatsby": "^6.2.0",
     "@stripe/stripe-js": "^1.11.0",
     "@u-wave/react-vimeo": "^0.9.3",
     "autoprefixer": "^10.1.0",
