@@ -29,12 +29,6 @@ export default function SetPasswordPage({ mode }) {
     navigate("/app/login");
   }
 
-  useEffect(() => {
-    request("GET", "/users").then((asdf) => {
-      console.log("asdf: ", asdf);
-    });
-  }, []);
-
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -74,7 +68,7 @@ export default function SetPasswordPage({ mode }) {
           response: asdf?.response
         },
       });
-      const response = await asdf?.response?.json()
+      const response = await asdf?.response?.json?.()
       if(response?.message == "email not found"){
         alert("Email not found in database...")
         return

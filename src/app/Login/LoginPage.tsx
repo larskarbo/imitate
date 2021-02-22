@@ -13,12 +13,6 @@ export default function LoginPage() {
   const formRef = useRef();
   const [msg, setMsg] = useState("");
 
-  useEffect(() => {
-    request("GET", "/users").then((asdf) => {
-      console.log("asdf: ", asdf);
-    });
-  }, []);
-
   const onLogin = (e) => {
     e.preventDefault();
 

@@ -184,13 +184,13 @@ function Course({ slug, subslug }) {
             </>
           )}
           <div className="flex justify-end w-full">
-            <Link
+            <a
               target="_blank"
-              to="https://forms.gle/vYxYHtg3NpTibdtH8"
+              href="https://forms.gle/vYxYHtg3NpTibdtH8"
               className="inline-flex rounded items-center my-4 mx-auto justify-center text-sm py-3 px-6 bg-green-50 border-2  hover:bg-green-100 border-green-600 font-medium text-gray-900  transition duration-150"
             >
               Send feedback 🗣
-            </Link>
+            </a>
           </div>
         </main>
       </div>
