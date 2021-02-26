@@ -43,6 +43,7 @@ const { register } = require("./user/register");
 const db = require("./database");
 const { registerWithToken } = require("./user/registerWithToken");
 const { setPassword } = require("./user/setPassword");
+const { verifyToken } = require("./user/verifyToken");
 
 app.get("/", async (req, res) => {
   res.send({ status: "Ok" });
@@ -176,6 +177,7 @@ app.get("/logout", logout);
 app.post("/register", register);
 app.post("/registerWithToken", registerWithToken);
 app.post("/setPassword", setPassword);
+app.post("/verifyToken", verifyToken);
 
 app.all("/*", (req, res) => {
   return res.status(404).send({

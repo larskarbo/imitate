@@ -13,7 +13,7 @@ export const FormElement = ({ name, type = "text", title, value = null, disabled
           disabled={disabled}
           tabIndex={1}
           name={name}
-          value={value}
+          value={value ? value : undefined}
           placeholder={placeholder}
           required
           className={`block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out
