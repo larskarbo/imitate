@@ -2,8 +2,8 @@ require("dotenv").config();
 
 const axios = require("axios");
 
-const BASE = `http://localhost:3200`;
-// const BASE = `https://server.goimitate.com`;
+// const BASE = `http://localhost:3200`;
+const BASE = `https://server.goimitate.com`;
 
 const makeEmail=(email,token)=>{
   const link = `https://goimitate.com/app/set-password?email=${email}&token=${token}`
@@ -23,11 +23,12 @@ const makeEmail=(email,token)=>{
 }
 
 axios.post(BASE + "/registerWithToken", {
-  email: "horse@horse.com",
+  email: "",
 }).then(asdf=>{
   console.log(asdf.data)
+  console.log(`https://goimitate.com/app/set-password?email=${asdf.data.email}&token=${asdf.data.token}`)
   // sendEmail(email, "Your Imitate account", html)
-      // sendEmail(email, "Set you Imitate password here", makeEmail(email, asdf.data.token))
+  sendEmail(email, "Set you Imitate password here", makeEmail(email, asdf.data.token))
 })
 .catch(asdf => {
   console.log(asdf.response)
