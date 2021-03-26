@@ -28,6 +28,7 @@ export default function LoginPage() {
         navigate("/french/pronunciation-course");
       })
       .catch((error) => {
+        console.log('error: ', error);
         if (error.message == "Unauthorized") {
           setMsg("Wrong username or password, please try again.");
         } else {
@@ -45,6 +46,8 @@ export default function LoginPage() {
         <FormElement title={"Password"} type="password" name="password" placeholder="*******" />
 
         <SubmitButton>Log in</SubmitButton>
+
+        <Link to="/app/forgot-password" className="text-sm">Forgot password?</Link>
       </form>
     </LoginLayout>
   );

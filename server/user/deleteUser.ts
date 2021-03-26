@@ -1,7 +1,7 @@
 const { db } = require("../database");
 const bcrypt = require("bcrypt");
 
-const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   if (req.user.role != "admin") {
     res.status(401).send({ success: false, message: "you need to be an admin to see this page" });
     return;
@@ -35,4 +35,3 @@ const deleteUser = async (req, res) => {
     success: true
   });
 };
-exports.deleteUser = deleteUser;

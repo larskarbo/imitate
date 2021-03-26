@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const db = require("../database");
 const { encrypt } = require("./encrypt");
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
   var name = req.body.name;
   var email = req.body.email;
   var password = req.body.password;
@@ -45,5 +45,3 @@ const register = async (req, res) => {
     })
   }
 };
-exports.register = register;
-

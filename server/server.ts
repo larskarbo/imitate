@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const app = require('./serverRoutes.js');
+import app from './serverRoutes';
 const http = require('http')
 const server = http.createServer(app);
 const PORT = 3200;
@@ -26,3 +26,5 @@ pool.query('SELECT COUNT(*) FROM users', (err, res) => {
   }
   console.log(res.rows[0])
 })
+
+export default {} 

@@ -20,21 +20,23 @@ export default function SetPasswordPage({ mode }) {
   const { tryAgainUser } = useUser();
   const formRef = useRef();
   const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState(null);
   const [verifyError, setVerifyError] = useState(false);
 
   const location = useLocation();
   const searchParams = parse(location.search);
-  if (!searchParams.email || !searchParams.token) {
+  if (!searchParams.utoken) {
     alert("Link is malformed, double check that you have the right link");
     navigate("/app/login");
   }
 
   useEffect(() => {
-    request("POST", "/verifyToken", {
-      email: searchParams.email,
-      token: searchParams.token,
+    request("POST", "/verifyPasswordResetToken", {
+      utoken: searchParams.utoken,
     })
       .then((res) => {
+        console.log('res: ', res);
+        setEmail(res.email)
         // tryAgainUser()
         // navigate("/french/pronunciation-course");
       })
@@ -62,7 +64,7 @@ export default function SetPasswordPage({ mode }) {
     const email = formRef.current.email.value;
     const password = formRef.current.password.value;
     const passwordTwo = formRef.current.passwordTwo.value;
-    const token = formRef.current.token.value;
+    const utoken = formRef.current.utoken.value;
 
     if (password != passwordTwo) {
       alert("Passwords don't match");
@@ -78,17 +80,17 @@ export default function SetPasswordPage({ mode }) {
     request("POST", "/setPassword", {
       email,
       password,
-      token,
+      token: utoken,
     })
       .then((user) => {
         tryAgainUser();
-        navigate("/french/pronunciation-course");
+        navigate("/app/login");
       })
       .catch(async (asdf) => {
         Sentry.captureException(new Error("wrong token"), {
           extra: {
             section: "articles",
-            token,
+            utoken,
             passwordTwo,
             password,
             email,
@@ -118,13 +120,9 @@ export default function SetPasswordPage({ mode }) {
       ) : verifyError ? (
         <>
           <div>
-            <p className="py-3">We couldn't verify the link. Maybe you already created a password? Or maybe the link is malformed.</p>
+            <p className="py-3">We couldn't verify the link. Maybe the link is malformed.</p>
             <p className="py-3">
-              Please{" "}
-              <a className="underline text-blue-500" href="mailto:imitate@larskarbo.no">
-                contact me
-              </a>{" "}
-              if you need assistance.
+              Please    <Link to="/app/forgot-password" className="underline text-blue-500">request a new link</Link>{" "}
             </p>
             <p className="py-3">
               You can also try to{" "}
@@ -139,14 +137,14 @@ export default function SetPasswordPage({ mode }) {
         <>
           <form ref={formRef} onSubmit={onSubmit}>
             <div className="font-medium mb-4">Setting password</div>
-            <input type="hidden" name={"token"} value={searchParams.token} />
+            <input type="hidden" name={"utoken"} value={searchParams.utoken} />
 
             <FormElement
               title={"Email address"}
               type="email"
               name="email"
               placeholder="you@email.com"
-              value={searchParams.email}
+              value={email}
               disabled
             />
 
@@ -166,7 +164,7 @@ export default function SetPasswordPage({ mode }) {
               // value={searchParams.email}
             />
 
-            <SubmitButton>Set password and log in</SubmitButton>
+            <SubmitButton>Set password</SubmitButton>
           </form>
         </>
       )}

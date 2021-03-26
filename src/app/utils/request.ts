@@ -6,13 +6,6 @@ export const BASE = isLocal ? `http://localhost:3200` : `https://server.goimitat
 
 let headers = {};
 
-// export function generateHeaders(token) {
-//   headers = {
-//     "Content-Type": "application/json",
-//     Authorization: `Bearer ${token}`,
-//   };
-// }
-
 export function request(method, functionName, data?) {
   return axios({
     url: BASE + functionName,
@@ -20,11 +13,4 @@ export function request(method, functionName, data?) {
     data: data,
     withCredentials: true,
   }).then(res => res.data)
-  // return ky(BASE + functionName, {
-  //   method: method,
-  //   json: data,
-  //   headers,
-  //   credentials: "include",
-  //   mode: "cors"
-  // }).json()
 }

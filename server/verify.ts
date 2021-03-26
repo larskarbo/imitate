@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const db = require("./database")
 
-exports.verify = function(req, res, next){
+export function verify(req, res, next){
     let accessToken = req.cookies.jwt
 
     //if there is no token stored in cookies, the request is unauthorized

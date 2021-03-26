@@ -6,6 +6,7 @@ import LoginPage from "../app/Login/LoginPage";
 import { useUser } from "../user-context";
 import SetPasswordPage from "../app/Login/SetPasswordPage";
 import { Header } from "../course/Header";
+import ForgotPasswordPage from "../app/Login/ForgotPasswordPage";
 
 const url = "https://slapper.io";
 
@@ -45,6 +46,7 @@ function Routing() {
       <Router basepath="/app">
         <LogOut path="/logout" />
         <LoginRoute component={LoginPage} path="/login" />
+        <LoginRoute component={ForgotPasswordPage} path="/forgot-password" />
         <LoginRoute component={SetPasswordPage} path="/set-password" />
         <Main path="/" />
         <Main path="/:segmentId" />

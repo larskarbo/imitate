@@ -6,7 +6,7 @@ const { encrypt } = require("./encrypt");
 const {alphanumeric} = require('nanoid-dictionary');
 const id = customAlphabet(alphanumeric, 48);
 
-const registerWithToken = async (req, res) => {
+export const registerWithToken = async (req, res) => {
   var name = req.body.name;
   var email = req.body.email;
 
@@ -46,4 +46,3 @@ const registerWithToken = async (req, res) => {
       });
   }
 };
-exports.registerWithToken = registerWithToken;
