@@ -19,7 +19,7 @@ export enum regType {
 
 export default function ForgotPasswordPage({ mode }) {
   const formRef = useRef();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [submitted, setSubmitted] = useState(false);
   const [msg, setMsg] = useState("");
