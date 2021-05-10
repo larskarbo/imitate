@@ -60,6 +60,36 @@ app.get("/testAuth", verify, async (req, res) => {
   res.send({ success: true });
 });
 
+app.get("/getAdminData", verify, async (req, res) => {
+  if (req.user.email !== "mail@larskarbo.no") {
+    res.status(403).send({ message: "forbidden" });
+    return;
+  }
+
+  const users = await db.pool.query("SELECT * FROM users").then(async (hey) => {
+    return hey.rows;
+  });
+
+  const completeUsers: any = [];
+
+  for (const user of users) {
+    const progressArr = (
+      await db.pool.query("SELECT item_id, progress FROM progress WHERE user_id = $1 and course_id = $2", [
+        user.id,
+        "fpb",
+      ])
+    )?.rows;
+
+    completeUsers.push({
+      ...user,
+      progressArr,
+    });
+  }
+
+  console.log("users: ", users);
+  res.send({ users: completeUsers });
+});
+
 // user
 app.get("/getUser", verify, async (req, res) => {
   res.send({

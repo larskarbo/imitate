@@ -1,10 +1,18 @@
 import { Link } from "gatsby";
 import React, { useEffect, useState } from "react";
 import { Header } from "./Header";
+import { Helmet } from 'react-helmet';
 
 export default function CourseNotLoggedIn({ slug, subslug }) {
   return (
     <div className=" flex flex-col items-center px-8 w-full pb-24">
+      <Helmet>
+        <title>French Pronunciation Course - Imitate</title>
+        <meta
+          name="description"
+          content="The best interactive french pronunciation course. Guides you through all the fundational sounds."
+        />
+      </Helmet>
       <Header />
 
       <div className="pb-8"></div>

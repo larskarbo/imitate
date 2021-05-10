@@ -58,7 +58,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
-        // exclude: [`/projects/`, `/consulting/`],
+        exclude: [`/admin`],
       }
     },
     `gatsby-plugin-react-helmet`,
