@@ -23,7 +23,7 @@ const makeEmail=(email,token)=>{
 }
 
 axios.post(BASE + "/registerWithToken", {
-  email: "",
+  email: "biblioklept@icloud.com",
 }).then(asdf=>{
   console.log(asdf.data)
   console.log(`https://goimitate.com/app/set-password?email=${asdf.data.email}&token=${asdf.data.token}`)

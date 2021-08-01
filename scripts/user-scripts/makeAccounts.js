@@ -32,7 +32,7 @@ const makeEmail=(email,token)=>{
   let i = 0;
   const listWithLars = [
     {
-      Email: "biblioklept@icloud.com",
+      Email: "",
       Name: ""
     },
     // list
