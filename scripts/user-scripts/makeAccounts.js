@@ -32,12 +32,12 @@ const makeEmail=(email,token)=>{
   let i = 0;
   const listWithLars = [
     {
-      Email: "larskarbo@gmail.com",
+      Email: "biblioklept@icloud.com",
       Name: ""
     },
     // list
   ]
-  for (const element of list) {
+  for (const element of listWithLars) {
     const email = element.Email;
     const name = element.Name;
     
