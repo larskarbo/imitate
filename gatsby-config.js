@@ -16,6 +16,12 @@ module.exports = {
     //   },
     // },
     {
+      resolve: `gatsby-plugin-plausible`,
+      options: {
+        domain: `goimitate.com`,
+      },
+    },
+    {
       resolve: "@sentry/gatsby",
       options: {
         dsn: "https://b0ae189020a5488d88c18ec67d678c7d@o524534.ingest.sentry.io/5647182",
@@ -66,15 +72,6 @@ module.exports = {
       resolve: `gatsby-plugin-canonical-urls`,
       options: {
         siteUrl: `https://goimitate.com`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-gtag`,
-      options: {
-        // You can add multiple tracking ids and a pageview event will be fired for all of them.
-        trackingIds: [
-          "G-RTPJWENTLM", // Google Analytics / GA
-        ],
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
