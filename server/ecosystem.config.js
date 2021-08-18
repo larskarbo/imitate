@@ -1,8 +1,10 @@
 module.exports = {
   apps: [
+    
     {
       name: "imitate",
-      script: "./dist/server.js",
+      script: "./node_modules/.bin/ts-node",
+      args: "--transpile-only server.ts",
     },
   ],
 };
