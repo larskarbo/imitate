@@ -7,6 +7,7 @@ import { SubmitButton } from "./SubmitButton";
 import LoginLayout from "./LoginLayout";
 import { useUser } from "../../user-context";
 import { BASEPATH } from '../../pages/french/pronunciation-course';
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 export default function LoginPage() {
   const {tryAgainUser } = useUser()
@@ -32,7 +33,7 @@ export default function LoginPage() {
         if (error.message == "Unauthorized") {
           setMsg("Wrong username or password, please try again.");
         } else {
-          setMsg(error.message);
+          setMsg(getErrorMessage(error));
         }
       });
   };

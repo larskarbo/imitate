@@ -98,17 +98,6 @@ export default function () {
           </div>
         </div>
 
-        {/* {sent ?
-          <div className="text-center text-sm">Awesome! You will be the first to try ⚡</div>
-          : <form ref={formRef} onSubmit={onSubmit}>
-            <div className="flex border border-gray-300 w-96 rounded overflow-hidden shadow-sm text-sm mx-auto">
-              <input
-                required name="email" className="flex-grow px-4" type="email" placeholder="Your email" />
-              <input
-                required className="px-4 py-2 bg-blue-50 border-l" type="submit" value="Be the first to try ⚡" />
-            </div>
-          </form>
-        } */}
         <div className="bg-blue-50 border border-blue-400 rounded px-8 py-4">
           <form ref={formRef} onSubmit={onSubmit}>
             <div className="flex items-center mb-4">

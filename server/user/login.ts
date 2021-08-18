@@ -18,7 +18,7 @@ export const login = async (req, res) => {
     });
   });
   if (!result) {
-    res.status(401).send({ success: false, message: "wrong password" });
+    res.status(401).send({ success: false, message: "Wrong password. Please try again" });
     return;
   }
 
