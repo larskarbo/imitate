@@ -54,31 +54,39 @@ export default function FPBLander({ slug, subslug }) {
             video="https://vimeo.com/514712104/a37dc439b6"
           />
 
-          <div className="bg-blue-50 max-w-md mx-auto border border-blue-400 rounded px-8 py-4">
-            {/* <form
-              ref={formRef}
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-            > */}
-            <div className="flex items-center mb-4">
-              <img
-                className="rounded-full ring shadow inline"
-                src="https://hatscripts.github.io/circle-flags/flags/fr.svg"
-                width="32"
-              />
-              <div className="text-xl font-medium text-blue-900 ml-3">French Pronunciation Basics</div>
+          <div className="relative bg-white pt-16 pb-16 ">
+            <div className="relative">
+              <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
+                <div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0">
+                  <div>
+                    <div className="mt-6">
+                      <h2 className="text-3xl font-extrabold tracking-tight text-gray-900">
+                        The <span className="text-blue-700">better</span> way to learn pronunciation
+                      </h2>
+                      <p className="mt-4 text-lg text-gray-500">
+                        The only way to pronounce things better is to hear how you're <strong>actually</strong>{" "}
+                        pronouncing it!
+                      </p>
+                      <ul className="mt-4 text-lg text-gray-500 list-disc list-inside">
+                        <li>Learn sounds one by one</li>
+                        <li>Listen to yourself with practice chamber</li>
+                        <li>Compare your recording with native speakers</li>
+                        <li>Examples from movies</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-12 sm:mt-16 lg:mt-0">
+                  <div className="pl-4 -mr-48 sm:pl-6 md:-mr-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
+                    <img
+                      className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                      src="/bigs2.png"
+                      alt="Imitate user interface"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            <h2 className="text-black mb-2 ">
-              <s>89$</s>
-              <span className=" font-bold "> Now only 25$!</span>
-            </h2>
-            <img src="/screenshot-fpb.png" className="w-48  border rounded border-gray-500" />
-            <p className="text-black mb-2 my-2 text-sm ">French Pronunciation platform lifetime access.</p>
-
-            {/* <p className="text-xs font-light opacity-60 mb-2 mt-1 ">Currently available for French learners only.</p> */}
-            {/* </form> */}
-            <PayButton />
           </div>
 
           <section className="">
@@ -150,6 +158,33 @@ export default function FPBLander({ slug, subslug }) {
               </div>
             </div>
           </section>
+
+          <div className="bg-blue-50 max-w-md mx-auto border border-blue-400 rounded px-8 py-4">
+            {/* <form
+              ref={formRef}
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            > */}
+            <div className="flex items-center mb-4">
+              <img
+                className="rounded-full ring shadow inline"
+                src="https://hatscripts.github.io/circle-flags/flags/fr.svg"
+                width="32"
+              />
+              <div className="text-xl font-medium text-blue-900 ml-3">French Pronunciation Basics</div>
+            </div>
+            <h2 className="text-black mb-2 ">
+              <s>89$</s>
+              <span className=" font-bold "> Now only 25$!</span>
+            </h2>
+            <img src="/screenshot-fpb.png" className="w-48  border rounded border-gray-500" />
+            <p className="text-black mb-2 my-2 text-sm ">French Pronunciation platform lifetime access.</p>
+
+            {/* <p className="text-xs font-light opacity-60 mb-2 mt-1 ">Currently available for French learners only.</p> */}
+            {/* </form> */}
+            <PayButton />
+          </div>
 
           <div className="flex my-16 max-w-md mx-auto">
             <StaticImage alt="imitate" width={36} className="rounded-full mr-2 w-9 h-9 flex-shrink-0" src="./pb.jpeg" />
