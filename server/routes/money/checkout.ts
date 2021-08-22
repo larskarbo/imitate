@@ -35,8 +35,8 @@ export const checkout = async function (req: Request, res: Response) {
       // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
       // the actual Session ID is returned in the query parameter when your customer
       // is redirected to the success page.
-      success_url: `${WEB_BASE}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${WEB_BASE}/studio/${studioId}`,
+      success_url: `${WEB_BASE}/thank-you-fpt?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${WEB_BASE}/french/pronunciation-course/intro`,
     });
 
     res.send({
