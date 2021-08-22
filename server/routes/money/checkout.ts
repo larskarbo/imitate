@@ -4,15 +4,11 @@ import { isDev, WEB_BASE } from "./webBase";
 import { Request, Response } from "express";
 import { getEnv } from "../../utils/getEnv";
 
-
 const stripe = new Stripe(getEnv("STRIPE_SECRET_KEY"), {
   apiVersion: "2020-08-27",
 });
 
-
-const price = isDev
-  ? "price_1JRCy3HspBoD23ZMQrKnA3WM"
-  : "price_1JRCy3HspBoD23ZMQrKnA3WM";
+const price = isDev ? "price_1JRCy3HspBoD23ZMQrKnA3WM" : "price_1JREj7HspBoD23ZM82O0YyoA";
 
 export const checkout = async function (req: Request, res: Response) {
   const { studioId } = req.body;
@@ -25,6 +21,13 @@ export const checkout = async function (req: Request, res: Response) {
       metadata: {
         studioId: studioId,
       },
+      discounts: isDev
+        ? [{ coupon: "cTf9qJLv" }]
+        : [
+            {
+              coupon: "rNqdx0AZ",
+            },
+          ],
       line_items: [
         {
           price: priceId,
