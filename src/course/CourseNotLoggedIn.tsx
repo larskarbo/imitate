@@ -3,9 +3,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { Header } from "./Header";
 import { Helmet } from "react-helmet";
 import { StaticImage } from "gatsby-plugin-image";
+import { BASE } from "../app/utils/request";
+import { loadStripe } from "@stripe/stripe-js/pure";
+import axios from "axios";
+import { FaSpinner } from "react-icons/fa";
+import { getErrorMessage } from "../app/utils/getErrorMessage";
+import PayButton from "./PayButton";
 
+console.log('process.env.GATSBY_STRIPE_PUB_KEY: ', process.env.GATSBY_STRIPE_PUB_KEY);
 export default function CourseNotLoggedIn({ slug, subslug }) {
   const formRef = useRef();
+  
 
   return (
     <div className=" flex flex-col items-center px-8 w-full pb-24">
@@ -68,23 +76,20 @@ export default function CourseNotLoggedIn({ slug, subslug }) {
                 e.preventDefault();
               }}
             > */}
-              <div className="flex items-center mb-4">
-                <img
-                  className="rounded-full ring shadow inline"
-                  src="https://hatscripts.github.io/circle-flags/flags/fr.svg"
-                  width="32"
-                />
-                <div className="text-xl font-medium text-blue-900 ml-3">French Pronunciation Basics</div>
-              </div>
-              <h2 className="text-black font-bold mb-2 ">Buy it today!</h2>
-              <p className="text-black mb-2 ">Start learning pronunciation with good tools.</p>
-              <Link to="https://gum.co/zXdoq">
-                <button className=" mb-2 px-4 py-2 bg-blue-100 hover:bg-blue-200 border border-gray-400 hover:border-gray-500 shadow-sm text-sm rounded transition-colors">
-                  Get access (24$)
-                </button>
-              </Link>
-              {/* <p className="text-xs font-light opacity-60 mb-2 mt-1 ">Currently available for French learners only.</p> */}
+            <div className="flex items-center mb-4">
+              <img
+                className="rounded-full ring shadow inline"
+                src="https://hatscripts.github.io/circle-flags/flags/fr.svg"
+                width="32"
+              />
+              <div className="text-xl font-medium text-blue-900 ml-3">French Pronunciation Basics</div>
+            </div>
+            <h2 className="text-black font-bold mb-2 ">Buy it today!</h2>
+            <p className="text-black mb-2 ">Start learning pronunciation with good tools.</p>
+            
+            {/* <p className="text-xs font-light opacity-60 mb-2 mt-1 ">Currently available for French learners only.</p> */}
             {/* </form> */}
+            <PayButton />
           </div>
 
           <p className="text-xs mt-48">

@@ -1,3 +1,6 @@
+import { checkout } from "./routes/money/checkout";
+import { stripeWebhook } from "./routes/money/stripe-webhook";
+
 const express = require("express");
 const app = express();
 var cors = require("cors");
@@ -24,7 +27,16 @@ var upload = multer({ storage: storage });
 var bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
-app.use(bodyParser.json());
+
+app.use(
+  bodyParser.json({
+    limit: '200mb',
+    verify: (req, res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
+
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -210,6 +222,9 @@ app.post("/registerWithToken", registerWithToken);
 app.post("/forgotPassword", forgotPassword);
 app.post("/setPassword", setPassword);
 app.post("/verifyPasswordResetToken", verifyPasswordResetToken);
+
+app.post("/money/checkout", checkout);
+app.post("/money/stripe-webhook", stripeWebhook);
 
 app.all("/*", (req, res) => {
   return res.status(404).send({
