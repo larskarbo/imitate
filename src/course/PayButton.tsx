@@ -29,7 +29,7 @@ export default function PayButton() {
       onClick={onPressPay}
       className="flex items-center mb-2 px-4 py-2 bg-blue-100 hover:bg-blue-200 border border-gray-400 hover:border-gray-500 shadow-sm text-sm rounded transition-colors"
     >
-      {loadingPay && <FaSpinner className="animate-spin mr-2" />} Get access (24$)
+      {loadingPay && <FaSpinner className="animate-spin mr-2" />} Get access (25$)
     </button>
   );
 }
