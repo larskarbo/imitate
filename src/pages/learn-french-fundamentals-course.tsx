@@ -155,7 +155,7 @@ export default function FPBLander({ slug, subslug }) {
             <StaticImage alt="imitate" width={36} className="rounded-full mr-2 w-9 h-9 flex-shrink-0" src="./pb.jpeg" />
             <div className="ml-2">
               <div className="border py-2 px-4 bg-white rounded mb-4">
-                Hi! 👋 As a <strong>french learner</strong> I know how hard it can be to master pronunciation.
+                Hi! 👋 As a <strong>French learner</strong> I know how hard it can be to master pronunciation.
               </div>
               <div className={"border py-2 px-4 bg-white rounded mb-4"}>
                 Many people settle on <span className="italic">"good enough"</span>, and never truly learn how to speak
