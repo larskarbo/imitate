@@ -97,7 +97,7 @@ export default function CourseNotLoggedIn({ slug, subslug }) {
                   </div>
                   <footer className="mt-8">
                     <div className="flex items-start">
-                      <div className="flex-shrink-0 inline-flex rounded-full border-2 border-white">
+                      <div className="flex-shrink-0 inline-flex rounded-full ">
                         <img
                           className="h-12 w-12 rounded-full"
                           src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -112,7 +112,7 @@ export default function CourseNotLoggedIn({ slug, subslug }) {
                   </footer>
                 </blockquote>
               </div>
-              <div className="py-12 px-4 border-t-2 border-indigo-900 sm:px-6 md:py-16 md:pr-0 md:pl-10 md:border-t-0 ml lg:pl-16">
+              <div className="py-12 px-4  sm:px-6 md:py-16 md:pr-0 md:pl-10 md:border-t-0 ml lg:pl-16">
                 <blockquote className="mt-6 md:flex-grow md:flex md:flex-col">
                   <div className="relative text-lg font-medium text-gray-900 md:flex-grow">
                     <svg
