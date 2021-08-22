@@ -104,7 +104,7 @@ export default function FPBLander({ slug, subslug }) {
                     </svg>
                     <p className="relative">
                       I never realized the French essentially omit words in normal speech. No wonder I cannot understand
-                      movies, etc. Imitate is an excellent method to learn French!
+                      movies, etc. Imitate is an excellent method to learn the pronunciation properly!
                     </p>
                   </div>
                   <footer className="mt-8">
@@ -136,7 +136,7 @@ export default function FPBLander({ slug, subslug }) {
                     </svg>
                     <p className="relative">
                       Wow! Hearing my mistakes recorded is such a great tool without the embarrassment of a real live
-                      French speaker laughing their socks off in my face!
+                      French speaker laughing their socks off in my face is so nice, highly recommended!
                     </p>
                   </div>
                   <footer className="mt-8">
