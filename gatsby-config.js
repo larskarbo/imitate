@@ -8,6 +8,12 @@ module.exports = {
     siteUrl: `https://goimitate.com`,
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-facebook-pixel`,
+      options: {
+        pixelId: "257222416251560",
+      },
+    },
     // {
     //   resolve: `gatsby-source-filesystem`,
     //   options: {
