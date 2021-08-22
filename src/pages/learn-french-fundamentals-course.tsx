@@ -20,11 +20,9 @@ export default function FPBLander({ slug, subslug }) {
       </Helmet>
       <header className="md:flex justify-between items-center w-full pt-8 max-w-screen-lg border-b pb-4 border-gray-300">
         <div className="md:flex font-light">
-          <Link to="/">
-            <div className="flex justify-center pl-4 pb-4 md:pb-0">
-              <img src={logo} />
-            </div>
-          </Link>
+          <div className="flex justify-center pl-4 pb-4 md:pb-0">
+            <img src={logo} />
+          </div>
           <div className={`flex justify-center pl-4 font-semibold`}>French Pronunciation Basics 🇫🇷</div>
         </div>
 
