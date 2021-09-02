@@ -1,16 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import YouTube from "react-youtube";
-import {
-  AiFillYoutube,
-  AiOutlineMergeCells,
-  AiOutlinePlayCircle,
-} from "react-icons/ai";
-import RecordBoat from "./RecordBoat";
-import PlaybackBoat from "./PlaybackBoat";
-import { IoGitMerge, IoLanguage } from "react-icons/io5";
 import axios from "axios";
 import EventEmitter from "eventemitter3";
-import { Link } from "gatsby";
+import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
+import { AiFillYoutube, AiOutlinePlayCircle } from "react-icons/ai";
+import YouTube from "react-youtube";
+import PlaybackBoat from "./PlaybackBoat";
+import RecordBoat from "./RecordBoat";
 
 // const segment = {
 //     videoId: "B9rVdOLWsak",
@@ -39,7 +34,7 @@ export default function SegmentLoader({ loading, segmentId, newSegment }) {
 
   useEffect(() => {
     setLoadingHere(true);
-    axios.get("/.netlify/functions/db/getSegment/" + segmentId).then((r) => {
+    axios.get("/api/db/getSegment/" + segmentId).then((r) => {
       setLoadingHere(false);
       setSegment(r.data.segment);
     });
@@ -71,7 +66,7 @@ export default function SegmentLoader({ loading, segmentId, newSegment }) {
 }
 
 export function Segment({ segment, newSegment }) {
-  console.log('segment: ', segment);
+  console.log("segment: ", segment);
   const [youtubeElement, setYoutubeElement] = useState(null);
   const [recordings, setRecordings] = useState([]);
   const [playing, setPlaying] = useState(false);
@@ -170,16 +165,15 @@ export function Segment({ segment, newSegment }) {
       <div className="flex w-full flex-col sm:flex-row">
         <div className="sm:w-1/2 sm:pr-4 mb-8">
           <div className="flex justify-between items-end h-6">
-            <h2 className="ext-left smallcase mb-2">
-              Pronunciation
-            </h2>
-            <Link
-              to={"https://youtu.be/" + segment.videoId}
-              target="_blank"
-              className="flex items-center text-xs bg-white border rounded-lg mb-2 py-1 px-2"
-            >
-              <AiFillYoutube className="mr-1" /> {segment.channel.channelTitle}{" "}
-              ↗
+            <h2 className="ext-left smallcase mb-2">Pronunciation</h2>
+            <Link href={"https://youtu.be/" + segment.videoId}>
+              <a
+                target="_blank"
+                className="flex items-center text-xs bg-white border rounded-lg mb-2 py-1 px-2"
+              >
+                <AiFillYoutube className="mr-1" />{" "}
+                {segment.channel.channelTitle} ↗
+              </a>
             </Link>
           </div>
           <div

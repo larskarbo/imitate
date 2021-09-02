@@ -1,16 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-
-import { FaGoogle } from "react-icons/fa";
-import { Link, navigate } from "gatsby";
-import { useUser } from "../../user-context";
-import { request } from "../utils/request";
-import { useLocation } from "@reach/router";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { parse } from "query-string";
-import LoginLayout from "./LoginLayout";
-import { FormElement } from "./FormElement";
-import { SubmitButton } from "./SubmitButton";
-import * as Sentry from "@sentry/gatsby";
-console.log("Sentry: ", Sentry);
+import React, { useEffect, useRef, useState } from "react";
+import { useUser } from "../../user-context";
+import { request } from "../../app/utils/request";
+import { FormElement } from "../../app/Login/FormElement";
+import LoginLayout from "../../app/Login/LoginLayout";
+import { SubmitButton } from "../../app/Login/SubmitButton";
+
 export enum regType {
   LOGIN = "login",
   SET_PASSWORD = "set-password",
@@ -22,12 +19,12 @@ export default function SetPasswordPage({ mode }) {
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState(null);
   const [verifyError, setVerifyError] = useState(false);
+  const router = useRouter();
 
-  const location = useLocation();
   const searchParams = parse(location.search);
   if (!searchParams.utoken) {
     alert("Link is malformed, double check that you have the right link");
-    navigate("/app/login");
+    router.push("/app/login");
   }
 
   useEffect(() => {
@@ -35,8 +32,8 @@ export default function SetPasswordPage({ mode }) {
       utoken: searchParams.utoken,
     })
       .then((res) => {
-        console.log('res: ', res);
-        setEmail(res.email)
+        console.log("res: ", res);
+        setEmail(res.email);
         // tryAgainUser()
         // navigate("/french/pronunciation-course");
       })
@@ -84,7 +81,7 @@ export default function SetPasswordPage({ mode }) {
     })
       .then((user) => {
         tryAgainUser();
-        navigate("/app/login");
+        router.push("/app/login");
       })
       .catch(async (asdf) => {
         Sentry.captureException(new Error("wrong token"), {
@@ -120,14 +117,19 @@ export default function SetPasswordPage({ mode }) {
       ) : verifyError ? (
         <>
           <div>
-            <p className="py-3">We couldn't verify the link. Maybe the link is malformed.</p>
             <p className="py-3">
-              Please    <Link to="/app/forgot-password" className="underline text-blue-500">request a new link</Link>{" "}
+              We couldn't verify the link. Maybe the link is malformed.
+            </p>
+            <p className="py-3">
+              Please{" "}
+              <Link href="/app/forgot-password">
+                <a className="underline text-blue-500">request a new link</a>
+              </Link>{" "}
             </p>
             <p className="py-3">
               You can also try to{" "}
-              <Link className="underline text-blue-500" to="/app/login">
-                log in
+              <Link href="/app/login">
+                <a className="underline text-blue-500">log in</a>
               </Link>
               .
             </p>

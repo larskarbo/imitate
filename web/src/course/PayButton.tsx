@@ -12,7 +12,7 @@ export default function PayButton() {
     axios
       .post(BASE + "/money/checkout")
       .then(async function ({ data }) {
-        const stripe = await loadStripe(process.env.GATSBY_STRIPE_PUB_KEY);
+        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUB_KEY);
         stripe
           .redirectToCheckout({
             sessionId: data.sessionId,
