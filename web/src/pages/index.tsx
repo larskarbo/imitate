@@ -13,6 +13,7 @@ export default function Index() {
     fetch("/api/newsletter", {
       method: "POST",
       body: JSON.stringify({
+        //@ts-ignore
         email: formRef.current.email.value,
         language: "french",
       }),
@@ -233,8 +234,10 @@ export function Other() {
     fetch("/api/newsletter", {
       method: "POST",
       body: JSON.stringify({
+        //@ts-ignore
         email: formRef.current.email.value,
         language:
+        //@ts-ignore
           formRef.current.otherLanguage?.value || language.name.toLowerCase(),
       }),
     })

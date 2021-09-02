@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function LoginLayout({ children, msg }) {
+export default function LoginLayout({ children, msg=null }) {
   return (
     <div className="w-full min-h-screen h-full flex flex-col items-center justify-center ">
       <h1 className="text-2xl font pb-12">

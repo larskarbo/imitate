@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
-import { BASEPATH } from "./french/pronunciation-course";
-import { useUser } from "../user-context";
-import { getErrorMessage } from "../app/utils/getErrorMessage";
-import { request } from "../app/utils/request";
-import { FormElement } from "../app/Login/FormElement";
-import LoginLayout from "../app/Login/LoginLayout";
-import { SubmitButton } from "../app/Login/SubmitButton";
+import { BASEPATH } from "../french/pronunciation-course";
+import { useUser } from "../../user-context";
+import { getErrorMessage } from "get-error-message";
+import { request } from "../../app/utils/request";
+import { FormElement } from "../../app/Login/FormElement";
+import LoginLayout from "../../app/Login/LoginLayout";
+import { SubmitButton } from "../../app/Login/SubmitButton";
 
 export default function LoginPage() {
   const { tryAgainUser } = useUser();
@@ -18,7 +18,9 @@ export default function LoginPage() {
   const onLogin = (e) => {
     e.preventDefault();
 
+    //@ts-ignore
     const email = formRef.current.email.value;
+    //@ts-ignore
     const password = formRef.current.password.value;
 
     request("POST", "/login", {

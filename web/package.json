@@ -13,6 +13,7 @@
     "dotenv": "^8.2.0",
     "eventemitter3": "^4.0.7",
     "force-env": "^1.0.2",
+    "get-error-message": "^1.0.0",
     "js-video-url-parser": "^0.4.3",
     "ky": "^0.26.0",
     "lodash": "^4.17.21",

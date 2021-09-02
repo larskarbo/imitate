@@ -1,7 +1,7 @@
 // Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
 
 import { NextApiRequest, NextApiResponse } from "next";
-import forceEnv from "force-env"
+import forceEnv from "force-env";
 var axios = require("axios");
 // var FormData = require("form-data");
 
@@ -40,6 +40,7 @@ export default async function handler(
       method: "post",
       url: forceEnv("SENDY_URL"),
       headers: {
+        //@ts-ignore
         ...data.getHeaders(),
       },
       data: data,

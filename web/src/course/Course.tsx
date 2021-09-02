@@ -11,7 +11,6 @@ import SegmentPro from "./SegmentPro";
 import { SelfAssessment } from "./SelfAssessment";
 import { SidebarElement } from "./SidebarElement";
 import { SmallNavElement } from "./SmallNavElement";
-import tutorial from "./tutorial.png";
 import { Vimeo } from "./Vimeo";
 
 export default function CourseWrapper(props) {
@@ -41,7 +40,7 @@ function Course({ slug, subslug }) {
 
   useEffect(() => {
     if (page?.type == "collection" && !subslug) {
-      return router.push(
+      router.push(
         "/french/pronunciation-course/" + slug + "/" + page?.children[0].slug
       );
     }
@@ -145,7 +144,7 @@ function Course({ slug, subslug }) {
                     them.
                   </p>
                   <img
-                    src={tutorial}
+                    src={"/tutorial.png"}
                     className="max-w-lg w-full border rounded-lg p-4 shadow-lg"
                   />
                   <p>By practicing like this you will learn two things:</p>

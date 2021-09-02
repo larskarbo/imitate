@@ -17,37 +17,6 @@ export default function SegmentPro({ segment }) {
     setPlaying(false);
   }, [segment.text]);
 
-  // const onStateChange = ({ data }) => {
-  //   
-  //   if (data == 1) {
-  //     // playing
-  //     setPlaying(true);
-
-  //     if (player.getCurrentTime() * 1000 < segment.from - 1000) {
-  //       player.seekTo(segment.from / 1000);
-  //     }
-  //     const now = Math.round(player.getCurrentTime() * 1000);
-  //     clearTimeout(timer);
-  //     const timeMultiplier = 1 / player.getPlaybackRate();
-  //     timer = setTimeout(() => {
-  //       player.pauseVideo();
-  //       setHasPlayedOnce(true);
-  //     }, timeMultiplier * (segment.to - now));
-  //   } else if (data == 2) {
-  //     // paused
-  //     setPlaying(false);
-  //   } else if (data == 5) {
-  //     // setMetaInfo(playingNowVideo.item.id, {
-  //     //   duration: youtubeElement.target.getDuration() * 1000,
-  //     //   title: youtubeElement.target.getVideoData().title,
-  //     // });
-  //   }
-  // };
-
-  const playSegmentSlow = () => {
-    playerRef.current.defaultPlaybackRate = 0.75;
-    playSegment();
-  };
 
   const playSegmentNormalSpeed = () => {
     playSegment();
@@ -55,6 +24,7 @@ export default function SegmentPro({ segment }) {
 
   const playSegment = () => {
     // player.currentTime = (segment.from / 1000);
+    //@ts-ignore
     playerRef.current.play();
     // player.seekTo(segment.from / 1000);
   };

@@ -22,7 +22,9 @@ export default function RecordBoat({ onRecordFinish, onRecordingChange }) {
         navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then((stream) => {
 
             setLoading(false)
-            const mediaRecorder = new MediaRecorder(stream)
+
+            // @ts-ignore
+            const mediaRecorder = new window.MediaRecorder(stream)
 
             recordedChunks = []
             mediaRecorder.addEventListener('dataavailable', function (e) {

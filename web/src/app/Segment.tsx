@@ -78,7 +78,9 @@ export function Segment({ segment, newSegment }) {
 
   const [ytWidth, setYtWidth] = useState(448);
   useEffect(() => {
+    //@ts-ignore
     setYtWidth(divRef.current?.getBoundingClientRect().width);
+    //@ts-ignore
   }, [divRef.current?.getBoundingClientRect().width]);
 
   const onStateChange = ({ data }) => {
@@ -195,7 +197,7 @@ export function Segment({ segment, newSegment }) {
                 videoId={segment.videoId}
                 opts={{
                   height: "200",
-                  width: ytWidth,
+                  width: ytWidth+"",
                   playerVars: {
                     controls: 0,
                     modestbranding: 1,

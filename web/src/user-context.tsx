@@ -56,7 +56,7 @@ export function UserProvider({ children }) {
   );
 }
 
-export function useUser() {
+export function useUser(): any {
   const context = React.useContext(UserContext);
   if (context === undefined) {
     throw new Error("useUser must be used within a UserProvider");

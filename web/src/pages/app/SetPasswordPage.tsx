@@ -39,12 +39,6 @@ export default function SetPasswordPage({ mode }) {
       })
       .catch((err) => {
         setVerifyError(true);
-        Sentry.captureException(new Error("verify token error"), {
-          extra: {
-            searchParams,
-            response: err?.response,
-          },
-        });
         // tryAgainUser()
         // navigate("/french/pronunciation-course");
       })
@@ -58,9 +52,13 @@ export default function SetPasswordPage({ mode }) {
   const onSubmit = (e) => {
     e.preventDefault();
 
+        //@ts-ignore
     const email = formRef.current.email.value;
+        //@ts-ignore
     const password = formRef.current.password.value;
+        //@ts-ignore
     const passwordTwo = formRef.current.passwordTwo.value;
+        //@ts-ignore
     const utoken = formRef.current.utoken.value;
 
     if (password != passwordTwo) {
@@ -84,16 +82,6 @@ export default function SetPasswordPage({ mode }) {
         router.push("/app/login");
       })
       .catch(async (asdf) => {
-        Sentry.captureException(new Error("wrong token"), {
-          extra: {
-            section: "articles",
-            utoken,
-            passwordTwo,
-            password,
-            email,
-            response: asdf?.response,
-          },
-        });
         const response = await asdf?.response?.json?.();
         if (response?.message == "email not found") {
           alert("Email not found in database...");

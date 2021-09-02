@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
-import { getErrorMessage } from "../app/utils/getErrorMessage";
-import { request } from "../app/utils/request";
-import { FormElement } from "../app/Login/FormElement";
-import LoginLayout from "../app/Login/LoginLayout";
-import { SubmitButton } from "../app/Login/SubmitButton";
+import { getErrorMessage } from "get-error-message";
+import { request } from "../../app/utils/request";
+import { FormElement } from "../../app/Login/FormElement";
+import LoginLayout from "../../app/Login/LoginLayout";
+import { SubmitButton } from "../../app/Login/SubmitButton";
 
 export enum regType {
   LOGIN = "login",
@@ -20,6 +20,7 @@ export default function ForgotPasswordPage({ mode }) {
   const onSubmit = (e) => {
     e.preventDefault();
 
+        //@ts-ignore
     const email = formRef.current.email.value;
 
     setLoading(true);
