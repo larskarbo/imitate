@@ -230,7 +230,7 @@ export function Other() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    fetch("/.netlify/functions/newsletter", {
+    fetch("/api/newsletter", {
       method: "POST",
       body: JSON.stringify({
         email: formRef.current.email.value,

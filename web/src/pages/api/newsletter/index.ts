@@ -1,7 +1,7 @@
 // Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
 
 import { NextApiRequest, NextApiResponse } from "next";
-
+import forceEnv from "force-env"
 var axios = require("axios");
 // var FormData = require("form-data");
 
@@ -9,15 +9,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  res.status(200).json({ name: "John Doe" });
   try {
     const email = req.body.email;
     const language = req.body.language;
 
     var data = new FormData();
-    data.append("api_key", process.env.SENDY_API);
+    data.append("api_key", forceEnv("SENDY_API"));
     data.append("email", email);
-    data.append("list", process.env.SENDY_LIST);
+    data.append("list", forceEnv("SENDY_LIST"));
 
     if (language == "french") {
       data.append("isFrenchLearner", "yes");
@@ -39,7 +38,7 @@ export default async function handler(
 
     var config = {
       method: "post",
-      url: process.env.SENDY_URL,
+      url: forceEnv("SENDY_URL"),
       headers: {
         ...data.getHeaders(),
       },
