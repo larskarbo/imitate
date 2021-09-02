@@ -3,7 +3,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 var axios = require("axios");
-var FormData = require("form-data");
+// var FormData = require("form-data");
 
 export default async function handler(
   req: NextApiRequest,

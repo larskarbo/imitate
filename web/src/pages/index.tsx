@@ -4,13 +4,13 @@ import React, { useRef, useState } from "react";
 import { AiFillQuestionCircle } from "react-icons/ai";
 import { Header } from "../course/Header";
 
-export default function () {
+export default function Index() {
   const formRef = useRef();
   const [sent, setSent] = useState(false);
   const router = useRouter();
   const onSubmit = (e) => {
     e.preventDefault();
-    fetch("/.netlify/functions/newsletter", {
+    fetch("/api/newsletter", {
       method: "POST",
       body: JSON.stringify({
         email: formRef.current.email.value,
@@ -20,8 +20,8 @@ export default function () {
       .then((a) => {
         console.log("a: ", a);
 
-        setSent(true);
-        router.push("/app");
+        // setSent(true);
+        // router.push("/app");
       })
       .catch((err) => {});
   };

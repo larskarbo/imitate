@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import Segment from "../app/Segment";
 import axios from "axios";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { Header } from "../course/Header";
+import Segment from "./Segment";
 
-export default function Main({ segmentId=null }) {
+export default function Main({ segmentId = null }) {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -20,13 +21,14 @@ export default function Main({ segmentId=null }) {
     axios.get("/api/db/random").then((r) => {
       setTotal(r.data.total);
       setLoading(false);
-      
+
       router.push("/app/" + r.data.segment.id);
     });
   };
 
   return (
-    <Layout>
+    <div className="flex flex-col items-center bg-gradient-to-tr from-gray-100 pt-0 to-yellow-50 min-h-screen w-full">
+      <Header />
       <div className="max-w-3xl flex flex-col items-center px-8 w-full pb-24">
         <div className="pb-8"></div>
         {segmentId && (
@@ -96,6 +98,6 @@ export default function Main({ segmentId=null }) {
           </div>
         )}
       </div>
-    </Layout>
+    </div>
   );
 }
