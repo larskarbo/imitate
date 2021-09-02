@@ -1,20 +1,18 @@
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import content from "./content.json";
-import SegmentPro from "./SegmentPro";
-import { Header } from "./Header";
-import { ProgressProvider } from "./progress-context";
-import tutorial from "./tutorial.png";
-
+import { FaBars, FaTimes } from "react-icons/fa";
 import ReactMarkdown from "react-markdown";
-import { Redirect } from "@reach/router";
-import { SmallNavElement } from "./SmallNavElement";
-import { SidebarElement } from "./SidebarElement";
-import { NextChapter } from "./NextChapter";
-import { SelfAssessment } from "./SelfAssessment";
-import { Vimeo } from "./Vimeo";
 import { Button } from "./Button";
-import { FaBars, FaHamburger, FaTimes } from "react-icons/fa";
-import { Link } from "gatsby";
+import content from "./content.json";
+import { Header } from "./Header";
+import { NextChapter } from "./NextChapter";
+import { ProgressProvider } from "./progress-context";
+import SegmentPro from "./SegmentPro";
+import { SelfAssessment } from "./SelfAssessment";
+import { SidebarElement } from "./SidebarElement";
+import { SmallNavElement } from "./SmallNavElement";
+import tutorial from "./tutorial.png";
+import { Vimeo } from "./Vimeo";
 
 export default function CourseWrapper(props) {
   return (
@@ -25,8 +23,10 @@ export default function CourseWrapper(props) {
 }
 
 function Course({ slug, subslug }) {
+  console.log('slug, subslug: ', slug, subslug);
   const [menuOpen, setMenuOpen] = useState(false);
   const overPage = content.find((c) => c.slug == slug);
+  const router = useRouter();
 
   let page;
   let path;
@@ -38,10 +38,19 @@ function Course({ slug, subslug }) {
     path = slug;
   }
 
-  if (page.type == "collection" && !subslug) {
-    return <Redirect to={"/french/pronunciation-course/" + slug + "/" + page.children[0].slug} />;
-  }
 
+  useEffect(() => {
+    if (page?.type == "collection" && !subslug) {
+      return router.push(
+        "/french/pronunciation-course/" + slug + "/" + page?.children[0].slug
+      );
+    }
+  }, [page?.type, subslug]);
+
+  if(!page) {
+    return null
+  }
+  
   return (
     <div className=" flex flex-col items-center px-8 w-full pb-24">
       <Header />
@@ -78,12 +87,20 @@ function Course({ slug, subslug }) {
           </ul>
         </div>
 
-        <main className={`${menuOpen ? "hidden" : ""} md:block md:pl-12 w-full md:pt-8`}>
+        <main
+          className={`${
+            menuOpen ? "hidden" : ""
+          } md:block md:pl-12 w-full md:pt-8`}
+        >
           {subslug && (
             <>
               <h1 className="text-4xl font-light pb-8">
                 <span className="font-bold">
-                  The <span className="font-mono bg-gray-200 rounded-md font-bold">[{overPage.phonetic}]</span> sound
+                  The{" "}
+                  <span className="font-mono bg-gray-200 rounded-md font-bold">
+                    [{overPage.phonetic}]
+                  </span>{" "}
+                  sound
                 </span>{" "}
                 like in {overPage.word}
               </h1>
@@ -105,7 +122,9 @@ function Course({ slug, subslug }) {
 
           {page.type == "article" && (
             <>
-              {page.title && <h1 className="text-4xl font-bold pb-8">{page.title}</h1>}
+              {page.title && (
+                <h1 className="text-4xl font-bold pb-8">{page.title}</h1>
+              )}
               {page.video && !subslug && <Vimeo id={page.video} />}
               {page.slug == "using-imitate" && (
                 <article>
@@ -121,36 +140,50 @@ function Course({ slug, subslug }) {
                       Small sound <strong>exercises</strong>.
                     </li>
                   </ol>
-                  <p>The exercises have example phrases. Your job is to imitate them.</p>
-                  <img src={tutorial} className="max-w-lg w-full border rounded-lg p-4 shadow-lg" />
+                  <p>
+                    The exercises have example phrases. Your job is to imitate
+                    them.
+                  </p>
+                  <img
+                    src={tutorial}
+                    className="max-w-lg w-full border rounded-lg p-4 shadow-lg"
+                  />
                   <p>By practicing like this you will learn two things:</p>
                   <p>👂 Train your ears to recognize sounds.</p>
                   <p>🗣 Train your voice to produce sounds.</p>
                   <p>
-                    Remember to <strong>practice consistently</strong>, and you will achieve great results.
+                    Remember to <strong>practice consistently</strong>, and you
+                    will achieve great results.
                   </p>
                   <h2>Technical problems</h2>
-                  <p>The recording functionality might not work in all browsers.</p>
+                  <p>
+                    The recording functionality might not work in all browsers.
+                  </p>
                   <p>
                     👺 <strong>Problematic</strong>: iPhone, iPad, Safari.
                   </p>
                   <p>
-                    ✅ <strong>Best</strong>: Google Chrome or Firefox on a desktop or laptop computer.
+                    ✅ <strong>Best</strong>: Google Chrome or Firefox on a
+                    desktop or laptop computer.
                   </p>
                   <p>
-                    I am working on making this work everywhere! In the meantime, try to use the devices and browsers
-                    that work.
+                    I am working on making this work everywhere! In the
+                    meantime, try to use the devices and browsers that work.
                   </p>
                 </article>
               )}
 
               {subslug == "intro" && (
                 <>
-                  <h2 className="text-2xl font-semibold py-4">How to make this sound:</h2>
+                  <h2 className="text-2xl font-semibold py-4">
+                    How to make this sound:
+                  </h2>
                   {page.video && <Vimeo id={page.video} />}
                   {page.spellingRules && (
                     <div className="pt-8">
-                      <h2 className="text-2xl font-semibold pb-4">Spelling rules:</h2>
+                      <h2 className="text-2xl font-semibold pb-4">
+                        Spelling rules:
+                      </h2>
                       <ul className="list-disc pl-8 font-mono">
                         {page.spellingRules.map((spelling) => (
                           <li className="pt-2" key={spelling}>

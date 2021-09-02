@@ -1,33 +1,25 @@
-import React, { useContext, useEffect, useState } from "react";
-
-import { Router } from "@reach/router";
-import Main from "../app/Main";
-import LoginPage from "../app/Login/LoginPage";
-import { useUser } from "../user-context";
-import SetPasswordPage from "../app/Login/SetPasswordPage";
-import { Header } from "../course/Header";
-import ForgotPasswordPage from "../app/Login/ForgotPasswordPage";
+import React, { useEffect, useState } from "react";
 import { request } from "../app/utils/request";
-import content from "../course/content.json"
+import content from "../course/content.json";
+import { useUser } from "../user-context";
 
 const url = "https://slapper.io";
 
 export default function Admin() {
   const [data, setData] = useState(null);
   const [max, setMax] = useState(0);
-  
 
   useEffect(() => {
     request("GET", "/getAdminData").then((asdf) => {
       console.log({ asdf });
       const num = content.reduce((acc, val) => {
-        if(val.children){
-          return acc + val.children.length
+        if (val.children) {
+          return acc + val.children.length;
         }
-        return acc + 1
-      },0)
-      setMax(num)
-      setData(asdf)
+        return acc + 1;
+      }, 0);
+      setMax(num);
+      setData(asdf);
     });
   }, []);
 
@@ -69,9 +61,15 @@ export default function Admin() {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {data.users.map((user) => (
                     <tr key={user.email}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.email_verified ? "(not verified)" : ""}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.progressArr.length}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {user.email}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {user.email_verified ? "(not verified)" : ""}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {user.progressArr.length}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -86,6 +84,11 @@ export default function Admin() {
 
 /* This example requires Tailwind CSS v2.0+ */
 const people = [
-  { name: "Jane Cooper", title: "Regional Paradigm Technician", role: "Admin", email: "jane.cooper@example.com" },
+  {
+    name: "Jane Cooper",
+    title: "Regional Paradigm Technician",
+    role: "Admin",
+    email: "jane.cooper@example.com",
+  },
   // More people...
 ];

@@ -1,19 +1,22 @@
+import { useRouter } from "next/router";
 import React from "react";
-import { navigate } from "gatsby";
-import content from "./content.json";
-import { useProgress } from "./progress-context";
 import { BASEPATH } from "../pages/french/pronunciation-course";
 import { Button } from "./Button";
+import content from "./content.json";
+import { useProgress } from "./progress-context";
 
 export const NextChapter = ({ slug, subslug, path }) => {
   const { getProgress } = useProgress();
   const progressHere = getProgress(path);
+  const router = useRouter();
 
   const ourIndex = content.findIndex((c) => c.slug == slug);
   let ourChildrenIndex;
   let nextIsChapter = true;
   if (subslug) {
-    ourChildrenIndex = content[ourIndex]?.children?.findIndex((c) => c.slug == subslug);
+    ourChildrenIndex = content[ourIndex]?.children?.findIndex(
+      (c) => c.slug == subslug
+    );
     if (ourChildrenIndex < content[ourIndex].children.length - 1) {
       nextIsChapter = false;
     }
@@ -24,9 +27,15 @@ export const NextChapter = ({ slug, subslug, path }) => {
       <Button
         onClick={() => {
           if (nextIsChapter) {
-            navigate(BASEPATH + "/" + content[ourIndex + 1].slug);
+            router.push(BASEPATH + "/" + content[ourIndex + 1].slug);
           } else {
-            navigate(BASEPATH + "/" + slug + "/" + content[ourIndex].children[ourChildrenIndex + 1].slug);
+            router.push(
+              BASEPATH +
+                "/" +
+                slug +
+                "/" +
+                content[ourIndex].children[ourChildrenIndex + 1].slug
+            );
           }
         }}
       >
@@ -35,5 +44,3 @@ export const NextChapter = ({ slug, subslug, path }) => {
     )
   );
 };
-
-

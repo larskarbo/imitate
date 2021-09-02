@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "gatsby";
 import { useProgress } from "./progress-context";
 import { BASEPATH } from "../pages/french/pronunciation-course";
 import { progressToColor } from "./utils/progressToColor";
+import Link from "next/link";
 
 export const SidebarElement = ({ onGo, content: contentElement, active }) => {
   const { getProgress } = useProgress();
@@ -19,7 +19,7 @@ export const SidebarElement = ({ onGo, content: contentElement, active }) => {
     link = BASEPATH + "/" + contentElement.slug + "/" + contentElement.children[0].slug;
   }
   return (
-    <Link to={link} onClick={onGo}>
+    <Link href={link} onClick={onGo}>
       <li
         className={" flex items-center justify-between py-1 px-2 rounded transition-colors  " +
           (active ? "font-bold text-black bg-gray-200 hover:bg-gray-200" : " hover:bg-gray-100")}

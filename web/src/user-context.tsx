@@ -1,14 +1,16 @@
 // src/playingNow-context.js
+import { useRouter } from "next/router";
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { request } from "./app/utils/request";
-import { navigate } from "gatsby";
 
 const UserContext = React.createContext({});
 
 // const spotifyOriginal = new Spotify()
 
 export function UserProvider({ children }) {
+  const router = useRouter();
+
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
   const [updater, setUpdater] = useState(0);
@@ -28,7 +30,7 @@ export function UserProvider({ children }) {
 
   const logoutUser = () => {
     request("GET", "/logout").then(() => {
-      navigate("/");
+      router.push("/");
       setUser(null);
     });
   };
@@ -40,7 +42,15 @@ export function UserProvider({ children }) {
   const isAuthenticated = false;
 
   return (
-    <UserContext.Provider value={{ user, isAuthenticated, isLoading: loadingUser, logoutUser, tryAgainUser }}>
+    <UserContext.Provider
+      value={{
+        user,
+        isAuthenticated,
+        isLoading: loadingUser,
+        logoutUser,
+        tryAgainUser,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

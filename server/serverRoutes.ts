@@ -5,7 +5,7 @@ const express = require("express");
 const app = express();
 var cors = require("cors");
 app.use(
-  cors({ credentials: true, origin: ["http://localhost:8000", "http://localhost:8888", "https://goimitate.com"] })
+  cors({ credentials: true, origin: ["http://localhost:3000", "https://goimitate.com"] })
 );
 var multer = require("multer");
 var path = require("path");

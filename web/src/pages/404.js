@@ -1,8 +1,6 @@
-import React, { useCallback, useContext } from "react";
+import React from "react";
 
 function NotFound() {
-
-
   return (
     <div className="flex flex-col flex-grow items-center">
       <div
@@ -11,9 +9,8 @@ function NotFound() {
         }
       >
         404 not found
-        </div>
+      </div>
     </div>
-
   );
 }
 

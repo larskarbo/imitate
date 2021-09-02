@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "lib": [
       "dom",
       "esnext"
@@ -30,9 +30,12 @@
     "allowUmdGlobalAccess": true,
     "allowUnreachableCode": true,
     "allowUnusedLabels": true,
-    "alwaysStrict": false, // default
+    "alwaysStrict": false // default
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

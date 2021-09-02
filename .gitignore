@@ -17,10 +17,7 @@ web-build/
 samplex.xcworkspace
 
 fpb-buyers-all.*
-.cache
-
-public
-
+.next
 *.mp4
 *.mov
 
