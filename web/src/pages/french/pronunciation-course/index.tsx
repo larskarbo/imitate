@@ -1,11 +1,20 @@
 import ReactVimeo from "@u-wave/react-vimeo";
 import Head from "next/head";
-import React, { useRef } from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useRef } from "react";
 import PayButton from "../../../course/PayButton";
-
+import { useUser } from "../../../user-context";
 export const BASEPATH = "/french/pronunciation-course";
 export default function FPBLander({ slug, subslug }) {
-  const formRef = useRef();
+  const { user } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log("user:", user);
+    if (user) {
+      router.push(`${BASEPATH}/intro`);
+    }
+  }, [user]);
 
   return (
     <div className=" flex flex-col items-center px-8 w-full pb-24">

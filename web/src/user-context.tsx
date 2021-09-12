@@ -30,8 +30,8 @@ export function UserProvider({ children }) {
 
   const logoutUser = () => {
     request("GET", "/logout").then(() => {
-      router.push("/");
       setUser(null);
+      router.push("/");
     });
   };
 

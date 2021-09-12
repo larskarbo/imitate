@@ -14,42 +14,42 @@ export function Header() {
     <header className="md:flex justify-between items-center w-full pt-8 max-w-screen-lg border-b pb-4 border-gray-300">
       <div className="md:flex font-light">
         <Link href="/">
-          <div className="flex justify-center pl-4 pb-4 md:pb-0">
+          <a className="flex justify-center pl-4 pb-4 md:pb-0">
             <img src={"/logo.svg"} />
-          </div>
+          </a>
         </Link>
         {user && (
           <Link href="/app">
-            <div
+            <a
               className={`flex justify-center pl-4 ${isApp && "font-semibold"}`}
             >
               Imitate Classic
-            </div>
+            </a>
           </Link>
         )}
         {/* {user && ( */}
         <Link href={BASEPATH}>
-          <div
+          <a
             className={`flex justify-center pl-4 ${isFPB && "font-semibold"}`}
           >
             French Pronunciation Basics 🇫🇷
-          </div>
+          </a>
         </Link>
       </div>
 
       <div className="flex justify-center pt-4 md:pt-0">
         {!user && !loadingUser && (
           <Link href="/app/login">
-            <div className={` font-light  w-20 ${isLogin && "font-semibold"}`}>
+            <a className={` font-light  w-20 ${isLogin && "font-semibold"}`}>
               Log in
-            </div>
+            </a>
           </Link>
         )}
         {user && (
           <div className="inline-flex w-20">
             {/* :) |{" "} */}
             <Link href="/app/logout">
-              <div className=" font-light ml-1">Log out</div>
+              <a className=" font-light ml-1">Log out</a>
             </Link>
           </div>
         )}

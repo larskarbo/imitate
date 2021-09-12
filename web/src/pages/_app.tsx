@@ -18,16 +18,16 @@ function MyApp({ Component, pageProps, config }) {
           revalidateOnReconnect: false,
         }}
       >
-          <UserProvider>
-        <PlausibleProvider domain="goimitate.com">
-          <Head>
-            <meta property="og:site_name" content="Imitate" />
-          </Head>
+        <UserProvider>
+          <PlausibleProvider domain="goimitate.com">
+            <Head>
+              <meta property="og:site_name" content="Imitate" />
+            </Head>
 
-          <div className="min-h-screen">
-            <Component {...pageProps} />
-          </div>
-        </PlausibleProvider>
+            <div className="min-h-screen">
+              <Component {...pageProps} />
+            </div>
+          </PlausibleProvider>
         </UserProvider>
       </SWRConfig>
     </>
