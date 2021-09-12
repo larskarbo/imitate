@@ -21,11 +21,15 @@ export default function SetPasswordPage({ mode }) {
   const [verifyError, setVerifyError] = useState(false);
   const router = useRouter();
 
-  const searchParams = parse(location.search);
-  if (!searchParams.utoken) {
-    alert("Link is malformed, double check that you have the right link");
-    router.push("/app/login");
-  }
+  const searchParams = router.query;
+  useEffect(() => {
+    () => {
+      if (!searchParams.utoken) {
+        alert("Link is malformed, double check that you have the right link");
+        router.push("/app/login");
+      }
+    };
+  });
 
   useEffect(() => {
     request("POST", "/verifyPasswordResetToken", {
@@ -52,13 +56,13 @@ export default function SetPasswordPage({ mode }) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-        //@ts-ignore
+    //@ts-ignore
     const email = formRef.current.email.value;
-        //@ts-ignore
+    //@ts-ignore
     const password = formRef.current.password.value;
-        //@ts-ignore
+    //@ts-ignore
     const passwordTwo = formRef.current.passwordTwo.value;
-        //@ts-ignore
+    //@ts-ignore
     const utoken = formRef.current.utoken.value;
 
     if (password != passwordTwo) {
