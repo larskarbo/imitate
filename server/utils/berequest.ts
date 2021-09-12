@@ -20,7 +20,7 @@ export const isLocal = () => {
 console.log("IS LOCAL: ", isLocal());
 
 // export const BASE = ``
-export const WEB_BASE = isLocal() ? `http://localhost:8000` : `https://goimitate.ai`;
+export const WEB_BASE = isLocal() ? `http://localhost:3000` : `https://goimitate.ai`;
 export const BASE = isLocal() ? `http://localhost:3200` : `https://server.goimitate.ai`;
 console.log("BASE: ", BASE);
 
