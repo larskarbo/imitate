@@ -1,5 +1,6 @@
 import { checkout } from "./routes/money/checkout";
 import { stripeWebhook } from "./routes/money/stripe-webhook";
+import newsLetter from "./routes/newsletter";
 
 const express = require("express");
 const app = express();
@@ -225,6 +226,10 @@ app.post("/verifyPasswordResetToken", verifyPasswordResetToken);
 
 app.post("/money/checkout", checkout);
 app.post("/money/stripe-webhook", stripeWebhook);
+
+
+
+app.post("/newsletter", newsLetter);
 
 app.all("/*", (req, res) => {
   return res.status(404).send({
