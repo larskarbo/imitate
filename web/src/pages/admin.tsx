@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { request } from "../app/utils/request";
+import { request } from "../application/utils/request";
 import content from "../course/content.json";
 import { useUser } from "../user-context";
 

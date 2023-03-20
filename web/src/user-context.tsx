@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { request } from "./app/utils/request";
+import { request } from "./application/utils/request";
 
 const UserContext = React.createContext({});
 

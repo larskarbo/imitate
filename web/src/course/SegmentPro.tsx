@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlinePlayCircle } from "react-icons/ai";
-import PlaybackBoat from "../app/PlaybackBoat";
-import RecordBoat from "../app/RecordBoat";
+import PlaybackBoat from "../application/PlaybackBoat";
+import RecordBoat from "../application/RecordBoat";
 
 export default function SegmentPro({ segment }) {
   

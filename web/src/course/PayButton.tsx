@@ -2,8 +2,8 @@ import { loadStripe } from "@stripe/stripe-js/pure";
 import axios from "axios";
 import React, { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
-import { getErrorMessage } from "../app/utils/getErrorMessage";
-import { BASE } from "../app/utils/request";
+import { getErrorMessage } from "../application/utils/getErrorMessage";
+import { BASE } from "../application/utils/request";
 
 export default function PayButton() {
   const [loadingPay, setLoadingPay] = useState(false);

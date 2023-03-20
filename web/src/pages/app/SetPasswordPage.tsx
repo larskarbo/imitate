@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import { parse } from "query-string";
 import React, { useEffect, useRef, useState } from "react";
 import { useUser } from "../../user-context";
-import { request } from "../../app/utils/request";
-import { FormElement } from "../../app/Login/FormElement";
-import LoginLayout from "../../app/Login/LoginLayout";
-import { SubmitButton } from "../../app/Login/SubmitButton";
+import { request } from "../../application/utils/request";
+import { FormElement } from "../../application/Login/FormElement";
+import LoginLayout from "../../application/Login/LoginLayout";
+import { SubmitButton } from "../../application/Login/SubmitButton";
 
 export enum regType {
   LOGIN = "login",

@@ -31,6 +31,8 @@
     "allowUnreachableCode": true,
     "allowUnusedLabels": true,
     "alwaysStrict": false // default
+    ,
+    "incremental": true
   },
   "include": [
     "src"

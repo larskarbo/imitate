@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { AiFillQuestionCircle } from "react-icons/ai";
-import { request } from "../app/utils/request";
+import { request } from "../application/utils/request";
 import { Header } from "../course/Header";
 
 export default function Index() {
