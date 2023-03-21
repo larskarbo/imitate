@@ -10,12 +10,6 @@ export default function Main({ segmentId = null }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  //   useEffect(() => {
-  //     if (!segmentId) {
-  //       newSegment();
-  //     }
-  //   }, [segmentId]);
-
   const newSegment = () => {
     setLoading(true);
     axios.get("/api/db/random").then((r) => {
@@ -60,10 +54,11 @@ export default function Main({ segmentId = null }) {
                   </p>
                   <p className="my-2">Send me your thoughts here:</p>
                   <div className="flex justify-center">
-                    <Link href="https://docs.google.com/forms/d/e/1FAIpQLScewq4uRUFV6XJcA2KCQavxNxpXw5a_oCNpjr3o2PAQNc5Otw/viewform?usp=sf_link">
-                      <a className="inline-flex rounded items-center my-4 mx-auto justify-center text-sm py-3 px-6 bg-green-50 border-2  hover:bg-green-100 border-green-600 font-medium text-gray-900  transition duration-150">
-                        Send feedback 🗣
-                      </a>
+                    <Link
+                      href="https://docs.google.com/forms/d/e/1FAIpQLScewq4uRUFV6XJcA2KCQavxNxpXw5a_oCNpjr3o2PAQNc5Otw/viewform?usp=sf_link"
+                      className="inline-flex rounded items-center my-4 mx-auto justify-center text-sm py-3 px-6 bg-green-50 border-2  hover:bg-green-100 border-green-600 font-medium text-gray-900  transition duration-150"
+                    >
+                      Send feedback 🗣
                     </Link>
                   </div>
                 </div>

@@ -25,7 +25,7 @@ export const SidebarElement = ({ onGo, content: contentElement, active }) => {
       contentElement.children[0].slug;
   }
   return (
-    <Link href={link}>
+    <Link href={link} legacyBehavior>
       <li
         onClick={onGo}
         className={

@@ -13,43 +13,45 @@ export function Header() {
   return (
     <header className="md:flex justify-between items-center w-full pt-8 max-w-screen-lg border-b pb-4 border-gray-300">
       <div className="md:flex font-light">
-        <Link href="/">
-          <a className="flex justify-center pl-4 pb-4 md:pb-0">
-            <img src={"/logo.svg"} />
-          </a>
+        <Link href="/" className="flex justify-center pl-4 pb-4 md:pb-0">
+
+          <img src={"/logo.svg"} />
+
         </Link>
         {user && (
-          <Link href="/app">
-            <a
-              className={`flex justify-center pl-4 ${isApp && "font-semibold"}`}
-            >
+          <Link
+            href="/app"
+            className={`flex justify-center pl-4 ${isApp && "font-semibold"}`}>
+            
               Imitate Classic
-            </a>
+            
           </Link>
         )}
         {/* {user && ( */}
-        <Link href={BASEPATH}>
-          <a
-            className={`flex justify-center pl-4 ${isFPB && "font-semibold"}`}
-          >
+        <Link
+          href={BASEPATH}
+          className={`flex justify-center pl-4 ${isFPB && "font-semibold"}`}>
+          
             French Pronunciation Basics 🇫🇷
-          </a>
+          
         </Link>
       </div>
 
       <div className="flex justify-center pt-4 md:pt-0">
         {!user && !loadingUser && (
-          <Link href="/app/login">
-            <a className={` font-light  w-20 ${isLogin && "font-semibold"}`}>
+          <Link
+            href="/app/login"
+            className={` font-light  w-20 ${isLogin && "font-semibold"}`}>
+            
               Log in
-            </a>
+            
           </Link>
         )}
         {user && (
           <div className="inline-flex w-20">
             {/* :) |{" "} */}
-            <Link href="/app/logout">
-              <a className=" font-light ml-1">Log out</a>
+            <Link href="/app/logout" className=" font-light ml-1">
+              Log out
             </Link>
           </div>
         )}

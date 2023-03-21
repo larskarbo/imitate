@@ -20,11 +20,11 @@ pool.query('SELECT NOW()', (err, res) => {
   console.log(res.rows[0].now)
 })
 
-pool.query('SELECT COUNT(*) FROM users', (err, res) => {
-  if(err){
-    throw err
-  }
-  console.log(res.rows[0])
-})
+// pool.query('SELECT COUNT(*) FROM users', (err, res) => {
+//   if(err){
+//     throw err
+//   }
+//   console.log(res.rows[0])
+// })
 
 export default {} 

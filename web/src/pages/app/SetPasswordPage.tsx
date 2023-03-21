@@ -114,14 +114,14 @@ export default function SetPasswordPage({ mode }) {
             </p>
             <p className="py-3">
               Please{" "}
-              <Link href="/app/forgot-password">
-                <a className="underline text-blue-500">request a new link</a>
+              <Link href="/app/forgot-password" className="underline text-blue-500">
+                request a new link
               </Link>{" "}
             </p>
             <p className="py-3">
               You can also try to{" "}
-              <Link href="/app/login">
-                <a className="underline text-blue-500">log in</a>
+              <Link href="/app/login" className="underline text-blue-500">
+                log in
               </Link>
               .
             </p>

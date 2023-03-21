@@ -65,8 +65,8 @@ export default function LoginPage() {
 
         <SubmitButton>Log in</SubmitButton>
 
-        <Link href="/app/forgot-password">
-          <a className="text-sm">Forgot password?</a>
+        <Link href="/app/forgot-password" className="text-sm">
+          Forgot password?
         </Link>
       </form>
     </LoginLayout>
