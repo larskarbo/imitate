@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { BASEPATH } from "../pages/french/pronunciation-course";
 import { Button } from "./Button";
 import content from "./content.json";
+import { BASEPATH } from "./Header";
 import { useProgress } from "./progress-context";
 
 export const NextChapter = ({ slug, subslug, path }) => {

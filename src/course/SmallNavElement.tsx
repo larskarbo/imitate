@@ -1,8 +1,8 @@
 import React from "react";
 import { useProgress } from "./progress-context";
-import { BASEPATH } from "../pages/french/pronunciation-course";
 import { progressToColor } from "./utils/progressToColor";
 import Link from "next/link";
+import { BASEPATH } from "./Header";
 
 export const SmallNavElement = ({ parent, element, active, index }) => {
   const { getProgress } = useProgress();
