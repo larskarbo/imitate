@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Header } from "../course/Header";
+import { trpc } from "../utils/trpc";
 import RecordBoat from "./RecordBoat";
 
-export function Chamber({ segmentId = null }) {
+export function Chamber() {
   const [recordings, setRecordings] = useState([]);
 
   const [recording, setRecording] = useState(false);
+
+  const { data } = trpc.hello.useQuery({ text: "client" });
+  console.log("data: ", data);
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-tr from-gray-100 pt-0 to-yellow-50 min-h-screen w-full">

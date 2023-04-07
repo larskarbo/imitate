@@ -8,6 +8,11 @@
 	},
 	"dependencies": {
 		"@stripe/stripe-js": "^1.50.0",
+		"@tanstack/react-query": "^4.28.0",
+		"@trpc/client": "^10.19.1",
+		"@trpc/next": "^10.19.1",
+		"@trpc/react-query": "^10.19.1",
+		"@trpc/server": "^10.19.1",
 		"@u-wave/react-vimeo": "^0.9.10",
 		"autoprefixer": "^10.4.14",
 		"axios": "^0.21.4",
@@ -17,8 +22,6 @@
 		"force-env": "^1.0.2",
 		"get-error-message": "^1.0.1",
 		"jotai": "^2.0.3",
-		"js-video-url-parser": "^0.4.3",
-		"ky": "^0.28.7",
 		"lodash": "^4.17.21",
 		"next": "^13.2.4",
 		"next-plausible": "^3.7.2",
@@ -30,8 +33,8 @@
 		"react-icons": "^4.8.0",
 		"react-markdown": "^7.1.2",
 		"react-youtube": "^7.14.0",
-		"swr": "^1.3.0",
-		"tailwindcss": "^2.2.19"
+		"tailwindcss": "^2.2.19",
+		"zod": "^3.21.4"
 	},
 	"devDependencies": {
 		"@types/lodash": "^4.14.172",
