@@ -242,7 +242,7 @@ export function Segment({ segment, newSegment }) {
               onRecordFinish={(blobUrl) => {
                 setRecordings([{ blobUrl }]);
               }}
-              onRecordingChange={setRecording}
+              onIsRecordingChange={setRecording}
             />
             {!recording && (
               <div className="h-16 border-t bg-gray-50">

@@ -1,9 +1,30 @@
 import React, { useState } from "react";
+import { blobToAudioBuffer } from "./blobToAudioBuffer";
 
-let recordedChunks = [];
-export default function RecordBoat({ onRecordFinish, onRecordingChange }) {
-  const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [recording, setRecording] = useState(false);
+let recordedChunks: Blob[] = [];
+export default function RecordBoat({
+  onRecordFinish,
+  onIsRecordingChange,
+}: {
+  onRecordFinish: ({
+    blobUrl,
+    chunks,
+    sampleRate,
+    blob,
+    audioBuffer,
+  }: {
+    blob: Blob;
+    audioBuffer: AudioBuffer;
+    blobUrl: string;
+    chunks: Blob[];
+    sampleRate: number;
+  }) => void;
+  onIsRecordingChange: (isRecording: boolean) => void;
+}) {
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
+    null
+  );
+  const [isRecording, setIsRecording] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const start = () => {
@@ -25,8 +46,8 @@ export default function RecordBoat({ onRecordFinish, onRecordingChange }) {
 
         mediaRecorder.start();
 
-        setRecording(true);
-        onRecordingChange(true);
+        setIsRecording(true);
+        onIsRecordingChange(true);
         setMediaRecorder(mediaRecorder);
       })
       .catch(() => {
@@ -36,14 +57,21 @@ export default function RecordBoat({ onRecordFinish, onRecordingChange }) {
 
   const stop = () => {
     setLoading(true);
-    const onStop = () => {
-      console.log("mediaRecorder.mimeType: ", mediaRecorder.mimeType);
-      onRecordFinish(
-        URL.createObjectURL(
-          new Blob(recordedChunks, { type: mediaRecorder.mimeType })
-        )
+    const onStop = async () => {
+      const blobOfAllBlobs = new Blob(recordedChunks, { type: mediaRecorder.mimeType });
+      const blobUrl = URL.createObjectURL(
+        blobOfAllBlobs
       );
-      onRecordingChange(false);
+
+      const audioBuffer = await blobToAudioBuffer(blobOfAllBlobs);
+      onRecordFinish({
+        blobUrl,
+        blob: blobOfAllBlobs,
+        chunks: recordedChunks,
+        audioBuffer,
+        sampleRate: audioBuffer.sampleRate,
+      });
+      onIsRecordingChange(false);
       setLoading(false);
       mediaRecorder.removeEventListener("stop", onStop);
     };
@@ -53,7 +81,7 @@ export default function RecordBoat({ onRecordFinish, onRecordingChange }) {
       .getTracks() // get all tracks from the MediaStream
       .forEach((track) => track.stop());
     mediaRecorder.stop();
-    setRecording(false);
+    setIsRecording(false);
   };
 
   return (
@@ -72,17 +100,17 @@ export default function RecordBoat({ onRecordFinish, onRecordingChange }) {
           <button
             className={
               "w-16 h-16 rounded-full text-white font-bold shadow " +
-              (recording ? "bg-gray-500" : "bg-red-500")
+              (isRecording ? "bg-gray-500" : "bg-red-500")
             }
             onClick={() => {
-              if (recording) {
+              if (isRecording) {
                 stop();
               } else {
                 start();
               }
             }}
           >
-            {recording ? "stop" : "rec"}
+            {isRecording ? "stop" : "rec"}
           </button>
         )}
         <div className="sm:hidden text-xs pt-2 text-gray-600 font-light">

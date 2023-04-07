@@ -58,6 +58,7 @@ export const trpc = createTRPCNext<AppRouter>({
           },
         },
       },
+      transformer: superjson,
     };
   },
   /**
@@ -65,3 +66,5 @@ export const trpc = createTRPCNext<AppRouter>({
    **/
   ssr: false,
 });
+
+import superjson from "superjson";

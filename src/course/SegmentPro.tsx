@@ -137,7 +137,7 @@ export default function SegmentPro({ segment }) {
                 // setRecordings([{ blobUrl }, ...recordings])
                 setRecordings([{ blobUrl }]);
               }}
-              onRecordingChange={setRecording}
+              onIsRecordingChange={setRecording}
             />
             {!recording && (
               <div className="h-16 border-t bg-gray-50">
