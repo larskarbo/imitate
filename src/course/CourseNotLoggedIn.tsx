@@ -1,10 +1,7 @@
 import Head from "next/head";
-import { useRef } from "react";
 import { Header } from "./Header";
 
 export default function CourseNotLoggedIn({}) {
-  const formRef = useRef();
-
   return (
     <div className=" flex flex-col items-center px-8 w-full pb-24">
       <Head>
