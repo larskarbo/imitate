@@ -32,7 +32,7 @@ export const forgotPassword = async (req, res) => {
       console.log('text: ', text);
       // // transporter
       sendMail({
-        subject:"Imitate Password Reset",
+        subject:"Imita Password Reset",
         toAddress: userValue.email,
         body_html: html,
         body_text: text
@@ -49,7 +49,7 @@ export const forgotPassword = async (req, res) => {
 };
 
 const makeEmail = (utoken) => {
-  const link = `https://goimitate.com/app/set-password?utoken=${utoken}`;
+  const link = `https://imita.io/app/set-password?utoken=${utoken}`;
   const template: string = `
   Hi!
   

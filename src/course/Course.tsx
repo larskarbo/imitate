@@ -125,7 +125,7 @@ function Course({ slug, subslug }) {
                 <h1 className="text-4xl font-bold pb-8">{page.title}</h1>
               )}
               {page.video && !subslug && <Vimeo id={page.video} />}
-              {page.slug == "using-imitate" && (
+              {page.slug == "using-imita" && (
                 <article>
                   <p>Each sound you learn follows this structure:</p>
                   <ol>

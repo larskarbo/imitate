@@ -9,10 +9,10 @@ code = execSync("csvtojson fpb-buyers-all.csv > fpb-buyers-all.json");
 const list = require("./fpb-buyers-all.json");
 
 // const BASE = `http://localhost:3200`;
-const BASE = `https://server.goimitate.com`;
+const BASE = `https://server.imita.io`;
 
 const makeEmail=(email,token)=>{
-  const link = `https://goimitate.com/app/set-password?email=${email}&token=${token}`
+  const link = `https://imita.io/app/set-password?email=${email}&token=${token}`
   const markdown = `
   **Hi!**
   

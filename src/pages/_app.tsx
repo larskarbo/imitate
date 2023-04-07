@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps, config }) {
       >
         <PlausibleProvider domain="imita.io">
           <Head>
-            <meta property="og:site_name" content="Imitate" />
+            <meta property="og:site_name" content="Imita" />
           </Head>
 
           <div className="min-h-screen">

@@ -23,36 +23,36 @@ export default function Index() {
   return (
     <div className="flex flex-col items-center bg-gradient-to-tr from-gray-100 pt-0 to-yellow-50 min-h-screen">
       <Head>
-        <meta property="og:url" content="https://goimitate.com/" />
-        <link rel="canonical" href="https://goimitate.com/" />
-        <title>Imitate - Learn perfect pronunciation</title>
+        <meta property="og:url" content="https://imita.io/" />
+        <link rel="canonical" href="https://imita.io/" />
+        <title>Imita - Learn perfect pronunciation</title>
         <meta
           property="og:title"
-          content={"Imitate - Learn perfect pronunciation"}
+          content={"Imita - Learn perfect pronunciation"}
         />
         <meta
           name="twitter:title"
-          content={"Imitate - Learn perfect pronunciation"}
+          content={"Imita - Learn perfect pronunciation"}
         />
-        <meta name="title" content={"Imitate - Learn perfect pronunciation"} />
+        <meta name="title" content={"Imita - Learn perfect pronunciation"} />
 
         <meta
           name="description"
-          content="Imitate is a pronunciation learning tool that lets you achieve near-native pronunciation with the help of real-life video."
+          content="Imita is a pronunciation learning tool that lets you achieve near-native pronunciation with the help of real-life video."
         />
         <meta
           property="og:description"
-          content="Imitate is a pronunciation learning tool that lets you achieve near-native pronunciation with the help of real-life video."
+          content="Imita is a pronunciation learning tool that lets you achieve near-native pronunciation with the help of real-life video."
         />
         <meta
           name="twitter:description"
-          content="Imitate is a pronunciation learning tool that lets you achieve near-native pronunciation with the help of real-life video."
+          content="Imita is a pronunciation learning tool that lets you achieve near-native pronunciation with the help of real-life video."
         />
 
-        <meta property="og:image" content="https://goimitate.com/hero.png" />
-        <meta name="twitter:image" content="https://goimitate.com/hero.png" />
+        <meta property="og:image" content="https://imita.io/hero.png" />
+        <meta name="twitter:image" content="https://imita.io/hero.png" />
 
-        <meta property="og:site_name" content="Imitate" />
+        <meta property="og:site_name" content="Imita" />
         <meta name="twitter:card" content="summary_large_image" />
 
         <meta name="twitter:creator" content={"larskarbo"} />
@@ -76,7 +76,7 @@ export default function Index() {
       <div className="text-left max-w-md w-full mb-12">
         <div className="flex mb-8">
           <img
-            alt="imitate"
+            alt="imita"
             className="rounded-full mr-2 w-9 h-9 flex-shrink-0"
             src="https://s.gravatar.com/avatar/4579b299730ddc53e3d523ec1cd5482a?s=72"
           />
@@ -91,7 +91,7 @@ export default function Index() {
               learn how to speak like a native.
             </div>
             <div className={"border py-2 px-4 bg-white rounded mb-4"}>
-              That's why I created Imitate.
+              That's why I created Imita.
               <br />
               <br />
               It's an app that let's you <strong>
@@ -116,7 +116,7 @@ export default function Index() {
                 </div>
               </div>
               <h2 className="text-black font-bold mb-2 ">
-                Imitate is free while in beta
+                Imita is free while in beta
               </h2>
               <p className="text-black mb-2 ">
                 Enter your email to try it right now.
@@ -134,7 +134,7 @@ export default function Index() {
                 className=" mb-2 px-4 py-2 bg-blue-100 hover:bg-blue-200 border border-gray-400 hover:border-gray-500 shadow-sm text-sm rounded transition-colors"
                 type="submit"
               >
-                Try Imitate for French ⚡
+                Try Imita for French ⚡
               </button>
             </form>
           </div>
@@ -143,7 +143,7 @@ export default function Index() {
 
       <img
         src="/screensh.jpg"
-        alt="Screenshot Imitate"
+        alt="Screenshot Imita"
         className="max-w-md rounded-lg"
       />
 
@@ -165,12 +165,12 @@ export default function Index() {
           </div>
         </a>
         <a
-          href="https://www.producthunt.com/posts/imitate?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-imitate"
+          href="https://www.producthunt.com/posts/imita?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-imita"
           target="_blank"
         >
           <img
             src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=282675&theme=light"
-            alt="Imitate | Product Hunt"
+            alt="Imita | Product Hunt"
             className="mt-6"
             width="250"
             height="54"

@@ -53,7 +53,7 @@ export const stripeWebhook = async (req: Request, res: Response) => {
 
           sendMail({
             toAddress: email,
-            subject: "Access Imitate French Pronunciation Basics Here!",
+            subject: "Access Imita French Pronunciation Basics Here!",
 
             body_html: html,
             body_text: text,
@@ -87,7 +87,7 @@ export const stripeWebhook = async (req: Request, res: Response) => {
 };
 
 const makeEmail = (utoken) => {
-  const link = `https://goimitate.com/app/set-password?utoken=${utoken}`;
+  const link = `https://imita.io/app/set-password?utoken=${utoken}`;
   const template: string = `
   Hi!
   

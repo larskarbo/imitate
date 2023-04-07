@@ -20,8 +20,8 @@ export const isLocal = () => {
 console.log("IS LOCAL: ", isLocal());
 
 // export const BASE = ``
-export const WEB_BASE = isLocal() ? `http://localhost:3000` : `https://goimitate.ai`;
-export const BASE = isLocal() ? `http://localhost:3200` : `https://server.goimitate.ai`;
+export const WEB_BASE = isLocal() ? `http://localhost:3000` : `https://imita.io`;
+export const BASE = isLocal() ? `http://localhost:3200` : `https://server.imita.io`;
 console.log("BASE: ", BASE);
 
 export function berequest(method, functionName, data?) {

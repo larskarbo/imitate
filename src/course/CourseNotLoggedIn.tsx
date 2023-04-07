@@ -8,7 +8,7 @@ export default function CourseNotLoggedIn({}) {
   return (
     <div className=" flex flex-col items-center px-8 w-full pb-24">
       <Head>
-        <title>French Pronunciation Course - Imitate</title>
+        <title>French Pronunciation Course - Imita</title>
         <meta
           name="description"
           content="The best interactive french pronunciation course. Guides you through all the fundamental sounds."

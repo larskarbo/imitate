@@ -6,7 +6,7 @@ export default function ThankYou() {
   return (
     <div className=" flex flex-col items-center px-8 w-full pb-24">
       <Helmet>
-        <title>Thank You - Imitate</title>
+        <title>Thank You - Imita</title>
       </Helmet>
       <Header />
 

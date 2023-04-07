@@ -124,7 +124,7 @@ export const HelloWorld: React.FC<{
 									className="font-light mt-2 flex justify-between"
 								>
 									<div>Sound 1/13 - French Pronunciation Basics 🇫🇷</div>
-									<div className="text-gray-00">goimitate.com</div>
+									<div className="text-gray-00">imita.io</div>
 								</div>
 							</div>
 						</div>
@@ -147,7 +147,7 @@ export const HelloWorld: React.FC<{
 						<div className="text-7xl font-bold">
 							French Pronunciation Basics 🇫🇷
 						</div>
-						<div className="text-4xl font-light">on goimitate.com</div>
+						<div className="text-4xl font-light">on imita.io</div>
 					</div>
 					<Video
 						src={rec}
