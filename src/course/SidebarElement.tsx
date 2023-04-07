@@ -29,7 +29,7 @@ export const SidebarElement = ({ onGo, content: contentElement, active }) => {
       <li
         onClick={onGo}
         className={
-          " flex items-center justify-between py-1 px-2 rounded transition-colors  " +
+          " flex items-center select-none justify-between py-1 px-2 rounded transition-colors  " +
           (active
             ? "font-bold text-black bg-gray-200 hover:bg-gray-200"
             : " hover:bg-gray-100")

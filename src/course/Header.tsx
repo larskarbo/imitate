@@ -16,6 +16,12 @@ export function Header() {
           Random phrase practice
         </Link>
         <Link
+          href="/chamber"
+          className={`flex justify-center pl-4 ${isApp && "font-semibold"}`}
+        >
+          Practice chamber
+        </Link>
+        <Link
           href="/french/pronunciation/intro"
           className={`flex justify-center pl-4 ${isApp && "font-semibold"}`}
         >

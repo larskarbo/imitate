@@ -1,6 +1,0 @@
-{
-  "watch": ["."],
-  "ext": ".ts,.js",
-  "ignore": [],
-  "exec": "NODE_ENV=development ts-node -T ./server.ts"
-}
