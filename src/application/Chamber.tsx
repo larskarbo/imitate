@@ -1,10 +1,9 @@
+import toWav from "audiobuffer-to-wav";
 import { useState } from "react";
 import { Header } from "../course/Header";
 import { trpc } from "../utils/trpc";
-import { arrayBufferToWavBuffer } from "./arrayBufferToWav";
 import { blobToAudioBuffer } from "./blobToAudioBuffer";
 import RecordBoat from "./RecordBoat";
-import toWav from "audiobuffer-to-wav";
 
 export function Chamber() {
   const [recordings, setRecordings] = useState([]);
