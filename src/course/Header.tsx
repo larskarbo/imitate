@@ -16,7 +16,7 @@ export function Header() {
         >
           Random phrase practice
         </Link>
-        {!isDevelopment && (
+        {isDevelopment && (
           <Link
             href="/chamber"
             className={`flex justify-center pl-4 ${isApp && "font-semibold"}`}
