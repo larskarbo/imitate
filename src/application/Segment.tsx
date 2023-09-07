@@ -52,7 +52,11 @@ export default function SegmentLoader({ loading, segmentId, newSegment }) {
 export function Segment({ segment, newSegment }) {
   console.log("segment: ", segment);
   const [youtubeElement, setYoutubeElement] = useState(null);
-  const [recordings, setRecordings] = useState([]);
+  const [recordings, setRecordings] = useState<
+    {
+      blobUrl: string;
+    }[]
+  >([]);
   const [playing, setPlaying] = useState(false);
   const [recording, setRecording] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
@@ -239,19 +243,23 @@ export function Segment({ segment, newSegment }) {
             }}
           >
             <RecordBoat
-              onRecordFinish={(blobUrl) => {
+              onRecordFinish={({ blobUrl }) => {
                 setRecordings([{ blobUrl }]);
               }}
               onIsRecordingChange={setRecording}
             />
             {!recording && (
               <div className="h-16 border-t bg-gray-50">
-                {recordings.map((recording) => (
-                  <PlaybackBoat
-                    key={recording.blobUrl}
-                    blobUrl={recording.blobUrl}
-                  />
-                ))}
+                {recordings.map((recording) => {
+                  console.log("recording: ", recording);
+
+                  return (
+                    <PlaybackBoat
+                      key={recording.blobUrl}
+                      blobUrl={recording.blobUrl}
+                    />
+                  );
+                })}
               </div>
             )}
           </div>
