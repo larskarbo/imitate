@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { blobToAudioBuffer } from "./blobToAudioBuffer";
 
 let recordedChunks: Blob[] = [];
@@ -26,6 +26,25 @@ export default function RecordBoat({
   );
   const [isRecording, setIsRecording] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [isLoadingLongTime, setIsLoadingLongTime] = useState(false);
+
+  // Assume your setLoading is updated in some other part of your code
+
+  useEffect(() => {
+    let timer;
+
+    if (loading) {
+      timer = setTimeout(() => {
+        setIsLoadingLongTime(true);
+      }, 1000);
+    } else {
+      setIsLoadingLongTime(false);
+    }
+
+    // Cleanup function to clear our timeout when loading changes
+    return () => clearTimeout(timer);
+  }, [loading]);
 
   const start = () => {
     setLoading(true);
@@ -58,10 +77,10 @@ export default function RecordBoat({
   const stop = () => {
     setLoading(true);
     const onStop = async () => {
-      const blobOfAllBlobs = new Blob(recordedChunks, { type: mediaRecorder.mimeType });
-      const blobUrl = URL.createObjectURL(
-        blobOfAllBlobs
-      );
+      const blobOfAllBlobs = new Blob(recordedChunks, {
+        type: mediaRecorder.mimeType,
+      });
+      const blobUrl = URL.createObjectURL(blobOfAllBlobs);
 
       const audioBuffer = await blobToAudioBuffer(blobOfAllBlobs);
       onRecordFinish({
@@ -87,7 +106,7 @@ export default function RecordBoat({
   return (
     <div className="w-full flex-grow flex items-center justify-center">
       <div className="flex flex-col items-center">
-        {loading ? (
+        {isLoadingLongTime ? (
           <button
             className={
               "w-16 h-16 rounded-full text-white font-bold shadow " +
@@ -102,6 +121,7 @@ export default function RecordBoat({
               "w-16 h-16 rounded-full text-white font-bold shadow " +
               (isRecording ? "bg-gray-500" : "bg-red-500")
             }
+						disabled={loading}
             onClick={() => {
               if (isRecording) {
                 stop();

@@ -27,7 +27,7 @@ export function Chamber() {
           </div>
         )} */}
       </div>
-      <div className="w-full  grid grid-cols-5">
+      <div className="w-full  flex flex-wrap">
         {range(5).map((i) => {
           return range(8).map((j) => {
             return <Box key={`${i}-${j}`} />;
@@ -60,7 +60,7 @@ const Box = () => {
   };
 
   return (
-    <div className="h-48">
+    <div className="h-48 w-72 border border-gray-400  flex flex-col justify-center items-center bg-gray-200">
       <RecordBoat
         onRecordFinish={async ({ blobUrl, chunks, sampleRate, blob }) => {
           console.log("sampleRate: ", sampleRate);
