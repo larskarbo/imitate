@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { blobToAudioBuffer } from "./blobToAudioBuffer";
+import { audioBufferToBlob } from "./audioBufferToBlob";
+import { trimSilence } from "./trimSilence";
 
 let recordedChunks: Blob[] = [];
 export default function RecordBoat({
@@ -9,15 +11,11 @@ export default function RecordBoat({
   onRecordFinish: ({
     blobUrl,
     chunks,
-    sampleRate,
     blob,
-    audioBuffer,
   }: {
     blob: Blob;
-    audioBuffer: AudioBuffer;
     blobUrl: string;
     chunks: Blob[];
-    sampleRate: number;
   }) => void;
   onIsRecordingChange: (isRecording: boolean) => void;
 }) {
@@ -80,15 +78,18 @@ export default function RecordBoat({
       const blobOfAllBlobs = new Blob(recordedChunks, {
         type: mediaRecorder.mimeType,
       });
-      const blobUrl = URL.createObjectURL(blobOfAllBlobs);
 
       const audioBuffer = await blobToAudioBuffer(blobOfAllBlobs);
+      const audioBufferCleaned = await trimSilence(audioBuffer);
+
+      const newBlob = await audioBufferToBlob(audioBufferCleaned);
+
+      const blobUrl = URL.createObjectURL(newBlob);
+
       onRecordFinish({
         blobUrl,
-        blob: blobOfAllBlobs,
+        blob: newBlob,
         chunks: recordedChunks,
-        audioBuffer,
-        sampleRate: audioBuffer.sampleRate,
       });
       onIsRecordingChange(false);
       setLoading(false);
@@ -104,39 +105,44 @@ export default function RecordBoat({
   };
 
   return (
-    <div className="w-full flex-grow flex items-center justify-center">
-      <div className="flex flex-col items-center">
-        {isLoadingLongTime ? (
-          <button
-            className={
-              "w-16 h-16 rounded-full text-white font-bold shadow " +
-              "bg-gray-500"
+    <>
+      {isLoadingLongTime ? (
+        <button
+          className={"px-2 py-1 text-white font-bold shadow " + "bg-gray-500"}
+        >
+          loading...
+        </button>
+      ) : (
+        <button
+          className={
+            "px-2 py-1 text-white font-bold shadow " +
+            (isRecording ? "bg-gray-500" : "bg-red-500")
+          }
+          disabled={loading}
+          onClick={() => {
+            if (isRecording) {
+              stop();
+            } else {
+              start();
             }
-          >
-            loading...
-          </button>
-        ) : (
-          <button
-            className={
-              "w-16 h-16 rounded-full text-white font-bold shadow " +
-              (isRecording ? "bg-gray-500" : "bg-red-500")
-            }
-						disabled={loading}
-            onClick={() => {
-              if (isRecording) {
-                stop();
-              } else {
-                start();
-              }
-            }}
-          >
-            {isRecording ? "stop" : "rec"}
-          </button>
-        )}
-        <div className="sm:hidden text-xs pt-2 text-gray-600 font-light">
-          Recording might not work on mobile devices
-        </div>
-      </div>
-    </div>
+          }}
+        >
+          {isRecording ? "stop" : "rec"}
+        </button>
+      )}
+    </>
   );
 }
+
+export const Button = (
+  props: React.ButtonHTMLAttributes<HTMLButtonElement>
+) => {
+  return (
+    <button
+      className={"px-2 py-1 text-white font-bold shadow bg-gray-500"}
+      {...props}
+    >
+      {props.children}
+    </button>
+  );
+};

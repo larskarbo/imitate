@@ -1,42 +1,96 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { IoPlaySharp } from "react-icons/io5";
+import { useCallback, useEffect, useRef, useState } from "react";
+import WaveSurfer from "wavesurfer.js";
 
-// htt>s://www.youtube.com/watch?v=t-LsjB45tOg
+type WaveSurferOptions = Partial<WaveSurfer["options"]>;
+
+const useWavesurfer = (
+  containerRef: React.MutableRefObject<HTMLDivElement | null>,
+  options: WaveSurferOptions
+) => {
+  const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ws = WaveSurfer.create({
+      ...options,
+      container: containerRef.current,
+    });
+
+    setWavesurfer(ws);
+
+    return () => {
+      ws.destroy();
+    };
+  }, [options.url, containerRef]);
+
+  return wavesurfer;
+};
+
+const WaveSurferPlayer = ({
+  options,
+  onSetWavesurfer,
+}: {
+  options: WaveSurferOptions;
+  onSetWavesurfer: (ws: WaveSurfer) => void;
+}) => {
+  const containerRef = useRef();
+  const [currentTime, setCurrentTime] = useState(0);
+  const wavesurfer = useWavesurfer(containerRef, options);
+
+  useEffect(() => {
+    if (!wavesurfer) return;
+
+    setCurrentTime(0);
+    // setIsPlaying(false);
+
+    const subscriptions = [
+      // wavesurfer.on("play", () => setIsPlaying(true)),
+      // wavesurfer.on("pause", () => setIsPlaying(false)),
+      wavesurfer.on("timeupdate", (currentTime) => setCurrentTime(currentTime)),
+    ];
+
+    return () => {
+      subscriptions.forEach((unsub) => unsub());
+    };
+  }, [wavesurfer]);
+
+  useEffect(() => {
+    if (!wavesurfer) return;
+
+    onSetWavesurfer(wavesurfer);
+  }, [wavesurfer]);
+
+  return (
+    <>
+      <div ref={containerRef} style={{ minHeight: "120px" }} />
+
+      <p>Seconds played: {currentTime}</p>
+    </>
+  );
+};
 
 export default function PlaybackBoat({
   blobUrl,
-  autoPlay,
+  onSetWavesurfer,
 }: {
   blobUrl: string;
-  autoPlay?: boolean;
+  onSetWavesurfer: (ws: WaveSurfer) => void;
 }) {
-  const audioRef = useRef();
-
-  useEffect(() => {
-    if (audioRef && autoPlay) {
-      try {
-        // @ts-ignore
-        audioRef?.current?.play?.();
-      } catch (e) {
-        console["log"]("Autoplay failed.", e);
-      }
-    }
-  }, [blobUrl, audioRef]);
+  const options: WaveSurferOptions = {
+    waveColor: "#4F4A85",
+    progressColor: "#383351",
+  };
 
   return (
-    <div className="flex w-full">
-      <audio
-        onError={(err) => {
-          alert(
-            "Sorry, we have some difficulties making audio recording work on iOS. Try on your laptop!"
-          );
+    <div className="flex flex-col w-full">
+      <WaveSurferPlayer
+        options={{
+          ...options,
+          url: blobUrl,
         }}
-        className="w-full"
-        src={blobUrl}
-        id="player"
-        controls
-        ref={audioRef}
-      ></audio>
+        onSetWavesurfer={onSetWavesurfer}
+      />
     </div>
   );
 }

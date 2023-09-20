@@ -1,20 +1,16 @@
-export const blobToAudioBuffer = async (blob: Blob) => {
-  const audioContext = new AudioContext();
+export const blobToAudioBuffer = async (blob: Blob): Promise<AudioBuffer> => {
   const fileReader = new FileReader();
-
-  const audiobuffer = await new Promise<AudioBuffer>((resolve) => {
-    // Set up file reader on loaded end event
+  const arrayBuffer = await new Promise<ArrayBuffer>((resolve) => {
     fileReader.onloadend = () => {
-      const arrayBuffer = fileReader.result as ArrayBuffer;
-
-      // Convert array buffer into audio buffer
-      audioContext.decodeAudioData(arrayBuffer, (audioBuffer) => {
-        resolve(audioBuffer);
-      });
+      resolve(fileReader.result as ArrayBuffer);
     };
-
-    //Load blob
     fileReader.readAsArrayBuffer(blob);
   });
+
+  const audioContext = new AudioContext();
+  const audiobuffer = await new Promise<AudioBuffer>((resolve, reject) => {
+    audioContext.decodeAudioData(arrayBuffer, resolve, reject);
+  });
+
   return audiobuffer;
 };

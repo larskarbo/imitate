@@ -3,8 +3,9 @@ import { range } from "lodash";
 import { useState } from "react";
 import { trpc } from "../utils/trpc";
 import PlaybackBoat from "./PlaybackBoat";
-import RecordBoat from "./RecordBoat";
+import RecordBoat, { Button } from "./RecordBoat";
 import { blobToAudioBuffer } from "./blobToAudioBuffer";
+import WaveSurfer from "wavesurfer.js";
 
 /*
 next steps:
@@ -44,6 +45,8 @@ const Box = () => {
   }>();
 
   const [isRecording, setIsRecording] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [wavesurfer, setWavesurfer] = useState<WaveSurfer>();
 
   const { data, mutate, isLoading } = trpc.transcribe.useMutation({});
 
@@ -61,27 +64,39 @@ const Box = () => {
 
   return (
     <div className="h-48 w-72 border border-gray-400  flex flex-col justify-center items-center bg-gray-200">
-      <RecordBoat
-        onRecordFinish={async ({ blobUrl, chunks, sampleRate, blob }) => {
-          console.log("sampleRate: ", sampleRate);
-          console.log("chunks: ", chunks);
-          setRecording({ blobUrl });
-
-          const SPEECH_TO_TEX = false;
-          if (!SPEECH_TO_TEX) return;
-          const { wavBlob } = await blobToWav(blob);
-          mutate({
-            audioBlob: blobUrl,
-            wavBlobArr: new Uint8Array(await wavBlob.arrayBuffer()),
-          });
-        }}
-        onIsRecordingChange={setIsRecording}
-      />
+      <div className="flex gap-2">
+				<RecordBoat
+					onRecordFinish={async ({
+						blobUrl,
+						chunks,
+						blob,
+					}) => {
+						console.log("chunks: ", chunks);
+						setRecording({ blobUrl });
+						const SPEECH_TO_TEX = false;
+						if (!SPEECH_TO_TEX) return;
+						const { wavBlob } = await blobToWav(blob);
+						mutate({
+							audioBlob: blobUrl,
+							wavBlobArr: new Uint8Array(await wavBlob.arrayBuffer()),
+						});
+					}}
+					onIsRecordingChange={setIsRecording}
+				/>
+				<Button
+					onClick={() => {
+						wavesurfer?.playPause();
+					}}
+					style={{ marginTop: "1em" }}
+				>
+					{isPlaying ? "Pause" : "Play"}
+				</Button>
+			</div>
       {recording && (
         <PlaybackBoat
           key={recording.blobUrl}
           blobUrl={recording.blobUrl}
-          autoPlay={false}
+          onSetWavesurfer={setWavesurfer}
         />
       )}
     </div>
