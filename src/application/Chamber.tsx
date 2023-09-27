@@ -1,61 +1,121 @@
 import toWav from "audiobuffer-to-wav";
 import { range } from "lodash";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import WaveSurfer from "wavesurfer.js";
 import { trpc } from "../utils/trpc";
 import PlaybackBoat, { Region } from "./PlaybackBoat";
 import RecordBoat, { Button } from "./RecordBoat";
 import { blobToArrayBuffer, blobToAudioBuffer } from "./blobToAudioBuffer";
-import WaveSurfer from "wavesurfer.js";
 
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useDropzone } from "react-dropzone";
 
-/*
-next steps:
-- cut start silence
-- upload mp3
-- speech to text
-*/
+export function Chamber({ namespace }: { namespace: string }) {
+  const [recordCount, setRecordCount] = useAtom(recordingCountAtom);
 
-export function Chamber() {
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    setIsInitialized(true);
+    // setTimeout(() => {
+    // }, 5000);
+  }, [firestore]);
+
+  if (!isInitialized) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col items-center bg-gradient-to-tr from-gray-100 pt-0 to-yellow-50 min-h-screen w-full">
       <div className="max-w-3xl flex flex-col items-center px-8 w-full pb-24">
         <div className="pb-8"></div>
-        {/* {isLoading && (
-          <div className="text-center text-xl mb-4 font-medium">Loading...</div>
-        )}
-        {data && (
-          <div className="text-center text-xl mb-4 font-medium">
-            {data.text}{" "}
-          </div>
-        )} */}
       </div>
+      Recordings: {recordCount}
       <div className="w-full  flex flex-wrap">
         {range(5).map((i) => {
           return range(8).map((j) => {
-            return <Box key={`${i}-${j}`} />;
+            const id = i * 8 + j;
+            return <Box key={`${i}-${j}`} id={id} sheetNamespace={namespace} />;
           });
         })}
       </div>
     </div>
   );
 }
+
+export const recordingCountAtom = atom(0);
+
 const lastRegionAtom = atom(
   null as {
     region: Region;
     blobUrl: string;
   } | null
 );
-const Box = () => {
+
+const Box = ({
+  id,
+  sheetNamespace,
+}: {
+  id: number;
+  sheetNamespace: string;
+}) => {
   const [recording, setRecording] = useState<{
     blobUrl: string;
   } | null>(null);
+
+  const { data: fetchedItem } = trpc.getItem.useQuery({ id, sheetNamespace });
+  if (fetchedItem) {
+    console.log("fetchedItem: ", fetchedItem);
+  }
+
+  useEffect(() => {
+    if (!fetchedItem) return;
+
+    console.log("fetchedItem.url: ", fetchedItem.url);
+    setRecording({
+      blobUrl: fetchedItem.url,
+    });
+  }, [fetchedItem]);
+
+  const { mutate: saveItem } = trpc.setItem.useMutation({
+    onError: (err) => {
+      alert(err);
+    },
+  });
+
+  const saveNewRecording = async (blob: Blob) => {
+    const { wavBlob } = await blobToWav(blob);
+    const blobUrl = URL.createObjectURL(blob);
+
+    saveItem({
+      id,
+      sheetNamespace,
+      item: {
+        recording: blobUrl,
+        ab: wavBlob,
+      },
+      wavBlob: new Uint8Array(await wavBlob.arrayBuffer()),
+    });
+
+    setRecording({ blobUrl });
+  };
 
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer>();
   const [region, setRegion] = useState<Region | null>(null);
   const [lastRegion, setLastRegion] = useAtom(lastRegionAtom);
+
+  useEffect(() => {
+    if (!wavesurfer) return;
+
+    wavesurfer.on("play", () => {
+      setIsPlaying(true);
+    });
+    wavesurfer.on("pause", () => {
+      setIsPlaying(false);
+    });
+  }, [wavesurfer]);
 
   const { data, mutate, isLoading } = trpc.transcribe.useMutation({});
 
@@ -72,17 +132,18 @@ const Box = () => {
   };
 
   return (
-    <div className="relative h-48 sm:w-72 w-full border border-gray-400  flex flex-col items-center bg-gray-200">
+    <div className="relative h-32 sm:w-72 w-full border border-gray-400  flex flex-col items-center bg-gray-200">
       <Uploader
-        onAudio={(blobUrl) => {
-          setRecording({ blobUrl });
+        onAudio={(blob) => {
+          // setRecording({ blobUrl });
+          saveNewRecording(blob);
         }}
       />
       <div className="flex gap-2 z-10">
         <RecordBoat
           onRecordFinish={async ({ blobUrl, chunks, blob }) => {
             console.log("chunks: ", chunks);
-            setRecording({ blobUrl });
+            saveNewRecording(blob);
             const SPEECH_TO_TEX = false;
             if (!SPEECH_TO_TEX) return;
             const { wavBlob } = await blobToWav(blob);
@@ -111,20 +172,13 @@ const Box = () => {
         <Button
           onClick={async () => {
             if (!lastRegion) return;
-            // wavesurfer?.stop();
-            // setRecording(null);
-            console.log("lastRegion: ", lastRegion);
+
             const from = lastRegion.region.start;
-            console.log("from: ", from);
             const to = lastRegion.region.end;
-            console.log("to: ", to);
 
             const blob = await fetch(lastRegion.blobUrl).then((r) => r.blob());
             const newBlob = await trimBlob(blob, from, to);
-            const newBlobUrl = URL.createObjectURL(newBlob);
-            setRecording({
-              blobUrl: newBlobUrl,
-            });
+						saveNewRecording(newBlob);
           }}
           disabled={!lastRegion}
         >
@@ -154,11 +208,11 @@ const Box = () => {
 };
 
 import decodeAudio from "audio-decode";
-import { trimSilence } from "./trimSilence";
+import { atom, useAtom } from "jotai";
 import { audioBufferToBlob } from "./audioBufferToBlob";
-import { atom, useAtom, useSetAtom } from "jotai";
+import { firestore } from "./firebase";
 import { trimBlob } from "./trimBlob";
-const Uploader = ({ onAudio }: { onAudio: (blobUrl: string) => void }) => {
+const Uploader = ({ onAudio }: { onAudio: (blob: Blob) => void }) => {
   const onDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0]!;
 
@@ -170,9 +224,7 @@ const Uploader = ({ onAudio }: { onAudio: (blobUrl: string) => void }) => {
 
     const newBlob = await audioBufferToBlob(audioBuffer);
 
-    const blobUrl = URL.createObjectURL(newBlob);
-
-    onAudio(blobUrl);
+    onAudio(newBlob);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

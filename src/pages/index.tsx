@@ -61,7 +61,7 @@ export default function Index() {
       <Header />
 
       <h1 className="text-5xl font-medium text-black text-center mt-20 mb-8">
-        <div className="mb-1">Perfect pronunciation.</div>
+        <div className="mb-1">Pronunciation.</div>
       </h1>
       <h2 className="text-2xl font-regular max-w-sm text-black text-center mb-8">
         <div className="mb-1 font-light">

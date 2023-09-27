@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { blobToAudioBuffer } from "./blobToAudioBuffer";
 import { audioBufferToBlob } from "./audioBufferToBlob";
 import { trimSilence } from "./trimSilence";
+import { useAtom } from "jotai";
+import { recordingCountAtom } from "./Chamber";
 
 let recordedChunks: Blob[] = [];
 export default function RecordBoat({
@@ -24,6 +26,7 @@ export default function RecordBoat({
   );
   const [isRecording, setIsRecording] = useState(false);
   const [loading, setLoading] = useState(false);
+	const [recordCount, setRecordCount] = useAtom(recordingCountAtom);
 
   const [isLoadingLongTime, setIsLoadingLongTime] = useState(false);
 
@@ -74,6 +77,7 @@ export default function RecordBoat({
 
   const stop = () => {
     setLoading(true);
+		setRecordCount(recordCount + 1);
     const onStop = async () => {
       const blobOfAllBlobs = new Blob(recordedChunks, {
         type: mediaRecorder.mimeType,
