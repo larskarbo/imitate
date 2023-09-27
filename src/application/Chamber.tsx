@@ -79,7 +79,7 @@ const Box = ({
 
   const { mutate: saveItem } = trpc.setItem.useMutation({
     onError: (err) => {
-      alert(err);
+      // alert(err);
     },
   });
 
