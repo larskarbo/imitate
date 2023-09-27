@@ -75,9 +75,10 @@ const WaveSurferPlayer = ({
   onSetWavesurfer: (ws: WaveSurfer) => void;
   onRegionUpdate: (region: Region | null) => void;
 }) => {
-  const containerRef = useRef();
-  const [currentTime, setCurrentTime] = useState(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const wavesurfer = useWavesurfer(containerRef, options, onRegionUpdate);
+
+  const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
     if (!wavesurfer) return;

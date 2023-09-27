@@ -21,8 +21,7 @@
     "noImplicitReturns": false, // old tsconfig was set to true
     "noImplicitThis": true,
     "noImplicitAny": false, // old tsconfig was set to true
-    "strictNullChecks": false, // old tsconfig was set to true
-    "suppressImplicitAnyIndexErrors": true,
+    "strictNullChecks": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "disableSizeLimit": true,

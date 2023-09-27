@@ -76,6 +76,7 @@ export default function RecordBoat({
   };
 
   const stop = () => {
+		if(!mediaRecorder) return;
     setLoading(true);
 		setRecordCount(recordCount + 1);
     const onStop = async () => {

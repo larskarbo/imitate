@@ -2,11 +2,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useRef } from "react";
 import { request } from "../application/utils/request";
-import { Header } from "../course/Header";
 
 const showEmailBox = false;
 export default function Index() {
-  const formRef = useRef();
+  const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const onSubmit = (e) => {
     e.preventDefault();
@@ -58,7 +57,6 @@ export default function Index() {
         <meta name="twitter:creator" content={"larskarbo"} />
       </Head>
 
-      <Header />
 
       <h1 className="text-5xl font-medium text-black text-center mt-20 mb-8">
         <div className="mb-1">Pronunciation.</div>
