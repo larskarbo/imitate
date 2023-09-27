@@ -7,7 +7,6 @@ import PlaybackBoat, { Region } from "./PlaybackBoat";
 import RecordBoat, { Button } from "./RecordBoat";
 import { blobToArrayBuffer, blobToAudioBuffer } from "./blobToAudioBuffer";
 
-import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useDropzone } from "react-dropzone";
 
 export function Chamber({ namespace }: { namespace: string }) {
@@ -27,9 +26,10 @@ export function Chamber({ namespace }: { namespace: string }) {
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-tr from-gray-100 pt-0 to-yellow-50 min-h-screen w-full">
+			<SheetPicker />
       <div className="max-w-3xl flex flex-col items-center px-8 w-full pb-24">
         <div className="pb-8"></div>
-      </div>
+      S</div>
       Recordings: {recordCount}
       <div className="w-full  flex flex-wrap">
         {range(5).map((i) => {
@@ -178,7 +178,7 @@ const Box = ({
 
             const blob = await fetch(lastRegion.blobUrl).then((r) => r.blob());
             const newBlob = await trimBlob(blob, from, to);
-						saveNewRecording(newBlob);
+            saveNewRecording(newBlob);
           }}
           disabled={!lastRegion}
         >
@@ -212,6 +212,7 @@ import { atom, useAtom } from "jotai";
 import { audioBufferToBlob } from "./audioBufferToBlob";
 import { firestore } from "./firebase";
 import { trimBlob } from "./trimBlob";
+import { SheetPicker } from "./SheetPicker";
 const Uploader = ({ onAudio }: { onAudio: (blob: Blob) => void }) => {
   const onDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0]!;

@@ -24,6 +24,22 @@ export const appRouter = router({
       };
     }),
 
+  getSheets: procedure.query(async ({ input }) => {
+    const keys = await kv.keys("sheet:*");
+
+    // Extract the namespaces from the keys
+    const namespaces = keys.map((key) => {
+      // Key format is 'sheet:{namespaceName}:item:{id}'
+      const parts = key.split(":");
+      return parts[1]; // Namespace is the second part of the split string
+    });
+
+    // Use a Set to remove duplicate namespaces
+    const uniqueNamespaces = Array.from(new Set(namespaces));
+
+    return uniqueNamespaces;
+  }),
+
   getItem: procedure
     .input(z.object({ id: z.number(), sheetNamespace: z.string() }))
     .query(async ({ input }) => {

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
+//@ts-ignore
 import Regions from "wavesurfer.js/plugins/regions";
 
 type WaveSurferOptions = Partial<WaveSurfer["options"]>;
