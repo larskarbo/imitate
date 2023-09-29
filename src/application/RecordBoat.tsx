@@ -26,7 +26,7 @@ export default function RecordBoat({
   );
   const [isRecording, setIsRecording] = useState(false);
   const [loading, setLoading] = useState(false);
-	const [recordCount, setRecordCount] = useAtom(recordingCountAtom);
+  const [recordCount, setRecordCount] = useAtom(recordingCountAtom);
 
   const [isLoadingLongTime, setIsLoadingLongTime] = useState(false);
 
@@ -76,9 +76,9 @@ export default function RecordBoat({
   };
 
   const stop = () => {
-		if(!mediaRecorder) return;
+    if (!mediaRecorder) return;
     setLoading(true);
-		setRecordCount(recordCount + 1);
+    setRecordCount(recordCount + 1);
     const onStop = async () => {
       const blobOfAllBlobs = new Blob(recordedChunks, {
         type: mediaRecorder.mimeType,
@@ -112,17 +112,10 @@ export default function RecordBoat({
   return (
     <>
       {isLoadingLongTime ? (
-        <button
-          className={"px-2 py-1 text-white font-bold shadow " + "bg-gray-500"}
-        >
-          loading...
-        </button>
+        <Button className={"    " + "bg-gray-500"}>loading...</Button>
       ) : (
-        <button
-          className={
-            "px-2 py-1 text-white font-bold shadow " +
-            (isRecording ? "bg-gray-500" : "bg-red-500")
-          }
+        <Button
+          className={"    " + (isRecording ? "bg-gray-500" : "bg-red-500")}
           disabled={loading}
           onClick={() => {
             if (isRecording) {
@@ -133,7 +126,7 @@ export default function RecordBoat({
           }}
         >
           {isRecording ? "stop" : "rec"}
-        </button>
+        </Button>
       )}
     </>
   );
@@ -144,8 +137,12 @@ export const Button = (
 ) => {
   return (
     <button
-      className={"px-2 py-1 text-white font-bold shadow bg-gray-500"}
       {...props}
+      className={
+        "px-2 py-1 text-white font-bold shadow bg-gray-500 text-xs " +
+        "whitespace-nowrap" +
+        props.className
+      }
     >
       {props.children}
     </button>

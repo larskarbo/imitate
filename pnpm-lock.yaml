@@ -119,6 +119,9 @@ dependencies:
   react-markdown:
     specifier: ^7.1.2
     version: 7.1.2(@types/react@18.0.28)(react@18.2.0)
+  react-textfit:
+    specifier: ^1.1.1
+    version: 1.1.1(react-dom@18.2.0)(react@18.2.0)
   react-youtube:
     specifier: ^7.14.0
     version: 7.14.0(react@18.2.0)
@@ -128,6 +131,9 @@ dependencies:
   tailwindcss:
     specifier: ^2.2.19
     version: 2.2.19(autoprefixer@10.4.14)(postcss@8.4.21)
+  use-fit-text:
+    specifier: ^2.4.0
+    version: 2.4.0(react@18.2.0)
   wavefile:
     specifier: ^11.0.0
     version: 11.0.0
@@ -160,6 +166,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^17.0.9
     version: 17.0.9
+  '@types/react-textfit':
+    specifier: ^1.1.1
+    version: 1.1.1
   typescript:
     specifier: ^5.2.2
     version: 5.2.2
@@ -1999,6 +2008,12 @@ packages:
       '@types/react': 18.0.28
     dev: true
 
+  /@types/react-textfit@1.1.1:
+    resolution: {integrity: sha512-6jbsmoVi1bluKCo0vo68QbKlviLZ28u791n4nOs6QkCSU67ZiVLKUb10I12Ugee/6D31urG4B/4/qrQRtIP0FQ==}
+    dependencies:
+      '@types/react': 18.0.28
+    dev: true
+
   /@types/react@18.0.28:
     resolution: {integrity: sha512-RD0ivG1kEztNBdoAK7lekI9M+azSnitIn85h4iOiaLjaTrMjzslhaqCGaI4IyCJ1RljWiLCEu4jyrLLgqxBTew==}
     dependencies:
@@ -3527,6 +3542,11 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
+  /process@0.11.10:
+    resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
+    engines: {node: '>= 0.6.0'}
+    dev: false
+
   /prop-types@15.7.2:
     resolution: {integrity: sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==}
     dependencies:
@@ -3697,6 +3717,18 @@ packages:
       react: 18.2.0
     dev: false
 
+  /react-textfit@1.1.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-UDSQRo5yBEGueLTE5SgNV9fSmr5CWJkE0E0R0YbcbCO69iuJGfcT6wspKhX2sIwdsDyT9qXOwMC80cnRolir7Q==}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0
+      react-dom: ^15.0.0 || ^16.0.0
+    dependencies:
+      process: 0.11.10
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /react-youtube@7.14.0(react@18.2.0):
     resolution: {integrity: sha512-SUHZ4F4pd1EHmQu0CV0KSQvAs5KHOT5cfYaq4WLCcDbU8fBo1ouTXaAOIASWbrz8fHwg+G1evfoSIYpV2AwSAg==}
     engines: {node: '>= 10.x'}
@@ -3766,6 +3798,10 @@ packages:
   /require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
+    dev: false
+
+  /resize-observer-polyfill@1.5.1:
+    resolution: {integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==}
     dev: false
 
   /resolve-from@4.0.0:
@@ -4078,6 +4114,15 @@ packages:
       browserslist: 4.21.10
       escalade: 3.1.1
       picocolors: 1.0.0
+    dev: false
+
+  /use-fit-text@2.4.0(react@18.2.0):
+    resolution: {integrity: sha512-Iy4LMrXcdxWlyZ5phntMpJMgyXGB1p3tV73y2r0QrZ6f/thPh+/QU3ie6RCXmjF8tHMs20FKMPskXeDYIla/Ww==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      resize-observer-polyfill: 1.5.1
     dev: false
 
   /use-sync-external-store@1.2.0(react@18.2.0):

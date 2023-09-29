@@ -49,9 +49,7 @@ export const appRouter = router({
       if (!value) {
         return null;
       }
-      return value as {
-        url: string;
-      };
+      return value as Item
     }),
 
   setItem: procedure
@@ -60,24 +58,38 @@ export const appRouter = router({
         id: z.number(),
         sheetNamespace: z.string(),
         item: z.any(),
-        wavBlob: z.instanceof(Uint8Array),
+        wavBlob: z.instanceof(Uint8Array).optional(),
+        text: z.string().optional(),
       })
     )
     .mutation(async ({ input }) => {
-      const { id, sheetNamespace, item } = input;
-      const { wavBlob } = input;
+      const { id, sheetNamespace, text, wavBlob } = input;
       const filePath = "temp.wav";
-      await writeFile(filePath, wavBlob);
 
-      const uploadedUrl = await uploadWavToS3(filePath);
+      const item: Item = {};
 
-      await kv.set(`sheet:${sheetNamespace}:item:${id}`, {
-        url: uploadedUrl,
-      });
+      if (wavBlob) {
+        const object = await writeFile(filePath, wavBlob);
+
+        const uploadedUrl = await uploadWavToS3(filePath);
+
+				item.url = uploadedUrl;
+      }
+
+      if (text) {
+        item.text = text;
+      }
+
+      await kv.set(`sheet:${sheetNamespace}:item:${id}`, item);
 
       return null;
     }),
 });
+
+export type Item = {
+  url?: string;
+  text?: string;
+};
 
 // export type definition of API
 export type AppRouter = typeof appRouter;
