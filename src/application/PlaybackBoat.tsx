@@ -109,16 +109,18 @@ const WaveSurferPlayer = ({
 
 export default function PlaybackBoat({
   blobUrl,
+  isRecording,
   onSetWavesurfer,
   onRegionUpdate,
 }: {
   blobUrl: string;
+  isRecording: boolean;
   onSetWavesurfer: (ws: WaveSurfer) => void;
   onRegionUpdate: (region: Region | null) => void;
 }) {
   const options: WaveSurferOptions = {
-    waveColor: "#4F4A85",
-    progressColor: "#383351",
+    waveColor: isRecording ? "#CC3110" : "#4F4A85",
+    progressColor: isRecording ? "#7A210E" : "#383351",
   };
 
   return (

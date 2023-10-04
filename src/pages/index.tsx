@@ -57,7 +57,6 @@ export default function Index() {
         <meta name="twitter:creator" content={"larskarbo"} />
       </Head>
 
-
       <h1 className="text-5xl font-medium text-black text-center mt-20 mb-8">
         <div className="mb-1">Pronunciation.</div>
       </h1>
@@ -206,3 +205,11 @@ const languages = [
     name: "Other",
   },
 ];
+export const getServerSideProps = async () => {
+  return {
+    redirect: {
+      destination: "/chamber/test",
+      permanent: false,
+    },
+  };
+};

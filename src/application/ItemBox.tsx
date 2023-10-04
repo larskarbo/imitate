@@ -10,6 +10,7 @@ import { trimBlob } from "./trimBlob";
 import { lastRegionAtom } from "./Chamber";
 import { Uploader } from "./Uploader";
 
+import { usePresignedUpload } from "next-s3-upload";
 export const ItemBox = ({
   id,
   sheetNamespace,
@@ -20,11 +21,14 @@ export const ItemBox = ({
   const [recording, setRecording] = useState<{
     blobUrl: string;
     blob?: Blob;
+    isRecording: boolean;
   } | null>(null);
   const [text, setText] = useState<string | null>(null);
   const [isDirty, setIsDirty] = useState(false);
 
   const { data: fetchedItem } = trpc.getItem.useQuery({ id, sheetNamespace });
+
+  let { uploadToS3 } = usePresignedUpload();
 
   useEffect(() => {
     if (!fetchedItem) return;
@@ -33,6 +37,7 @@ export const ItemBox = ({
     if (fetchedItem.url) {
       setRecording({
         blobUrl: fetchedItem.url,
+        isRecording: fetchedItem.isRecording || false,
       });
     }
 
@@ -47,25 +52,37 @@ export const ItemBox = ({
     },
   });
 
-  const setNewRecording = async (blob: Blob) => {
+  const setNewRecording = async (
+    blob: Blob,
+    {
+      isRecording,
+    }: {
+      isRecording: boolean;
+    }
+  ) => {
     const blobUrl = URL.createObjectURL(blob);
 
-    setRecording({ blobUrl, blob });
+    setRecording({ blobUrl, blob, isRecording });
     setIsDirty(true);
   };
 
   const save = async () => {
-    let wavBlob: Uint8Array | undefined;
+    let recordingUrl: string | undefined = undefined;
 
     if (recording?.blob) {
       const res = await blobToWav(recording.blob);
-      wavBlob = new Uint8Array(await res.wavBlob.arrayBuffer());
+      const wavBlob = new Uint8Array(await res.wavBlob.arrayBuffer());
+
+      const blob = new Blob([wavBlob], { type: "audio/wav" });
+      const file = new File([blob], "filename");
+      const result = await uploadToS3(file);
+      console.log("result: ", result);
     }
 
     saveItem({
       id,
       sheetNamespace,
-      wavBlob: wavBlob || undefined,
+      recordingUrl: recordingUrl,
       text: text || undefined,
     });
   };
@@ -106,14 +123,18 @@ export const ItemBox = ({
       <Uploader
         onAudio={(blob) => {
           // setRecording({ blobUrl });
-          setNewRecording(blob);
+          setNewRecording(blob, {
+            isRecording: false,
+          });
         }}
       />
       <div className="flex gap-2 z-10">
         <RecordBoat
           onRecordFinish={async ({ blobUrl, chunks, blob }) => {
             console.log("chunks: ", chunks);
-            setNewRecording(blob);
+            setNewRecording(blob, {
+              isRecording: true,
+            });
             const SPEECH_TO_TEX = false;
             if (!SPEECH_TO_TEX) return;
             const { wavBlob } = await blobToWav(blob);
@@ -145,7 +166,7 @@ export const ItemBox = ({
           onClick={() => {
             wavesurfer?.stop();
             setRecording(null);
-			setIsDirty(true);
+            setIsDirty(true);
           }}
         >
           Clear
@@ -162,7 +183,9 @@ export const ItemBox = ({
                 r.blob()
               );
               const newBlob = await trimBlob(blob, from, to);
-              setNewRecording(newBlob);
+              setNewRecording(newBlob, {
+                isRecording: lastRegion.isRecording,
+              });
             }}
             disabled={!lastRegion}
           >
@@ -183,6 +206,7 @@ export const ItemBox = ({
         <PlaybackBoat
           key={recording.blobUrl}
           blobUrl={recording.blobUrl}
+          isRecording={recording.isRecording}
           onSetWavesurfer={setWavesurfer}
           onRegionUpdate={(region) => {
             setRegion(region);
@@ -192,6 +216,7 @@ export const ItemBox = ({
               setLastRegion({
                 region,
                 blobUrl: recording.blobUrl,
+                isRecording: recording.isRecording,
               });
             }
           }}

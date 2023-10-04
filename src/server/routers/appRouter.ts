@@ -58,22 +58,17 @@ export const appRouter = router({
         id: z.number(),
         sheetNamespace: z.string(),
         item: z.any(),
-        wavBlob: z.instanceof(Uint8Array).optional(),
+				recordingUrl: z.string().optional(),
         text: z.string().optional(),
       })
     )
     .mutation(async ({ input }) => {
-      const { id, sheetNamespace, text, wavBlob } = input;
-      const filePath = "temp.wav";
+      const { id, sheetNamespace, text, recordingUrl } = input;
 
       const item: Item = {};
 
-      if (wavBlob) {
-        const object = await writeFile(filePath, wavBlob);
-
-        const uploadedUrl = await uploadWavToS3(filePath);
-
-				item.url = uploadedUrl;
+      if (recordingUrl) {
+				item.url = recordingUrl;
       }
 
       if (text) {
@@ -89,6 +84,7 @@ export const appRouter = router({
 export type Item = {
   url?: string;
   text?: string;
+	isRecording?: boolean;
 };
 
 // export type definition of API

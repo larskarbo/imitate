@@ -17,13 +17,8 @@ export function Chamber({ namespace }: { namespace: string }) {
       </div>
       Recordings: {recordCount}
       <div className="w-full px-2 flex flex-wrap">
-        {range(5).map((i) => {
-          return range(8).map((j) => {
-            const id = i * 8 + j;
-            return (
-              <ItemBox key={`${i}-${j}`} id={id} sheetNamespace={namespace} />
-            );
-          });
+        {range(40).map((i) => {
+          return <ItemBox key={i} id={i} sheetNamespace={namespace} />;
         })}
       </div>
     </div>
@@ -36,5 +31,6 @@ export const lastRegionAtom = atom(
   null as {
     region: Region;
     blobUrl: string;
+		isRecording: boolean;
   } | null
 );
