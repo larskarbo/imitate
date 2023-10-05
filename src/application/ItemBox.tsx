@@ -74,15 +74,16 @@ export const ItemBox = ({
       const wavBlob = new Uint8Array(await res.wavBlob.arrayBuffer());
 
       const blob = new Blob([wavBlob], { type: "audio/wav" });
-      const file = new File([blob], "filename");
+      const file = new File([blob], "file.wav");
       const result = await uploadToS3(file);
-      console.log("result: ", result);
+      recordingUrl = `https://lars-div.larskarbo.no/lars-div/${result.key}`;
     }
 
     saveItem({
       id,
       sheetNamespace,
       recordingUrl: recordingUrl,
+      isRecording: recording?.isRecording,
       text: text || undefined,
     });
   };

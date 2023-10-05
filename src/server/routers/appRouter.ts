@@ -49,7 +49,7 @@ export const appRouter = router({
       if (!value) {
         return null;
       }
-      return value as Item
+      return value as Item;
     }),
 
   setItem: procedure
@@ -58,23 +58,26 @@ export const appRouter = router({
         id: z.number(),
         sheetNamespace: z.string(),
         item: z.any(),
-				recordingUrl: z.string().optional(),
+        recordingUrl: z.string().optional(),
+				isRecording: z.boolean().optional(),
         text: z.string().optional(),
       })
     )
     .mutation(async ({ input }) => {
-      const { id, sheetNamespace, text, recordingUrl } = input;
+      const { id, sheetNamespace, text, recordingUrl, isRecording } = input;
 
       const item: Item = {};
 
       if (recordingUrl) {
-				item.url = recordingUrl;
+        item.url = recordingUrl;
+				item.isRecording = isRecording;
       }
 
       if (text) {
         item.text = text;
       }
 
+      console.log("item: ", item);
       await kv.set(`sheet:${sheetNamespace}:item:${id}`, item);
 
       return null;
@@ -84,7 +87,7 @@ export const appRouter = router({
 export type Item = {
   url?: string;
   text?: string;
-	isRecording?: boolean;
+  isRecording?: boolean;
 };
 
 // export type definition of API
