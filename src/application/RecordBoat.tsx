@@ -125,7 +125,7 @@ export default function RecordBoat({
             }
           }}
         >
-          {isRecording ? "stop" : "rec"}
+          {isRecording ? "stop" : "●"}
         </Button>
       )}
     </>

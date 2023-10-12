@@ -19,7 +19,7 @@ export const ItemBox = ({
   sheetNamespace: string;
 }) => {
   const [recording, setRecording] = useState<{
-    blobUrl: string;
+    wavOrBlobUrl: string;
     blob?: Blob;
     isRecording: boolean;
   } | null>(null);
@@ -32,21 +32,23 @@ export const ItemBox = ({
 
   useEffect(() => {
     if (!fetchedItem) return;
-    console.log("fetchedItem: ", fetchedItem);
 
     if (fetchedItem.url) {
-      setRecording({
-        blobUrl: fetchedItem.url,
-        isRecording: fetchedItem.isRecording || false,
-      });
+      if (!fetchedItem.url.includes("blob")) {
+        setRecording({
+          wavOrBlobUrl: fetchedItem.url,
+          isRecording: fetchedItem.isRecording || false,
+        });
+      }
     }
 
     if (fetchedItem.text) {
+      console.log(`fetchedItem.url for ${fetchedItem.text} `, fetchedItem.url);
       setText(fetchedItem.text);
     }
   }, [fetchedItem]);
 
-  const { mutate: saveItem } = trpc.setItem.useMutation({
+  const { mutateAsync: saveItem } = trpc.setItem.useMutation({
     onSuccess: () => {
       setIsDirty(false);
     },
@@ -62,11 +64,11 @@ export const ItemBox = ({
   ) => {
     const blobUrl = URL.createObjectURL(blob);
 
-    setRecording({ blobUrl, blob, isRecording });
+    setRecording({ wavOrBlobUrl: blobUrl, blob, isRecording });
     setIsDirty(true);
   };
 
-  const save = async () => {
+  const { mutate: save, isLoading: isLoadingSave } = useMutation(async () => {
     let recordingUrl: string | undefined = undefined;
 
     if (recording?.blob) {
@@ -77,16 +79,22 @@ export const ItemBox = ({
       const file = new File([blob], "file.wav");
       const result = await uploadToS3(file);
       recordingUrl = `https://lars-div.larskarbo.no/lars-div/${result.key}`;
+    } else if (recording?.wavOrBlobUrl) {
+      recordingUrl = recording.wavOrBlobUrl;
     }
 
-    saveItem({
+    if (recordingUrl?.includes("blob")) {
+      throw new Error("recordingUrl is blob");
+    }
+
+    return saveItem({
       id,
       sheetNamespace,
       recordingUrl: recordingUrl,
       isRecording: recording?.isRecording,
       text: text || undefined,
     });
-  };
+  });
 
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -123,7 +131,6 @@ export const ItemBox = ({
     <div className="relative h-48 sm:w-72 w-full border border-gray-400  flex flex-col items-center bg-gray-200">
       <Uploader
         onAudio={(blob) => {
-          // setRecording({ blobUrl });
           setNewRecording(blob, {
             isRecording: false,
           });
@@ -156,22 +163,35 @@ export const ItemBox = ({
         >
           text
         </Button>
+
+        <Button
+          onClick={() => {
+            wavesurfer?.pause();
+            wavesurfer?.seekTo(0);
+            wavesurfer?.play();
+          }}
+        >
+          |▶️
+        </Button>
         <Button
           onClick={() => {
             wavesurfer?.playPause();
           }}
         >
-          {isPlaying ? "Pause" : "Play"}
+          {isPlaying ? "⏸️" : "▶️"}
         </Button>
+
         <Button
           onClick={() => {
             wavesurfer?.stop();
             setRecording(null);
+            setText(null);
             setIsDirty(true);
           }}
         >
-          Clear
+          ✕
         </Button>
+
         {lastRegion && (
           <Button
             onClick={async () => {
@@ -193,20 +213,36 @@ export const ItemBox = ({
             froms
           </Button>
         )}
-        {isDirty && (
+        {isDirty ? (
           <Button
             onClick={async () => {
-              await save();
+              save();
             }}
           >
-            Save
+            Save{isLoadingSave && "..."}
           </Button>
+        ) : (
+          <>
+            {recording && (
+              <Button
+                onClick={() => {
+                  // download recording.blobUrl
+                  const a = document.createElement("a");
+                  a.href = recording.wavOrBlobUrl;
+                  a.download = "recording.wav";
+                  a.click();
+                }}
+              >
+                ↓
+              </Button>
+            )}
+          </>
         )}
       </div>
       {recording && (
         <PlaybackBoat
-          key={recording.blobUrl}
-          blobUrl={recording.blobUrl}
+          key={recording.wavOrBlobUrl}
+          blobUrl={recording.wavOrBlobUrl}
           isRecording={recording.isRecording}
           onSetWavesurfer={setWavesurfer}
           onRegionUpdate={(region) => {
@@ -216,7 +252,7 @@ export const ItemBox = ({
             } else {
               setLastRegion({
                 region,
-                blobUrl: recording.blobUrl,
+                blobUrl: recording.wavOrBlobUrl,
                 isRecording: recording.isRecording,
               });
             }
@@ -230,6 +266,7 @@ export const ItemBox = ({
 import useFitText from "use-fit-text";
 
 import { Textfit } from "react-textfit";
+import { useMutation } from "@tanstack/react-query";
 const Text = ({ text }: { text: string }) => {
   const { fontSize, ref } = useFitText();
 
