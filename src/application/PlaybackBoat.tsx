@@ -10,6 +10,8 @@ export type Region = {
   end: number;
 };
 
+export const ITEMBOX_HEIGHT = 160;
+
 const useWavesurfer = (
   containerRef: React.MutableRefObject<HTMLDivElement | null>,
   options: WaveSurferOptions,
@@ -23,6 +25,8 @@ const useWavesurfer = (
     const ws = WaveSurfer.create({
       ...options,
       container: containerRef.current,
+      height: ITEMBOX_HEIGHT,
+			cursorColor: "gray"
     });
 
     // Initialize the Regions plugin
@@ -102,7 +106,7 @@ const WaveSurferPlayer = ({
 
   return (
     <>
-      <div ref={containerRef} style={{ minHeight: "120px" }} />
+      <div ref={containerRef} style={{ height: "100%" }} />
     </>
   );
 };
@@ -124,7 +128,7 @@ export default function PlaybackBoat({
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full absolute inset-0">
       <WaveSurferPlayer
         options={{
           ...options,

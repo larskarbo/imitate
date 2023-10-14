@@ -2,14 +2,14 @@ import toWav from "audiobuffer-to-wav";
 import { useEffect, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
 import { trpc } from "../utils/trpc";
-import PlaybackBoat, { Region } from "./PlaybackBoat";
+import PlaybackBoat, { ITEMBOX_HEIGHT, Region } from "./PlaybackBoat";
 import RecordBoat, { Button } from "./RecordBoat";
 import { blobToAudioBuffer } from "./blobToAudioBuffer";
 import { useAtom } from "jotai";
 import { trimBlob } from "./trimBlob";
 import { lastRegionAtom } from "./Chamber";
 import { Uploader } from "./Uploader";
-
+import slugify from "slugify";
 import { usePresignedUpload } from "next-s3-upload";
 export const ItemBox = ({
   id,
@@ -34,12 +34,14 @@ export const ItemBox = ({
     if (!fetchedItem) return;
 
     if (fetchedItem.url) {
-      if (!fetchedItem.url.includes("blob")) {
-        setRecording({
-          wavOrBlobUrl: fetchedItem.url,
-          isRecording: fetchedItem.isRecording || false,
-        });
+      if (fetchedItem.url.includes("blob")) {
+        alert(`fetchedItem.url is blob where text is ${fetchedItem.text}`);
+        return;
       }
+      setRecording({
+        wavOrBlobUrl: fetchedItem.url,
+        isRecording: fetchedItem.isRecording || false,
+      });
     }
 
     if (fetchedItem.text) {
@@ -128,7 +130,10 @@ export const ItemBox = ({
   };
 
   return (
-    <div className="relative h-48 sm:w-72 w-full border border-gray-400  flex flex-col items-center bg-gray-200">
+    <div
+      className="relative sm:w-72 w-full rounded-lg overflow-hidden shadow-sm border border-gray-400  flex flex-col items-center bg-gray-200"
+      style={{ height: ITEMBOX_HEIGHT }}
+    >
       <Uploader
         onAudio={(blob) => {
           setNewRecording(blob, {
@@ -227,9 +232,17 @@ export const ItemBox = ({
               <Button
                 onClick={() => {
                   // download recording.blobUrl
+                  let filename = "recording.wav";
+
+                  if (text && text.length > 0) {
+                    let slug = slugify(text, { lower: true }); // create a slug from the text
+                    slug = slug.slice(0, 30); // make sure it's not longer than the max length
+                    filename = `${slug}.wav`;
+                  }
+
                   const a = document.createElement("a");
                   a.href = recording.wavOrBlobUrl;
-                  a.download = "recording.wav";
+                  a.download = filename;
                   a.click();
                 }}
               >
@@ -259,24 +272,29 @@ export const ItemBox = ({
           }}
         />
       )}
-      {text && <Text text={text} />}
+      {text && <Text text={text} hasRecording={!!recording} />}
     </div>
   );
 };
-import useFitText from "use-fit-text";
 
-import { Textfit } from "react-textfit";
 import { useMutation } from "@tanstack/react-query";
-const Text = ({ text }: { text: string }) => {
-  const { fontSize, ref } = useFitText();
-
+const Text = ({
+  text,
+  hasRecording,
+}: {
+  text: string;
+  hasRecording: boolean;
+}) => {
   return (
     <div
-      ref={ref}
-      style={{ fontSize }}
-      className="absolute bottom-0 right-0 top-0 left-0 p-2 font-serif text-6xl flex justify-center items-center"
+      className={clsx(
+        "absolute bottom-0 right-0 top-0 left-0  p-2  font-serif flex justify-center ",
+        hasRecording ? "pb-4 items-end " : "items-center",
+        text.length > 50 ? "text-xs" : "text-sm"
+      )}
     >
       {text}
     </div>
   );
 };
+import clsx from "clsx";

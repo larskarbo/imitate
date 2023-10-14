@@ -16,7 +16,7 @@ export function Chamber({ namespace }: { namespace: string }) {
         <div className="pb-8"></div>
       </div>
       Recordings: {recordCount}
-      <div className="w-full px-2 flex flex-wrap">
+      <div className="w-full px-2 flex flex-wrap gap-3">
         {range(40).map((i) => {
           return <ItemBox key={i} id={i} sheetNamespace={namespace} />;
         })}
