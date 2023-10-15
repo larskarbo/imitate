@@ -1,6 +1,6 @@
 export const trimSilence = async (
   buffer: AudioBuffer
-): Promise<AudioBuffer> => {
+) => {
   const offlineContext = new OfflineAudioContext(
     buffer.numberOfChannels,
     buffer.length,
@@ -20,7 +20,7 @@ export const trimSilence = async (
 
   const THRESHOLD = 0.1;
   const START_PAD = 3_000;
-  const END_PAD = 10_000;
+  const END_PAD = 30_000;
 
   // Find first non silent sample
   while (data[startOffset] < THRESHOLD) {
@@ -38,6 +38,10 @@ export const trimSilence = async (
 
   console.log("startOffset: ", startOffset);
   console.log("endOffset: ", endOffset);
+
+  if (endOffset < startOffset) {
+    return null;
+  }
 
   // Create new trimmed AudioBuffer
   const newBuffer = source.context.createBuffer(

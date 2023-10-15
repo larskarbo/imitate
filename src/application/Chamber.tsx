@@ -16,7 +16,7 @@ export function Chamber({ namespace }: { namespace: string }) {
         <div className="pb-8"></div>
       </div>
       Recordings: {recordCount}
-      <div className="w-full px-2 flex flex-wrap gap-3">
+      <div className="w-full px-2 grid grid-cols-4 gap-3 overflow-x-auto">
         {range(40).map((i) => {
           return <ItemBox key={i} id={i} sheetNamespace={namespace} />;
         })}
@@ -34,3 +34,5 @@ export const lastRegionAtom = atom(
 		isRecording: boolean;
   } | null
 );
+
+export const focusedItemAtom = atom(null as number | null);

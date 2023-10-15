@@ -85,7 +85,14 @@ export default function RecordBoat({
       });
 
       const audioBuffer = await blobToAudioBuffer(blobOfAllBlobs);
+
       const audioBufferCleaned = await trimSilence(audioBuffer);
+
+      if (!audioBufferCleaned) { // if the audio is just silence
+        setLoading(false);
+        onIsRecordingChange(false);
+        return;
+      }
 
       const newBlob = await audioBufferToBlob(audioBufferCleaned);
 

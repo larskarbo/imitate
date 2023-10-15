@@ -7,7 +7,7 @@ import RecordBoat, { Button } from "./RecordBoat";
 import { blobToAudioBuffer } from "./blobToAudioBuffer";
 import { useAtom } from "jotai";
 import { trimBlob } from "./trimBlob";
-import { lastRegionAtom } from "./Chamber";
+import { focusedItemAtom, lastRegionAtom } from "./Chamber";
 import { Uploader } from "./Uploader";
 import slugify from "slugify";
 import { usePresignedUpload } from "next-s3-upload";
@@ -103,15 +103,26 @@ export const ItemBox = ({
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer>();
   const [region, setRegion] = useState<Region | null>(null);
   const [lastRegion, setLastRegion] = useAtom(lastRegionAtom);
+  const [focusedItem, setFocusedItem] = useAtom(focusedItemAtom);
+  const isFocused = focusedItem === id;
+  if (isFocused) console.log("isFocused: ", isFocused, { focusedItem, id });
 
   useEffect(() => {
     if (!wavesurfer) return;
 
     wavesurfer.on("play", () => {
       setIsPlaying(true);
+      setFocusedItem(id);
     });
     wavesurfer.on("pause", () => {
       setIsPlaying(false);
+      setFocusedItem(id);
+			if(wavesurfer.getCurrentTime() === wavesurfer.getDuration()) {
+				wavesurfer.seekTo(0);
+			}
+    });
+    wavesurfer.on("seeking", () => {
+      setFocusedItem(id);
     });
   }, [wavesurfer]);
 
@@ -129,9 +140,24 @@ export const ItemBox = ({
     };
   };
 
+  const SPACE_KEY = " ";
+  useKeypress(
+    SPACE_KEY,
+    (e) => {
+      if (!isFocused) return;
+
+      wavesurfer?.playPause();
+      e.preventDefault();
+    },
+    [isFocused]
+  );
+
   return (
     <div
-      className="relative sm:w-72 w-full rounded-lg overflow-hidden shadow-sm border border-gray-400  flex flex-col items-center bg-gray-200"
+      className={clsx(
+        "relative w-full rounded-lg overflow-hidden shadow-sm border border-gray-400  flex flex-col items-center ",
+        isRecording ? "bg-red-200" : "bg-gray-200"
+      )}
       style={{ height: ITEMBOX_HEIGHT }}
     >
       <Uploader
@@ -160,42 +186,37 @@ export const ItemBox = ({
         />
         <Button
           onClick={() => {
-            const text = prompt("text");
-            if (!text) return;
-            setText(text);
+            const prompetText = prompt("text", text || "");
+            if (!prompetText) return;
+            setText(prompetText);
             setIsDirty(true);
           }}
         >
           text
         </Button>
 
-        <Button
-          onClick={() => {
-            wavesurfer?.pause();
-            wavesurfer?.seekTo(0);
-            wavesurfer?.play();
-          }}
-        >
-          |▶️
-        </Button>
-        <Button
-          onClick={() => {
-            wavesurfer?.playPause();
-          }}
-        >
-          {isPlaying ? "⏸️" : "▶️"}
-        </Button>
+        {recording && (
+          <Button
+            onClick={() => {
+              wavesurfer?.playPause();
+            }}
+          >
+            {isPlaying ? "⏸️" : "▶️"}
+          </Button>
+        )}
 
-        <Button
-          onClick={() => {
-            wavesurfer?.stop();
-            setRecording(null);
-            setText(null);
-            setIsDirty(true);
-          }}
-        >
-          ✕
-        </Button>
+        {(recording || text) && (
+          <Button
+            onClick={() => {
+              wavesurfer?.stop();
+              setRecording(null);
+              setText(null);
+              setIsDirty(true);
+            }}
+          >
+            ✕
+          </Button>
+        )}
 
         {lastRegion && (
           <Button
@@ -230,18 +251,22 @@ export const ItemBox = ({
           <>
             {recording && (
               <Button
-                onClick={() => {
+                onClick={async () => {
                   // download recording.blobUrl
                   let filename = "recording.wav";
 
                   if (text && text.length > 0) {
-                    let slug = slugify(text, { lower: true }); // create a slug from the text
+                    let slug = text
                     slug = slug.slice(0, 30); // make sure it's not longer than the max length
                     filename = `${slug}.wav`;
                   }
+									const blob = await fetch(recording.wavOrBlobUrl)
+									.then(response => response.blob())
+									let blobURL = window.URL.createObjectURL(blob);
+
 
                   const a = document.createElement("a");
-                  a.href = recording.wavOrBlobUrl;
+                  a.href = blobURL;
                   a.download = filename;
                   a.click();
                 }}
@@ -298,3 +323,4 @@ const Text = ({
   );
 };
 import clsx from "clsx";
+import useKeypress from "./utils/useKeyPress";

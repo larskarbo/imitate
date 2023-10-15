@@ -125,6 +125,9 @@ dependencies:
   react-markdown:
     specifier: ^7.1.2
     version: 7.1.2(@types/react@18.0.28)(react@18.2.0)
+  react-movable:
+    specifier: ^3.0.4
+    version: 3.0.4(react-dom@18.2.0)(react@18.2.0)
   react-textfit:
     specifier: ^1.1.1
     version: 1.1.1(react-dom@18.2.0)(react@18.2.0)
@@ -3791,6 +3794,16 @@ packages:
       vfile: 5.3.7
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /react-movable@3.0.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-rIbzl62O7cr7n//GjZMnQ+nWuu2QZI3Mnkm8P0Y4A5Qadt24BKvimlt1kzoxFzJ+Gk2+ZwpM4ZLQUVvKzGjsCw==}
+    peerDependencies:
+      react: '>=16.3'
+      react-dom: '>=16.3'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-side-effect@2.1.2(react@18.2.0):
