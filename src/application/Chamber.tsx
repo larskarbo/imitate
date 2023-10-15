@@ -36,3 +36,5 @@ export const lastRegionAtom = atom(
 );
 
 export const focusedItemAtom = atom(null as number | null);
+
+import { useDrag } from 'react-dnd'

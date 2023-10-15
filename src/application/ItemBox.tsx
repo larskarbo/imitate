@@ -10,6 +10,8 @@ import { trimBlob } from "./trimBlob";
 import { focusedItemAtom, lastRegionAtom } from "./Chamber";
 import { Uploader } from "./Uploader";
 import slugify from "slugify";
+import { useDraggable } from "@dnd-kit/core";
+
 import { usePresignedUpload } from "next-s3-upload";
 export const ItemBox = ({
   id,
@@ -117,9 +119,9 @@ export const ItemBox = ({
     wavesurfer.on("pause", () => {
       setIsPlaying(false);
       setFocusedItem(id);
-			if(wavesurfer.getCurrentTime() === wavesurfer.getDuration()) {
-				wavesurfer.seekTo(0);
-			}
+      if (wavesurfer.getCurrentTime() === wavesurfer.getDuration()) {
+        wavesurfer.seekTo(0);
+      }
     });
     wavesurfer.on("seeking", () => {
       setFocusedItem(id);
@@ -152,13 +154,29 @@ export const ItemBox = ({
     [isFocused]
   );
 
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: `draggable${id}`,
+    });
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      }
+    : undefined;
+
   return (
     <div
+      ref={setNodeRef}
       className={clsx(
         "relative w-full rounded-lg overflow-hidden shadow-sm border border-gray-400  flex flex-col items-center ",
         isRecording ? "bg-red-200" : "bg-gray-200"
       )}
-      style={{ height: ITEMBOX_HEIGHT }}
+      style={{
+        height: ITEMBOX_HEIGHT,
+        ...style,
+        zIndex: isDragging ? 100 : 0,
+        //  opacity: isDragging ? 0.5 : 1
+      }}
     >
       <Uploader
         onAudio={(blob) => {
@@ -168,6 +186,15 @@ export const ItemBox = ({
         }}
       />
       <div className="flex gap-2 z-10">
+        {/* <Button
+          {...listeners}
+          {...attributes}
+          style={{
+            zIndex: 1000,
+          }}
+        >
+          drag
+        </Button> */}
         <RecordBoat
           onRecordFinish={async ({ blobUrl, chunks, blob }) => {
             console.log("chunks: ", chunks);
@@ -256,14 +283,14 @@ export const ItemBox = ({
                   let filename = "recording.wav";
 
                   if (text && text.length > 0) {
-                    let slug = text
+                    let slug = text;
                     slug = slug.slice(0, 30); // make sure it's not longer than the max length
                     filename = `${slug}.wav`;
                   }
-									const blob = await fetch(recording.wavOrBlobUrl)
-									.then(response => response.blob())
-									let blobURL = window.URL.createObjectURL(blob);
-
+                  const blob = await fetch(recording.wavOrBlobUrl).then(
+                    (response) => response.blob()
+                  );
+                  let blobURL = window.URL.createObjectURL(blob);
 
                   const a = document.createElement("a");
                   a.href = blobURL;

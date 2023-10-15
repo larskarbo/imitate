@@ -3,8 +3,8 @@ import Head from "next/head";
 import "../styles.css";
 import "../tailwind.css";
 import { trpc } from "../utils/trpc";
-
 // Create a client
+import { DndContext } from "@dnd-kit/core";
 
 function MyApp({ Component, pageProps, config }) {
   return (
@@ -15,7 +15,9 @@ function MyApp({ Component, pageProps, config }) {
         </Head>
 
         <div className="min-h-screen">
-          <Component {...pageProps} />
+          <DndContext>
+            <Component {...pageProps} />
+          </DndContext>
         </div>
       </PlausibleProvider>
     </>
