@@ -4,6 +4,7 @@ import { audioBufferToBlob } from "./audioBufferToBlob";
 import { trimSilence } from "./trimSilence";
 import { useAtom } from "jotai";
 import { recordingCountAtom } from "./Chamber";
+import clsx from "clsx";
 
 let recordedChunks: Blob[] = [];
 export default function RecordBoat({
@@ -88,7 +89,8 @@ export default function RecordBoat({
 
       const audioBufferCleaned = await trimSilence(audioBuffer);
 
-      if (!audioBufferCleaned) { // if the audio is just silence
+      if (!audioBufferCleaned) {
+        // if the audio is just silence
         setLoading(false);
         onIsRecordingChange(false);
         return;
@@ -145,11 +147,11 @@ export const Button = (
   return (
     <button
       {...props}
-      className={
-        "px-2 py-1 text-white font-bold shadow bg-gray-500 text-xs " +
-        "whitespace-nowrap" +
+      className={clsx(
+        "px-2 py-1 text-white font-bold shadow bg-gray-500 text-xs ",
+        "whitespace-nowrap",
         props.className
-      }
+      )}
     >
       {props.children}
     </button>

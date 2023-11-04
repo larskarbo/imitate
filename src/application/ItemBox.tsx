@@ -2,23 +2,25 @@ import toWav from "audiobuffer-to-wav";
 import { useEffect, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
 import { trpc } from "../utils/trpc";
-import PlaybackBoat, { ITEMBOX_HEIGHT, Region } from "./PlaybackBoat";
+import PlaybackBoat, { Region } from "./PlaybackBoat";
 import RecordBoat, { Button } from "./RecordBoat";
 import { blobToAudioBuffer } from "./blobToAudioBuffer";
 import { useAtom } from "jotai";
 import { trimBlob } from "./trimBlob";
-import { focusedItemAtom, lastRegionAtom } from "./Chamber";
+import { focusedItemAtom, itemsAtom, lastRegionAtom } from "./Chamber";
 import { Uploader } from "./Uploader";
-import slugify from "slugify";
-import { useDraggable } from "@dnd-kit/core";
 
 import { usePresignedUpload } from "next-s3-upload";
 export const ItemBox = ({
   id,
   sheetNamespace,
+  item,
+  onDelete,
 }: {
-  id: number;
+  id: string;
   sheetNamespace: string;
+  item: Item;
+  onDelete: () => void;
 }) => {
   const [recording, setRecording] = useState<{
     wavOrBlobUrl: string;
@@ -28,33 +30,35 @@ export const ItemBox = ({
   const [text, setText] = useState<string | null>(null);
   const [isDirty, setIsDirty] = useState(false);
 
-  const { data: fetchedItem } = trpc.getItem.useQuery({ id, sheetNamespace });
-
   let { uploadToS3 } = usePresignedUpload();
 
   useEffect(() => {
-    if (!fetchedItem) return;
+    if (!item) return;
 
-    if (fetchedItem.url) {
-      if (fetchedItem.url.includes("blob")) {
-        alert(`fetchedItem.url is blob where text is ${fetchedItem.text}`);
+    if (item.url) {
+      if (item.url.includes("blob")) {
+        alert(`fetchedItem.url is blob where text is ${item.text}`);
         return;
       }
       setRecording({
-        wavOrBlobUrl: fetchedItem.url,
-        isRecording: fetchedItem.isRecording || false,
+        wavOrBlobUrl: item.url,
+        isRecording: item.isRecording || false,
       });
     }
 
-    if (fetchedItem.text) {
-      console.log(`fetchedItem.url for ${fetchedItem.text} `, fetchedItem.url);
-      setText(fetchedItem.text);
+    if (item.text) {
+      console.log(`fetchedItem.url for ${item.text} `, item.url);
+      setText(item.text);
     }
-  }, [fetchedItem]);
+  }, [item]);
 
+  const [items] = useAtom(itemsAtom);
+
+  const context = trpc.useContext();
   const { mutateAsync: saveItem } = trpc.setItem.useMutation({
     onSuccess: () => {
       setIsDirty(false);
+      context.getItems.invalidate();
     },
   });
 
@@ -96,9 +100,13 @@ export const ItemBox = ({
     return saveItem({
       id,
       sheetNamespace,
-      recordingUrl: recordingUrl,
-      isRecording: recording?.isRecording,
-      text: text || undefined,
+      item: {
+        ...item,
+        id,
+        text: text || undefined,
+        url: recordingUrl || undefined,
+        isRecording: recording?.isRecording,
+      },
     });
   });
 
@@ -109,6 +117,7 @@ export const ItemBox = ({
   const [region, setRegion] = useState<Region | null>(null);
   const [lastRegion, setLastRegion] = useAtom(lastRegionAtom);
   const [focusedItem, setFocusedItem] = useAtom(focusedItemAtom);
+
   const isFocused = focusedItem === id;
   if (isFocused) console.log("isFocused: ", isFocused, { focusedItem, id });
 
@@ -162,28 +171,14 @@ export const ItemBox = ({
     [isFocused]
   );
 
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: `draggable${id}`,
-    });
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined;
-
   return (
     <div
-      ref={setNodeRef}
       className={clsx(
         "relative w-full rounded-lg overflow-hidden shadow-sm border border-gray-400  flex flex-col items-center ",
         isRecording ? "bg-red-200" : "bg-gray-200"
       )}
       style={{
-        height: ITEMBOX_HEIGHT,
-        ...style,
-        zIndex: isDragging ? 100 : 0,
-        //  opacity: isDragging ? 0.5 : 1
+        height: "100%",
       }}
     >
       <Uploader
@@ -194,15 +189,6 @@ export const ItemBox = ({
         }}
       />
       <div className="flex gap-2 z-10">
-        {/* <Button
-          {...listeners}
-          {...attributes}
-          style={{
-            zIndex: 1000,
-          }}
-        >
-          drag
-        </Button> */}
         <RecordBoat
           onRecordFinish={async ({ blobUrl, chunks, blob }) => {
             console.log("chunks: ", chunks);
@@ -236,9 +222,9 @@ export const ItemBox = ({
             const nextIndex = currentIndex + 1;
             const nextRate = rates[nextIndex];
             if (!nextRate) {
-							setPlaybackRate(rates[0]);
-							return;
-						}
+              setPlaybackRate(rates[0]);
+              return;
+            }
             setPlaybackRate(nextRate);
           }}
         >
@@ -255,18 +241,16 @@ export const ItemBox = ({
           </Button>
         )}
 
-        {(recording || text) && (
+        {
           <Button
             onClick={() => {
               wavesurfer?.stop();
-              setRecording(null);
-              setText(null);
-              setIsDirty(true);
+              onDelete();
             }}
           >
             ✕
           </Button>
-        )}
+        }
 
         {lastRegion && (
           <Button
@@ -365,7 +349,7 @@ const Text = ({
       className={clsx(
         "absolute bottom-0 right-0 top-0 left-0  p-2  font-serif flex justify-center ",
         hasRecording ? "pb-4 items-end " : "items-center",
-        text.length > 50 ? "text-xs" : "text-sm"
+         "text-sm"
       )}
     >
       {text}
@@ -374,3 +358,4 @@ const Text = ({
 };
 import clsx from "clsx";
 import useKeypress from "./utils/useKeyPress";
+import { Item } from "../server/routers/appRouter";

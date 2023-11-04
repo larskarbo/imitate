@@ -4,6 +4,21 @@ import { z } from "zod";
 import { uploadWavToS3 } from "../s3";
 import { speechToText } from "../speech/speechToText";
 import { procedure, router } from "../trpc";
+
+export type Item = z.infer<typeof itemSchema>;
+const itemSchema = z.object({
+  id: z.string(),
+  url: z.string().optional(),
+  text: z.string().optional(),
+  isRecording: z.boolean().optional(),
+  dataGrid: z.object({
+    x: z.number(),
+    y: z.number(),
+    w: z.number(),
+    h: z.number(),
+  }),
+});
+
 export const appRouter = router({
   transcribe: procedure
     .input(
@@ -40,55 +55,71 @@ export const appRouter = router({
     return uniqueNamespaces;
   }),
 
-  getItem: procedure
-    .input(z.object({ id: z.number(), sheetNamespace: z.string() }))
+  getItems: procedure
+    .input(z.object({ sheetNamespace: z.string() }))
     .query(async ({ input }) => {
-      const { id, sheetNamespace } = input;
-      const value = await kv.get(`sheet:${sheetNamespace}:item:${id}`);
+      const { sheetNamespace } = input;
+      const values = await getItemsFromSheet(sheetNamespace);
 
-      if (!value) {
+      if (!values || values.length === 0) {
         return null;
       }
-      return value as Item;
+
+      return values;
     }),
 
   setItem: procedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string(),
         sheetNamespace: z.string(),
-        item: z.any(),
-        recordingUrl: z.string().optional(),
-				isRecording: z.boolean().optional(),
+        item: itemSchema,
         text: z.string().optional(),
       })
     )
     .mutation(async ({ input }) => {
-      const { id, sheetNamespace, text, recordingUrl, isRecording } = input;
-
-      const item: Item = {};
-
-      if (recordingUrl) {
-        item.url = recordingUrl;
-				item.isRecording = isRecording;
-      }
-
-      if (text) {
-        item.text = text;
-      }
-
+      const { id, item, sheetNamespace } = input;
       console.log("item: ", item);
-      await kv.set(`sheet:${sheetNamespace}:item:${id}`, item);
+      const items = await getItemsFromSheet(sheetNamespace);
+
+      const newItems = items.map((i) => {
+        if (i.id === id) {
+          return item;
+        }
+        return i;
+      });
+
+      // if ID is not found, add it
+      if (!items.find((i) => i.id === id)) {
+        newItems.push(item);
+      }
+
+      await kv.set(`sheet:${sheetNamespace}:items`, newItems);
+
+      return null;
+    }),
+
+  saveItems: procedure
+    .input(
+      z.object({
+        sheetNamespace: z.string(),
+        items: z.array(itemSchema),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { items, sheetNamespace } = input;
+      await kv.set(`sheet:${sheetNamespace}:items`, items);
 
       return null;
     }),
 });
 
-export type Item = {
-  url?: string;
-  text?: string;
-  isRecording?: boolean;
-};
-
 // export type definition of API
 export type AppRouter = typeof appRouter;
+import { Layout } from "react-grid-layout";
+
+const getItemsFromSheet = async (sheetNamespace: string) => {
+  const items = await kv.get<Item[]>(`sheet:${sheetNamespace}:items`);
+
+  return items!.filter((item) => item.id) as Item[];
+};

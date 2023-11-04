@@ -1,3 +1,11 @@
+.react-resizable-handle {
+	z-index: 20
+}
+
+.disable-select {
+	user-select: none
+}
+
 .smallcase {
   @apply uppercase text-xs text-gray-700 font-bold;
 }

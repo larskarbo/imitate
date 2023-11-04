@@ -3,6 +3,10 @@ import Head from "next/head";
 import "../styles.css";
 import "../tailwind.css";
 import { trpc } from "../utils/trpc";
+
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+
 // Create a client
 import { DndContext } from "@dnd-kit/core";
 
