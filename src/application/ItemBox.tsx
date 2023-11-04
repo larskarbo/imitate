@@ -70,6 +70,8 @@ export const ItemBox = ({
 
     setRecording({ wavOrBlobUrl: blobUrl, blob, isRecording });
     setIsDirty(true);
+
+    setFocusedItem(id);
   };
 
   const { mutate: save, isLoading: isLoadingSave } = useMutation(async () => {
@@ -102,12 +104,18 @@ export const ItemBox = ({
 
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1);
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer>();
   const [region, setRegion] = useState<Region | null>(null);
   const [lastRegion, setLastRegion] = useAtom(lastRegionAtom);
   const [focusedItem, setFocusedItem] = useAtom(focusedItemAtom);
   const isFocused = focusedItem === id;
   if (isFocused) console.log("isFocused: ", isFocused, { focusedItem, id });
+
+  useEffect(() => {
+    if (!wavesurfer) return;
+    wavesurfer.setPlaybackRate(playbackRate);
+  }, [playbackRate]);
 
   useEffect(() => {
     if (!wavesurfer) return;
@@ -220,6 +228,21 @@ export const ItemBox = ({
           }}
         >
           text
+        </Button>
+        <Button
+          onClick={() => {
+            const rates = [0.5, 0.75, 1, 1.25, 1.5, 2];
+            const currentIndex = rates.indexOf(playbackRate);
+            const nextIndex = currentIndex + 1;
+            const nextRate = rates[nextIndex];
+            if (!nextRate) {
+							setPlaybackRate(rates[0]);
+							return;
+						}
+            setPlaybackRate(nextRate);
+          }}
+        >
+          {playbackRate}x
         </Button>
 
         {recording && (

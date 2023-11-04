@@ -19,7 +19,7 @@ export const trimSilence = async (
   const data = renderedBuffer.getChannelData(0);
 
   const THRESHOLD = 0.1;
-  const START_PAD = 3_000;
+  const START_PAD = 10_000;
   const END_PAD = 30_000;
 
   // Find first non silent sample
