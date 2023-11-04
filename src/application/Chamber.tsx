@@ -35,7 +35,8 @@ export function Chamber({ namespace }: { namespace: string }) {
   const { mutate: saveItems } = trpc.saveItems.useMutation();
 
   const maxY = Math.max(
-    ...(items?.map((item) => item.dataGrid.y + item.dataGrid.h) || [3])
+    ...(items?.map((item) => item.dataGrid.y + item.dataGrid.h) || [0]),
+		3
   );
 
   const unfilledSquares = range(0, maxY)
@@ -69,7 +70,6 @@ export function Chamber({ namespace }: { namespace: string }) {
       <div className="max-w-3xl flex flex-col items-center px-8 w-full pb-24">
         <div className="pb-8"></div>
       </div>
-      Recordings: {recordCount}
       <ResponsiveGridLayout
         draggableHandle=".drag-handle"
         className="layout w-full  "

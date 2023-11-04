@@ -27,8 +27,10 @@ export const ItemBox = ({
     blob?: Blob;
     isRecording: boolean;
   } | null>(null);
-  const [text, setText] = useState<string | null>(null);
+  const [text, setText] = useState<string | JSONContent | null>(null);
   const [isDirty, setIsDirty] = useState(false);
+
+
 
   let { uploadToS3 } = usePresignedUpload();
 
@@ -51,8 +53,6 @@ export const ItemBox = ({
       setText(item.text);
     }
   }, [item]);
-
-  const [items] = useAtom(itemsAtom);
 
   const context = trpc.useContext();
   const { mutateAsync: saveItem } = trpc.setItem.useMutation({
@@ -97,16 +97,19 @@ export const ItemBox = ({
       throw new Error("recordingUrl is blob");
     }
 
+		const newItem = {
+			...item,
+			id,
+			text: text || undefined,
+			url: recordingUrl || undefined,
+			isRecording: recording?.isRecording,
+		}
+
+
     return saveItem({
       id,
       sheetNamespace,
-      item: {
-        ...item,
-        id,
-        text: text || undefined,
-        url: recordingUrl || undefined,
-        isRecording: recording?.isRecording,
-      },
+      item: newItem,
     });
   });
 
@@ -207,7 +210,7 @@ export const ItemBox = ({
         />
         <Button
           onClick={() => {
-            const prompetText = prompt("text", text || "");
+            const prompetText = prompt("text", "");
             if (!prompetText) return;
             setText(prompetText);
             setIsDirty(true);
@@ -331,31 +334,58 @@ export const ItemBox = ({
           }}
         />
       )}
-      {text && <Text text={text} hasRecording={!!recording} />}
+      {text && (
+        <Text
+          text={text}
+          hasRecording={!!recording}
+          onTextChange={(text) => {
+            setText(text);
+            setIsDirty(true);
+          }}
+          onFocus={() => {
+            setFocusedItem(null);
+          }}
+        />
+      )}
     </div>
   );
 };
 
 import { useMutation } from "@tanstack/react-query";
+import type { JSONContent } from "@tiptap/core";
+
 const Text = ({
   text,
+  onTextChange,
   hasRecording,
+  onFocus,
 }: {
-  text: string;
+  text: string | JSONContent;
+  onTextChange: (text: JSONContent | null) => void;
   hasRecording: boolean;
+  onFocus: () => void;
 }) => {
   return (
     <div
       className={clsx(
         "absolute bottom-0 right-0 top-0 left-0  p-2  font-serif flex justify-center ",
         hasRecording ? "pb-4 items-end " : "items-center",
-         "text-sm"
+        "text-sm"
       )}
     >
-      {text}
+      <Tiptap
+        onFocus={onFocus}
+        initialValue={isString(text) ? textToDoc(text) : text}
+        onChange={(newDoc) => {
+          console.log("newDoc: ", newDoc);
+          onTextChange(newDoc);
+        }}
+      />
     </div>
   );
 };
 import clsx from "clsx";
 import useKeypress from "./utils/useKeyPress";
 import { Item } from "../server/routers/appRouter";
+import Tiptap, { textToDoc } from "./TipTap";
+import { isString } from "lodash";

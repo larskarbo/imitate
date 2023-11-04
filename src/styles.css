@@ -6,6 +6,11 @@
 	user-select: none
 }
 
+.tiptap p {
+  margin: 1em 0;
+}
+
+
 .smallcase {
   @apply uppercase text-xs text-gray-700 font-bold;
 }

@@ -9,7 +9,7 @@ export type Item = z.infer<typeof itemSchema>;
 const itemSchema = z.object({
   id: z.string(),
   url: z.string().optional(),
-  text: z.string().optional(),
+  text: z.union([z.string(), zodTiptapDoc]).optional(),
   isRecording: z.boolean().optional(),
   dataGrid: z.object({
     x: z.number(),
@@ -117,6 +117,7 @@ export const appRouter = router({
 // export type definition of API
 export type AppRouter = typeof appRouter;
 import { Layout } from "react-grid-layout";
+import { zodTiptapDoc } from "../../application/TipTap";
 
 const getItemsFromSheet = async (sheetNamespace: string) => {
   const items = await kv.get<Item[]>(`sheet:${sheetNamespace}:items`);
