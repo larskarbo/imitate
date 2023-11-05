@@ -7,19 +7,19 @@ import RecordBoat, { Button } from "./RecordBoat";
 import { blobToAudioBuffer } from "./blobToAudioBuffer";
 import { useAtom } from "jotai";
 import { trimBlob } from "./trimBlob";
-import { focusedItemAtom, itemsAtom, lastRegionAtom } from "./Chamber";
+import { focusedItemAtom, lastRegionAtom } from "./Chamber";
 import { Uploader } from "./Uploader";
 
 import { usePresignedUpload } from "next-s3-upload";
 export const ItemBox = ({
   id,
-  sheetNamespace,
   item,
+  setItem,
   onDelete,
 }: {
   id: string;
-  sheetNamespace: string;
   item: Item;
+  setItem: (item: Partial<Item>) => void;
   onDelete: () => void;
 }) => {
   const [recording, setRecording] = useState<{
@@ -27,10 +27,7 @@ export const ItemBox = ({
     blob?: Blob;
     isRecording: boolean;
   } | null>(null);
-  const [text, setText] = useState<string | JSONContent | null>(null);
   const [isDirty, setIsDirty] = useState(false);
-
-
 
   let { uploadToS3 } = usePresignedUpload();
 
@@ -47,20 +44,7 @@ export const ItemBox = ({
         isRecording: item.isRecording || false,
       });
     }
-
-    if (item.text) {
-      console.log(`fetchedItem.url for ${item.text} `, item.url);
-      setText(item.text);
-    }
   }, [item]);
-
-  const context = trpc.useContext();
-  const { mutateAsync: saveItem } = trpc.setItem.useMutation({
-    onSuccess: () => {
-      setIsDirty(false);
-      context.getItems.invalidate();
-    },
-  });
 
   const setNewRecording = async (
     blob: Blob,
@@ -97,20 +81,11 @@ export const ItemBox = ({
       throw new Error("recordingUrl is blob");
     }
 
-		const newItem = {
-			...item,
-			id,
-			text: text || undefined,
-			url: recordingUrl || undefined,
-			isRecording: recording?.isRecording,
-		}
-
-
-    return saveItem({
-      id,
-      sheetNamespace,
-      item: newItem,
+    setItem({
+      url: recordingUrl || undefined,
+      isRecording: recording?.isRecording,
     });
+    setIsDirty(false);
   });
 
   const [isRecording, setIsRecording] = useState(false);
@@ -210,10 +185,11 @@ export const ItemBox = ({
         />
         <Button
           onClick={() => {
-            const prompetText = prompt("text", "");
-            if (!prompetText) return;
-            setText(prompetText);
-            setIsDirty(true);
+						const promptText = prompt("Insert text here");
+						if (!promptText) return;
+            setItem({
+              text: textToDoc(promptText),
+            });
           }}
         >
           text
@@ -292,8 +268,9 @@ export const ItemBox = ({
                   // download recording.blobUrl
                   let filename = "recording.wav";
 
-                  if (text && text.length > 0) {
-                    let slug = text;
+                  let plainText = isDoc(item.text) ? docToText(item.text) : "";
+                  if (plainText.length > 0) {
+                    let slug = plainText;
                     slug = slug.slice(0, 30); // make sure it's not longer than the max length
                     filename = `${slug}.wav`;
                   }
@@ -334,13 +311,14 @@ export const ItemBox = ({
           }}
         />
       )}
-      {text && (
+      {item.text && (
         <Text
-          text={text}
+          text={item.text}
           hasRecording={!!recording}
           onTextChange={(text) => {
-            setText(text);
-            setIsDirty(true);
+            setItem({
+              text: text || undefined,
+            });
           }}
           onFocus={() => {
             setFocusedItem(null);
@@ -354,38 +332,8 @@ export const ItemBox = ({
 import { useMutation } from "@tanstack/react-query";
 import type { JSONContent } from "@tiptap/core";
 
-const Text = ({
-  text,
-  onTextChange,
-  hasRecording,
-  onFocus,
-}: {
-  text: string | JSONContent;
-  onTextChange: (text: JSONContent | null) => void;
-  hasRecording: boolean;
-  onFocus: () => void;
-}) => {
-  return (
-    <div
-      className={clsx(
-        "absolute bottom-0 right-0 top-0 left-0  p-2  font-serif flex justify-center ",
-        hasRecording ? "pb-4 items-end " : "items-center",
-        "text-sm"
-      )}
-    >
-      <Tiptap
-        onFocus={onFocus}
-        initialValue={isString(text) ? textToDoc(text) : text}
-        onChange={(newDoc) => {
-          console.log("newDoc: ", newDoc);
-          onTextChange(newDoc);
-        }}
-      />
-    </div>
-  );
-};
 import clsx from "clsx";
 import useKeypress from "./utils/useKeyPress";
 import { Item } from "../server/routers/appRouter";
-import Tiptap, { textToDoc } from "./TipTap";
-import { isString } from "lodash";
+import { Text } from "./Text";
+import { docToText, isDoc, textToDoc } from "./TipTap";

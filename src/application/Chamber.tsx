@@ -1,4 +1,4 @@
-import { random, range } from "lodash";
+import { random, range, throttle } from "lodash";
 import { ITEMBOX_HEIGHT, Region } from "./PlaybackBoat";
 
 import { atom, useAtom } from "jotai";
@@ -6,15 +6,14 @@ import { Responsive, WidthProvider, Layout } from "react-grid-layout";
 import { ItemBox } from "./ItemBox";
 import { SheetPicker } from "./SheetPicker";
 import { trpc } from "../utils/trpc";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Item } from "../server/routers/appRouter";
 import { Button } from "./RecordBoat";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export function Chamber({ namespace }: { namespace: string }) {
-  const [recordCount, setRecordCount] = useAtom(recordingCountAtom);
-
+  const context = trpc.useContext();
   const { data: fetchedItems } = trpc.getItems.useQuery({
     sheetNamespace: namespace,
   });
@@ -25,18 +24,22 @@ export function Chamber({ namespace }: { namespace: string }) {
     if (!fetchedItems) return;
 
     if (items) {
-      console.log("items: ", items);
+      console.log("Don't fetch... already here");
       return;
     }
 
     setItems(fetchedItems);
   }, [fetchedItems, items]);
 
-  const { mutate: saveItems } = trpc.saveItems.useMutation();
+  const { mutate: saveItems } = trpc.saveItems.useMutation({
+    onSuccess: () => {
+      context.getItems.invalidate();
+    },
+  });
 
   const maxY = Math.max(
     ...(items?.map((item) => item.dataGrid.y + item.dataGrid.h) || [0]),
-		3
+    3
   );
 
   const unfilledSquares = range(0, maxY)
@@ -64,12 +67,23 @@ export function Chamber({ namespace }: { namespace: string }) {
     }
   }, [isResizing]);
 
+  // Throttled saveItems
+  const throttledSaveItems = useCallback(
+    throttle((items, namespace) => {
+      saveItems({ items: items, sheetNamespace: namespace });
+    }, 5000),
+    []
+  );
+
+  useEffect(() => {
+    if (!items) return;
+
+    throttledSaveItems(items, namespace);
+  }, [items, namespace, throttledSaveItems]);
+
   return (
     <div className="flex flex-col items-center bg-gradient-to-tr from-gray-100 pt-0 to-yellow-50 min-h-screen w-full">
       <SheetPicker />
-      <div className="max-w-3xl flex flex-col items-center px-8 w-full pb-24">
-        <div className="pb-8"></div>
-      </div>
       <ResponsiveGridLayout
         draggableHandle=".drag-handle"
         className="layout w-full  "
@@ -93,14 +107,13 @@ export function Chamber({ namespace }: { namespace: string }) {
           setIsResizing(false);
         }}
         onLayoutChange={(layouts) => {
-					if (!items) return;
+          if (!items) return;
           setItems(
             items.map((item) => {
               const layout = layouts.find((l) => l.i === item.id)!;
               return { ...item, dataGrid: layout };
             })
           );
-					saveItems({ items: items, sheetNamespace: namespace });
         }}
         preventCollision
       >
@@ -112,9 +125,22 @@ export function Chamber({ namespace }: { namespace: string }) {
             <ItemBox
               item={item}
               id={item.id}
-              sheetNamespace={namespace}
               onDelete={() => {
                 setItems(items!.filter((i) => i.id !== item.id));
+              }}
+              setItem={(newItem) => {
+                setItems((items) => {
+                  const newItems = items!.map((it) => {
+                    if (it.id === item.id) {
+                      return {
+                        ...it,
+                        ...newItem,
+                      };
+                    }
+                    return it;
+                  });
+                  return newItems;
+                });
               }}
             />
           </div>
@@ -140,7 +166,7 @@ export function Chamber({ namespace }: { namespace: string }) {
                 className="opacity-0 group-hover:opacity-50"
                 onClick={() => {
                   setItems([
-                    ...items || [],
+                    ...(items || []),
                     {
                       id: `${random(0, 100000)}`,
                       dataGrid: {

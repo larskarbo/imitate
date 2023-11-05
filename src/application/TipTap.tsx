@@ -1,9 +1,9 @@
 // src/Tiptap.jsx
-import { EditorProvider, FloatingMenu, BubbleMenu } from "@tiptap/react";
+import { BubbleMenu } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
-import { EditorContent, useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
+import { EditorContent, useEditor } from "@tiptap/react";
 
 // define your extension array
 const extensions = [
@@ -13,6 +13,12 @@ const extensions = [
   }),
 ];
 
+// Define highlight colors
+const highlightColors = {
+  yellow: "#eded98",
+  green: "#9fed98",
+  purple: "#ddc4f2",
+};
 const Tiptap = ({
   initialValue,
   onChange,
@@ -22,6 +28,8 @@ const Tiptap = ({
   onChange: (json: JSONContent | null) => void;
   onFocus: () => void;
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
+
   const editor = useEditor({
     extensions: [...extensions],
     content: initialValue,
@@ -38,8 +46,56 @@ const Tiptap = ({
         class: "focus:outline-none",
       },
     },
-    onFocus,
+    onFocus: () => {
+      setIsFocused(true);
+      onFocus();
+    },
+    onBlur: () => {
+      setIsFocused(false);
+    },
   });
+
+  const keyboardShortcutHandler = (event, color) => {
+    if (!isFocused || !event.ctrlKey) return;
+
+    event.preventDefault();
+    editor?.chain().focus().toggleHighlight({ color }).run();
+  };
+
+  useKeypress(
+    "1",
+    (e) => {
+      keyboardShortcutHandler(e, highlightColors.yellow);
+    },
+    [isFocused]
+  );
+
+  useKeypress(
+    "2",
+    (e) => {
+      keyboardShortcutHandler(e, highlightColors.green);
+    },
+    [isFocused]
+  );
+
+  useKeypress(
+    "3",
+    (e) => {
+      keyboardShortcutHandler(e, highlightColors.purple);
+    },
+    [isFocused]
+  );
+
+  useKeypress(
+    "x",
+    (e) => {
+      if (!e.metaKey || !e.shiftKey) return;
+
+      editor?.commands.toggleStrike();
+    },
+    [isFocused]
+  );
+
   return (
     <>
       {editor && (
@@ -89,7 +145,10 @@ const Tiptap = ({
           </button>
         </BubbleMenu>
       )}
-      <EditorContent className="prose" editor={editor} />
+      <EditorContent
+        className="prose prose-sm w-full  prose-zinc "
+        editor={editor}
+      />
     </>
   );
 };
@@ -115,7 +174,9 @@ export const textToDoc = (text: string): JSONContent => {
 
 import type { JSONContent } from "@tiptap/core";
 import { isObject } from "lodash";
+import { useState } from "react";
 import { z } from "zod";
+import useKeypress from "./utils/useKeyPress";
 
 export const isDoc = (
   maybeDoc: unknown | JSONContent
@@ -131,3 +192,15 @@ export const isDoc = (
 };
 
 export const zodTiptapDoc = z.unknown().refine(isDoc);
+
+export const docToText = (content: JSONContent) => {
+  const html = generateHTML(content, extensions);
+
+  return htmlToText(html, {
+    ignoreHref: true,
+  });
+};
+
+import { generateHTML } from "@tiptap/html";
+import { htmlToText } from "html-to-text";
+
