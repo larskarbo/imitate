@@ -68,10 +68,11 @@ export function Chamber({ namespace }: { namespace: string }) {
   }, [isResizing]);
 
   // Throttled saveItems
+	const ONE_SECOND = 1000;
   const throttledSaveItems = useCallback(
     throttle((items, namespace) => {
       saveItems({ items: items, sheetNamespace: namespace });
-    }, 5000),
+    }, ONE_SECOND),
     []
   );
 
