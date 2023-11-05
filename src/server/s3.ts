@@ -5,6 +5,7 @@ const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3") as {
   PutObjectCommand: typeof import("@aws-sdk/client-s3").PutObjectCommand;
 };
 
+import { PutObjectCommandInput } from "@aws-sdk/client-s3";
 import { getEnv } from "@larskarbo/get-env";
 import { readFileSync } from "fs";
 
@@ -29,7 +30,7 @@ export const uploadWavToS3 = async (filePath: string) => {
   // Generate a key using nanoid
   const Key = `imita/${nanoid()}.wav`;
 
-  const params = {
+  const params: PutObjectCommandInput = {
     Bucket: "lars-div",
     Key,
     Body,
