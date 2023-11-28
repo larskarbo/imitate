@@ -185,8 +185,8 @@ export const ItemBox = ({
         />
         <Button
           onClick={() => {
-						const promptText = prompt("Insert text here");
-						if (!promptText) return;
+            const promptText = prompt("Insert text here");
+            if (!promptText) return;
             setItem({
               text: textToDoc(promptText),
             });
@@ -316,12 +316,13 @@ export const ItemBox = ({
           text={item.text}
           hasRecording={!!recording}
           onTextChange={(text) => {
-            setItem({
-              text: text || undefined,
-            });
+						console.log('text: ', text);
+            // setItem({
+            //   text: text || undefined,
+            // });
           }}
           onFocus={() => {
-            setFocusedItem(null);
+            // setFocusedItem(null);
           }}
         />
       )}

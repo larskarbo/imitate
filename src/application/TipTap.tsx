@@ -46,13 +46,13 @@ const Tiptap = ({
         class: "focus:outline-none",
       },
     },
-    onFocus: () => {
-      setIsFocused(true);
-      onFocus();
-    },
-    onBlur: () => {
-      setIsFocused(false);
-    },
+    // onFocus: () => {
+    //   setIsFocused(true);
+    //   onFocus();
+    // },
+    // onBlur: () => {
+    //   setIsFocused(false);
+    // },
   });
 
   const keyboardShortcutHandler = (event, color) => {
@@ -146,7 +146,7 @@ const Tiptap = ({
         </BubbleMenu>
       )}
       <EditorContent
-        className="prose prose-sm w-full  prose-zinc "
+        className="prose prose-sm w-full prose-zinc "
         editor={editor}
       />
     </>
@@ -203,4 +203,3 @@ export const docToText = (content: JSONContent) => {
 
 import { generateHTML } from "@tiptap/html";
 import { htmlToText } from "html-to-text";
-
