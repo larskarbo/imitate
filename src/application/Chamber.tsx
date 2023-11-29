@@ -69,19 +69,19 @@ export function Chamber({ namespace }: { namespace: string }) {
   }, [isResizing]);
 
   // Throttled saveItems
-  // const ONE_SECOND = 1000;
-  // const throttledSaveItems = useCallback(
-  //   throttle((items, namespace) => {
-  //     saveItems({ items: items, sheetNamespace: namespace });
-  //   }, ONE_SECOND),
-  //   []
-  // );
+  const ONE_SECOND = 1000;
+  const throttledSaveItems = useCallback(
+    throttle((items, namespace) => {
+      saveItems({ items: items, sheetNamespace: namespace });
+    }, ONE_SECOND),
+    []
+  );
 
-  // useEffect(() => {
-  //   if (!items) return;
+  useEffect(() => {
+    if (!items) return;
 
-  //   throttledSaveItems(items, namespace);
-  // }, [items, namespace, throttledSaveItems]);
+    throttledSaveItems(items, namespace);
+  }, [items, namespace, throttledSaveItems]);
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-tr from-gray-100 pt-0 to-yellow-50 min-h-screen w-full">
