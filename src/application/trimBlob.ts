@@ -11,21 +11,22 @@ export const trimBlob = async (blob: Blob, from: number, to: number) => {
   const fromSamples = Math.round(from * audioBuffer.sampleRate);
 
   const trimmedBuffer = audioContext.createBuffer(
-	audioBuffer.numberOfChannels,
-	trimLength,
-	audioBuffer.sampleRate
+    audioBuffer.numberOfChannels,
+    trimLength,
+    audioBuffer.sampleRate
   );
 
   // Iterate each channel of original AudioBuffer, copy subsection into the corresponding channel of new buffer
   for (let channel = 0; channel < audioBuffer.numberOfChannels; channel++) {
-	const channelDataOriginal = audioBuffer.getChannelData(channel);
-	const channelDataTrimmed = trimmedBuffer.getChannelData(channel);
+    const channelDataOriginal = audioBuffer.getChannelData(channel);
+    const channelDataTrimmed = trimmedBuffer.getChannelData(channel);
 
-	for (let i = 0; i < trimLength; i++) {
-	  channelDataTrimmed[i] =
-		channelDataOriginal[fromSamples + i];
-	}
+    for (let i = 0; i < trimLength; i++) {
+      channelDataTrimmed[i] = channelDataOriginal[fromSamples + i];
+    }
   }
 
   return await audioBufferToBlob(trimmedBuffer);
 };
+
+

@@ -166,130 +166,176 @@ export const ItemBox = ({
           });
         }}
       />
-      <div className="flex gap-2 z-10">
-        <RecordBoat
-          onRecordFinish={async ({ blobUrl, chunks, blob }) => {
-            console.log("chunks: ", chunks);
-            setNewRecording(blob, {
-              isRecording: true,
-            });
-            const SPEECH_TO_TEX = false;
-            if (!SPEECH_TO_TEX) return;
-            const { wavBlob } = await blobToWav(blob);
-            mutate({
-              audioBlob: blobUrl,
-              wavBlobArr: new Uint8Array(await wavBlob.arrayBuffer()),
-            });
-          }}
-          onIsRecordingChange={setIsRecording}
-        />
-        <Button
-          onClick={() => {
-            const promptText = prompt("Insert text here");
-            if (!promptText) return;
-            setItem({
-              text: textToDoc(promptText),
-            });
-          }}
-        >
-          text
-        </Button>
-        <Button
-          onClick={() => {
-            const rates = [0.5, 0.75, 1, 1.25, 1.5, 2];
-            const currentIndex = rates.indexOf(playbackRate);
-            const nextIndex = currentIndex + 1;
-            const nextRate = rates[nextIndex];
-            if (!nextRate) {
-              setPlaybackRate(rates[0]);
-              return;
-            }
-            setPlaybackRate(nextRate);
-          }}
-        >
-          {playbackRate}x
-        </Button>
-
-        {recording && (
-          <Button
-            onClick={() => {
-              wavesurfer?.playPause();
-            }}
-          >
-            {isPlaying ? "⏸️" : "▶️"}
-          </Button>
-        )}
-
-        {
-          <Button
-            onClick={() => {
-              wavesurfer?.stop();
-              onDelete();
-            }}
-          >
-            ✕
-          </Button>
-        }
-
-        {lastRegion && (
-          <Button
-            onClick={async () => {
-              if (!lastRegion) return;
-
-              const from = lastRegion.region.start;
-              const to = lastRegion.region.end;
-
-              const blob = await fetch(lastRegion.blobUrl).then((r) =>
-                r.blob()
-              );
-              const newBlob = await trimBlob(blob, from, to);
-              setNewRecording(newBlob, {
-                isRecording: lastRegion.isRecording,
+      <div className="h-full flex flex-col justify-between">
+        <div className="flex gap-2 z-10">
+          <RecordBoat
+            onRecordFinish={async ({ blobUrl, chunks, blob }) => {
+              console.log("chunks: ", chunks);
+              setNewRecording(blob, {
+                isRecording: true,
+              });
+              const SPEECH_TO_TEX = false;
+              if (!SPEECH_TO_TEX) return;
+              const { wavBlob } = await blobToWav(blob);
+              mutate({
+                audioBlob: blobUrl,
+                wavBlobArr: new Uint8Array(await wavBlob.arrayBuffer()),
               });
             }}
-            disabled={!lastRegion}
-          >
-            froms
-          </Button>
-        )}
-        {isDirty ? (
+            onIsRecordingChange={setIsRecording}
+          />
           <Button
-            onClick={async () => {
-              save();
+            onClick={() => {
+              const promptText = prompt("Insert text here");
+              if (!promptText) return;
+              setItem({
+                text: textToDoc(promptText),
+              });
             }}
           >
-            Save{isLoadingSave && "..."}
+            text
           </Button>
-        ) : (
-          <>
-            {recording && (
+          {recording && (
+            <Button
+              onClick={() => {
+                const rates = [0.5, 0.75, 1, 1.25, 1.5, 2];
+                const currentIndex = rates.indexOf(playbackRate);
+                const nextIndex = currentIndex + 1;
+                const nextRate = rates[nextIndex];
+                if (!nextRate) {
+                  setPlaybackRate(rates[0]);
+                  return;
+                }
+                setPlaybackRate(nextRate);
+              }}
+            >
+              {playbackRate}x
+            </Button>
+          )}
+
+          {
+            <Button
+              onClick={() => {
+                wavesurfer?.stop();
+                onDelete();
+              }}
+            >
+              ✕
+            </Button>
+          }
+
+          {lastRegion && (
+            <Button
+              onClick={async () => {
+                if (!lastRegion) return;
+
+                const from = lastRegion.region.start;
+                const to = lastRegion.region.end;
+
+                const blob = await fetch(lastRegion.blobUrl).then((r) =>
+                  r.blob()
+                );
+                const newBlob = await trimBlob(blob, from, to);
+                setNewRecording(newBlob, {
+                  isRecording: lastRegion.isRecording,
+                });
+              }}
+              disabled={!lastRegion}
+            >
+              froms
+            </Button>
+          )}
+
+          {recording && (
+            <Button
+              onClick={async () => {
+                if (!recording) return;
+
+                const blob = await fetch(recording.wavOrBlobUrl).then((r) =>
+                  r.blob()
+                );
+                const audioBuffer = await blobToAudioBuffer(blob);
+
+                const newAudioBuffer = audioBufferIncreaseGain(audioBuffer, 2);
+                const newBlob = await audioBufferToBlob(newAudioBuffer);
+
+                setNewRecording(newBlob, {
+                  isRecording: recording.isRecording,
+                });
+              }}
+            >
+              gain↑
+            </Button>
+          )}
+          {isDirty ? (
+            <Button
+              onClick={async () => {
+                save();
+              }}
+            >
+              Save{isLoadingSave && "..."}
+            </Button>
+          ) : (
+            <>
+              {recording && (
+                <Button
+                  onClick={async () => {
+                    // download recording.blobUrl
+                    let filename = "recording.wav";
+
+                    let plainText = isDoc(item.text)
+                      ? docToText(item.text)
+                      : "";
+                    if (plainText.length > 0) {
+                      let slug = plainText;
+                      slug = slug.slice(0, 30); // make sure it's not longer than the max length
+                      filename = `${slug}.wav`;
+                    }
+                    const blob = await fetch(recording.wavOrBlobUrl).then(
+                      (response) => response.blob()
+                    );
+                    let blobURL = window.URL.createObjectURL(blob);
+
+                    const a = document.createElement("a");
+                    a.href = blobURL;
+                    a.download = filename;
+                    a.click();
+                  }}
+                >
+                  ↓
+                </Button>
+              )}
+            </>
+          )}
+        </div>
+        <div className="flex gap-2 z-10 justify-center">
+          {recording && (
+            <>
               <Button
-                onClick={async () => {
-                  // download recording.blobUrl
-                  let filename = "recording.wav";
-
-                  let plainText = isDoc(item.text) ? docToText(item.text) : "";
-                  if (plainText.length > 0) {
-                    let slug = plainText;
-                    slug = slug.slice(0, 30); // make sure it's not longer than the max length
-                    filename = `${slug}.wav`;
-                  }
-                  const blob = await fetch(recording.wavOrBlobUrl).then(
-                    (response) => response.blob()
-                  );
-                  let blobURL = window.URL.createObjectURL(blob);
-
-                  const a = document.createElement("a");
-                  a.href = blobURL;
-                  a.download = filename;
-                  a.click();
+                onClick={() => {
+                  wavesurfer?.seekTo(0);
+                  wavesurfer?.play();
                 }}
               >
-                ↓
+                |▶️
               </Button>
-            )}
-          </>
-        )}
+              <Button
+                onClick={() => {
+                  const currentTime = wavesurfer?.getCurrentTime() || 0;
+                  if (
+                    region &&
+                    (currentTime > region?.end || currentTime < region?.start)
+                  ) {
+                    wavesurfer?.seekTo(region.start);
+                  }
+                  wavesurfer?.playPause();
+                }}
+              >
+                {isPlaying ? "⏸️" : "▶️"}
+              </Button>
+            </>
+          )}
+        </div>
       </div>
       {recording && (
         <PlaybackBoat
@@ -316,7 +362,7 @@ export const ItemBox = ({
           text={item.text}
           hasRecording={!!recording}
           onTextChange={(text) => {
-						console.log('text: ', text);
+            console.log("text: ", text);
             // setItem({
             //   text: text || undefined,
             // });
@@ -338,3 +384,5 @@ import useKeypress from "./utils/useKeyPress";
 import { Item } from "../server/routers/appRouter";
 import { Text } from "./Text";
 import { docToText, isDoc, textToDoc } from "./TipTap";
+import { audioBufferIncreaseGain } from "./audioBufferIncreaseGain";
+import { audioBufferToBlob } from "./audioBufferToBlob";
