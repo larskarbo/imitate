@@ -5,6 +5,7 @@ import { trimSilence } from "./trimSilence";
 import { useAtom } from "jotai";
 import { recordingCountAtom } from "./Chamber";
 import clsx from "clsx";
+import useKeypress from "./utils/useKeyPress";
 
 let recordedChunks: Blob[] = [];
 export default function RecordBoat({
@@ -47,6 +48,18 @@ export default function RecordBoat({
     // Cleanup function to clear our timeout when loading changes
     return () => clearTimeout(timer);
   }, [loading]);
+
+  const SPACE_KEY = " ";
+  useKeypress(
+    SPACE_KEY,
+    (e) => {
+      e.preventDefault();
+      if (isRecording) {
+        stop();
+      }
+    },
+    [isRecording]
+  );
 
   const start = () => {
     setLoading(true);

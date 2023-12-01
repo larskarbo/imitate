@@ -18,19 +18,20 @@ export const trimSilence = async (
   let endOffset = renderedBuffer.length - 1;
   const data = renderedBuffer.getChannelData(0);
 
-  const THRESHOLD = 0.1;
+	const THRESHOLD_START = 0.1;
+	const THRESHOLD_END = 0.01;
   const START_PAD = 10_000;
   const END_PAD = 30_000;
 
   // Find first non silent sample
-  while (data[startOffset] < THRESHOLD) {
+  while (data[startOffset] < THRESHOLD_START) {
     startOffset++;
   }
 
   startOffset = Math.max(0, startOffset - START_PAD);
 
   // Find last non silent sample
-  while (data[endOffset] < THRESHOLD) {
+  while (data[endOffset] < THRESHOLD_END) {
     endOffset--;
   }
 

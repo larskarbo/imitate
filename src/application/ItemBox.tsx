@@ -143,10 +143,14 @@ export const ItemBox = ({
     (e) => {
       if (!isFocused) return;
 
+			if(isRecording){
+				return
+			}
+
       wavesurfer?.playPause();
       e.preventDefault();
     },
-    [isFocused]
+    [isFocused, isRecording]
   );
 
   return (
