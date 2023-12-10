@@ -46,13 +46,13 @@ const Tiptap = ({
         class: "focus:outline-none",
       },
     },
-    // onFocus: () => {
-    //   setIsFocused(true);
-    //   onFocus();
-    // },
-    // onBlur: () => {
-    //   setIsFocused(false);
-    // },
+    onFocus: () => {
+      setIsFocused(true);
+      onFocus();
+    },
+    onBlur: () => {
+      setIsFocused(false);
+    },
   });
 
   const keyboardShortcutHandler = (event, color) => {

@@ -11,6 +11,7 @@ let recordedChunks: Blob[] = [];
 export default function RecordBoat({
   onRecordFinish,
   onIsRecordingChange,
+	onFocus,
 }: {
   onRecordFinish: ({
     blobUrl,
@@ -22,6 +23,7 @@ export default function RecordBoat({
     chunks: Blob[];
   }) => void;
   onIsRecordingChange: (isRecording: boolean) => void;
+	onFocus: () => void;
 }) {
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
     null
@@ -53,8 +55,8 @@ export default function RecordBoat({
   useKeypress(
     SPACE_KEY,
     (e) => {
-      e.preventDefault();
       if (isRecording) {
+        e.preventDefault();
         stop();
       }
     },
@@ -140,6 +142,7 @@ export default function RecordBoat({
           className={"    " + (isRecording ? "bg-gray-500" : "bg-red-500")}
           disabled={loading}
           onClick={() => {
+						onFocus();
             if (isRecording) {
               stop();
             } else {

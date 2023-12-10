@@ -26,7 +26,6 @@ export const Text = ({
         onFocus={onFocus}
         initialValue={isString(text) ? textToDoc(text) : text}
         onChange={(newDoc) => {
-          console.log("newDoc: ", newDoc);
           onTextChange(newDoc);
         }}
       />

@@ -4,7 +4,6 @@ import { trpc } from "../utils/trpc";
 export const SheetPicker = () => {
   const router = useRouter();
   const { data: sheets } = trpc.getSheets.useQuery();
-  console.log("sheets: ", sheets);
 
   if (!sheets) {
     return null;

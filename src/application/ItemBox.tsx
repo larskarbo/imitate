@@ -97,6 +97,7 @@ export const ItemBox = ({
   const [focusedItem, setFocusedItem] = useAtom(focusedItemAtom);
 
   const isFocused = focusedItem === id;
+
   if (isFocused) console.log("isFocused: ", isFocused, { focusedItem, id });
 
   useEffect(() => {
@@ -143,9 +144,9 @@ export const ItemBox = ({
     (e) => {
       if (!isFocused) return;
 
-			if(isRecording){
-				return
-			}
+      if (isRecording) {
+        return;
+      }
 
       wavesurfer?.playPause();
       e.preventDefault();
@@ -187,6 +188,9 @@ export const ItemBox = ({
               });
             }}
             onIsRecordingChange={setIsRecording}
+            onFocus={() => {
+              setFocusedItem(id);
+            }}
           />
           <Button
             onClick={() => {
@@ -366,13 +370,12 @@ export const ItemBox = ({
           text={item.text}
           hasRecording={!!recording}
           onTextChange={(text) => {
-            console.log("text: ", text);
-            // setItem({
-            //   text: text || undefined,
-            // });
+            setItem({
+              text: text || undefined,
+            });
           }}
           onFocus={() => {
-            // setFocusedItem(null);
+            setFocusedItem(null);
           }}
         />
       )}

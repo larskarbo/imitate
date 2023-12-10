@@ -24,7 +24,6 @@ export function Chamber({ namespace }: { namespace: string }) {
     if (!fetchedItems) return;
 
     if (items) {
-      console.log("Don't fetch... already here");
       return;
     }
 
@@ -37,7 +36,6 @@ export function Chamber({ namespace }: { namespace: string }) {
     },
   });
 
-  console.log("items: ", items);
   const maxY = Math.max(
     ...(items?.map((item) => item.dataGrid.y + item.dataGrid.h) || [0]),
     3
