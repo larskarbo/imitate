@@ -55,6 +55,9 @@ export const trpc = createTRPCNext<AppRouter>({
           },
           mutations: {
             retry: false,
+            onError: (err: Error) => {
+              alert("Error: " + err.message);
+            },
           },
         },
       },

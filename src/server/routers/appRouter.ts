@@ -1,9 +1,11 @@
 import { kv } from "@vercel/kv";
 import { readFile, writeFile } from "fs/promises";
 import { z } from "zod";
-import { uploadWavToS3 } from "../s3";
+import { zodTiptapDoc } from "../../application/TipTap";
 import { speechToText } from "../speech/speechToText";
 import { procedure, router } from "../trpc";
+
+import axios from "axios";
 
 export type Item = z.infer<typeof itemSchema>;
 const itemSchema = z.object({
@@ -23,17 +25,24 @@ export const appRouter = router({
   transcribe: procedure
     .input(
       z.object({
-        audioBlob: z.string(),
-        wavBlobArr: z.instanceof(Uint8Array),
+        wavUrl: z.string().url(), // Update the input schema to accept URL string
       })
     )
     .mutation(async ({ input }) => {
-      const { wavBlobArr } = input;
+      const { wavUrl } = input;
+
+      // Download the WAV file using the provided URL
+      const response = await axios.get(wavUrl, {
+        responseType: "arraybuffer",
+      });
+      const wavBlobArr = new Uint8Array(response.data);
+
       const filePath = "temp.wav";
       await writeFile(filePath, wavBlobArr);
       const file = await readFile(filePath);
 
       const text = await speechToText(file, "");
+
       return {
         text,
       };
@@ -108,7 +117,32 @@ export const appRouter = router({
     )
     .mutation(async ({ input }) => {
       const { items, sheetNamespace } = input;
+      const existingItems = await getItemsFromSheet(sheetNamespace);
+
+      if (items.length - existingItems.length < -2) {
+        throw new Error("Too many items deleted");
+      }
+
+      if (process.env.NODE_ENV === "production") {
+        console.log("items: ", JSON.stringify(items, null, 2));
+      }
+
       await kv.set(`sheet:${sheetNamespace}:items`, items);
+      return null;
+    }),
+  deleteSheet: procedure
+    .input(z.object({ sheetNamespace: z.string() }))
+    .mutation(async ({ input }) => {
+      const { sheetNamespace } = input;
+
+      // Check if the sheet exists
+      const sheetExists = await kv.exists(`sheet:${sheetNamespace}:items`);
+      if (!sheetExists) {
+        throw new Error("Sheet does not exist");
+      }
+
+      // Delete the sheet
+      await kv.del(`sheet:${sheetNamespace}:items`);
 
       return null;
     }),
@@ -116,8 +150,6 @@ export const appRouter = router({
 
 // export type definition of API
 export type AppRouter = typeof appRouter;
-import { Layout } from "react-grid-layout";
-import { zodTiptapDoc } from "../../application/TipTap";
 
 const getItemsFromSheet = async (sheetNamespace: string) => {
   const items = await kv.get<Item[]>(`sheet:${sheetNamespace}:items`);

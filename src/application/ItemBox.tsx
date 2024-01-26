@@ -124,7 +124,15 @@ export const ItemBox = ({
     });
   }, [wavesurfer]);
 
-  const { data, mutate, isLoading } = trpc.transcribe.useMutation({});
+  const {
+    // data,
+    mutate: transcribe,
+    isLoading: isLoadingTranscribe,
+  } = trpc.transcribe.useMutation({
+    onSuccess: (data) => {
+      console.log(data.text);
+    },
+  });
 
   const blobToWav = async (blob: Blob) => {
     const audiobuffer = await blobToAudioBuffer(blob);
@@ -179,13 +187,6 @@ export const ItemBox = ({
               setNewRecording(blob, {
                 isRecording: true,
               });
-              const SPEECH_TO_TEX = false;
-              if (!SPEECH_TO_TEX) return;
-              const { wavBlob } = await blobToWav(blob);
-              mutate({
-                audioBlob: blobUrl,
-                wavBlobArr: new Uint8Array(await wavBlob.arrayBuffer()),
-              });
             }}
             onIsRecordingChange={setIsRecording}
             onFocus={() => {
@@ -203,23 +204,6 @@ export const ItemBox = ({
           >
             text
           </Button>
-          {recording && (
-            <Button
-              onClick={() => {
-                const rates = [0.5, 0.75, 1, 1.25, 1.5, 2];
-                const currentIndex = rates.indexOf(playbackRate);
-                const nextIndex = currentIndex + 1;
-                const nextRate = rates[nextIndex];
-                if (!nextRate) {
-                  setPlaybackRate(rates[0]);
-                  return;
-                }
-                setPlaybackRate(nextRate);
-              }}
-            >
-              {playbackRate}x
-            </Button>
-          )}
 
           {
             <Button
@@ -254,27 +238,6 @@ export const ItemBox = ({
             </Button>
           )}
 
-          {recording && (
-            <Button
-              onClick={async () => {
-                if (!recording) return;
-
-                const blob = await fetch(recording.wavOrBlobUrl).then((r) =>
-                  r.blob()
-                );
-                const audioBuffer = await blobToAudioBuffer(blob);
-
-                const newAudioBuffer = audioBufferIncreaseGain(audioBuffer, 2);
-                const newBlob = await audioBufferToBlob(newAudioBuffer);
-
-                setNewRecording(newBlob, {
-                  isRecording: recording.isRecording,
-                });
-              }}
-            >
-              gain↑
-            </Button>
-          )}
           {isDirty ? (
             <Button
               onClick={async () => {
@@ -286,37 +249,69 @@ export const ItemBox = ({
           ) : (
             <>
               {recording && (
-                <Button
-                  onClick={async () => {
-                    // download recording.blobUrl
-                    let filename = "recording.wav";
+                <>
+                  <Button
+                    onClick={async () => {
+                      // download recording.blobUrl
+                      let filename = "recording.wav";
 
-                    let plainText = isDoc(item.text)
-                      ? docToText(item.text)
-                      : "";
-                    if (plainText.length > 0) {
-                      let slug = plainText;
-                      slug = slug.slice(0, 30); // make sure it's not longer than the max length
-                      filename = `${slug}.wav`;
-                    }
-                    const blob = await fetch(recording.wavOrBlobUrl).then(
-                      (response) => response.blob()
-                    );
-                    let blobURL = window.URL.createObjectURL(blob);
+                      let plainText = isDoc(item.text)
+                        ? docToText(item.text)
+                        : "";
+                      if (plainText.length > 0) {
+                        let slug = plainText;
+                        slug = slug.slice(0, 30); // make sure it's not longer than the max length
+                        filename = `${slug}.wav`;
+                      }
+                      const blob = await fetch(recording.wavOrBlobUrl).then(
+                        (response) => response.blob()
+                      );
+                      let blobURL = window.URL.createObjectURL(blob);
 
-                    const a = document.createElement("a");
-                    a.href = blobURL;
-                    a.download = filename;
-                    a.click();
-                  }}
-                >
-                  ↓
-                </Button>
+                      const a = document.createElement("a");
+                      a.href = blobURL;
+                      a.download = filename;
+                      a.click();
+                    }}
+                  >
+                    ↓
+                  </Button>
+                  <Button
+                    isLoading={isLoadingTranscribe}
+                    onClick={async () => {
+                      if (!recording) return;
+                      if (recording.wavOrBlobUrl.includes("blob")) {
+                        alert("recording.wavOrBlobUrl is blob");
+                        return;
+                      }
+                      transcribe({ wavUrl: recording.wavOrBlobUrl });
+                    }}
+                  >
+                    🗣️
+                  </Button>
+                </>
               )}
             </>
           )}
         </div>
         <div className="flex gap-2 z-10 justify-center">
+          {recording && (
+            <Button
+              onClick={() => {
+                const rates = [0.5, 0.75, 1, 1.25, 1.5, 2];
+                const currentIndex = rates.indexOf(playbackRate);
+                const nextIndex = currentIndex + 1;
+                const nextRate = rates[nextIndex];
+                if (!nextRate) {
+                  setPlaybackRate(rates[0]);
+                  return;
+                }
+                setPlaybackRate(nextRate);
+              }}
+            >
+              {playbackRate}x
+            </Button>
+          )}
           {recording && (
             <>
               <Button
@@ -342,6 +337,28 @@ export const ItemBox = ({
                 {isPlaying ? "⏸️" : "▶️"}
               </Button>
             </>
+          )}
+
+          {recording && (
+            <Button
+              onClick={async () => {
+                if (!recording) return;
+
+                const blob = await fetch(recording.wavOrBlobUrl).then((r) =>
+                  r.blob()
+                );
+                const audioBuffer = await blobToAudioBuffer(blob);
+
+                const newAudioBuffer = audioBufferIncreaseGain(audioBuffer, 2);
+                const newBlob = await audioBufferToBlob(newAudioBuffer);
+
+                setNewRecording(newBlob, {
+                  isRecording: recording.isRecording,
+                });
+              }}
+            >
+              gain↑
+            </Button>
           )}
         </div>
       </div>

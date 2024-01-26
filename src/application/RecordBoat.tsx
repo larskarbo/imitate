@@ -6,12 +6,13 @@ import { useAtom } from "jotai";
 import { recordingCountAtom } from "./Chamber";
 import clsx from "clsx";
 import useKeypress from "./utils/useKeyPress";
+import { Spinner } from "./Spinner";
 
 let recordedChunks: Blob[] = [];
 export default function RecordBoat({
   onRecordFinish,
   onIsRecordingChange,
-	onFocus,
+  onFocus,
 }: {
   onRecordFinish: ({
     blobUrl,
@@ -23,7 +24,7 @@ export default function RecordBoat({
     chunks: Blob[];
   }) => void;
   onIsRecordingChange: (isRecording: boolean) => void;
-	onFocus: () => void;
+  onFocus: () => void;
 }) {
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
     null
@@ -142,7 +143,7 @@ export default function RecordBoat({
           className={"    " + (isRecording ? "bg-gray-500" : "bg-red-500")}
           disabled={loading}
           onClick={() => {
-						onFocus();
+            onFocus();
             if (isRecording) {
               stop();
             } else {
@@ -157,9 +158,12 @@ export default function RecordBoat({
   );
 }
 
-export const Button = (
-  props: React.ButtonHTMLAttributes<HTMLButtonElement>
-) => {
+export const Button = ({
+  isLoading,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  isLoading?: boolean;
+}) => {
   return (
     <button
       {...props}
@@ -168,8 +172,9 @@ export const Button = (
         "whitespace-nowrap",
         props.className
       )}
+      disabled={isLoading || props.disabled}
     >
-      {props.children}
+      {isLoading ? <Spinner /> : props.children}
     </button>
   );
 };
