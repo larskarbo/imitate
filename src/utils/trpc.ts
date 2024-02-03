@@ -21,6 +21,7 @@ function getBaseUrl() {
 }
 
 export const trpc = createTRPCNext<AppRouter>({
+  // @ts-ignore
   config({ ctx }) {
     return {
       links: [
