@@ -37,10 +37,6 @@ export const appRouter = router({
       });
       const wavBlobArr = Buffer.from(response.data);
 
-      // const filePath = "temp.wav";
-      // await writeFile(filePath, wavBlobArr);
-      // const file = await readFile(filePath);
-
       const text = await speechToText(
         wavBlobArr,
         "Bienvenue à la réunion. Comment ça va?"
@@ -155,7 +151,7 @@ export const appRouter = router({
 export type AppRouter = typeof appRouter;
 
 const getItemsFromSheet = async (sheetNamespace: string) => {
-  const items = await kv.get<Item[]>(`sheet:${sheetNamespace}:items`);
+  const items = await kv.get<Item[]>(`sheet:${sheetNamespace}:items`) || [];
 
-  return items!.filter((item) => item.id) as Item[];
+  return items.filter((item) => item.id) as Item[];
 };
