@@ -6,7 +6,7 @@ const openaiApiKey = getEnv("OPENAI_API_KEY");
 const openaiEndpoint = "https://api.openai.com/v1/audio/transcriptions";
 const model = "whisper-1";
 
-export async function speechToText(file: Buffer, prompt: string) {
+export async function speechToText(file: Uint8Array, prompt: string) {
   const formData = new FormData();
   console.log("transcribing audio...");
 

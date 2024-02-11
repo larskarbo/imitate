@@ -35,13 +35,16 @@ export const appRouter = router({
       const response = await axios.get(wavUrl, {
         responseType: "arraybuffer",
       });
-      const wavBlobArr = new Uint8Array(response.data);
+      const wavBlobArr = Buffer.from(response.data);
 
-      const filePath = "temp.wav";
-      await writeFile(filePath, wavBlobArr);
-      const file = await readFile(filePath);
+      // const filePath = "temp.wav";
+      // await writeFile(filePath, wavBlobArr);
+      // const file = await readFile(filePath);
 
-      const text = await speechToText(file, "");
+      const text = await speechToText(
+        wavBlobArr,
+        "Bienvenue à la réunion. Comment ça va?"
+      );
 
       return {
         text,

@@ -6,6 +6,9 @@ import { appRouter } from "../../../server/routers/appRouter";
 export default trpcNext.createNextApiHandler({
   router: appRouter,
   createContext: () => ({}),
+  onError(err) {
+    console.error(err);
+  },
 });
 
 export const config = {
