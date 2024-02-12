@@ -1,5 +1,4 @@
 import { kv } from "@vercel/kv";
-import { readFile, writeFile } from "fs/promises";
 import { z } from "zod";
 import { zodTiptapDoc } from "../../application/TipTap";
 import { speechToText } from "../speech/speechToText";
@@ -151,7 +150,7 @@ export const appRouter = router({
 export type AppRouter = typeof appRouter;
 
 const getItemsFromSheet = async (sheetNamespace: string) => {
-  const items = await kv.get<Item[]>(`sheet:${sheetNamespace}:items`) || [];
+  const items = (await kv.get<Item[]>(`sheet:${sheetNamespace}:items`)) || [];
 
   return items.filter((item) => item.id) as Item[];
 };

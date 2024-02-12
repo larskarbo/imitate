@@ -10,7 +10,7 @@ export const SheetPicker = () => {
   }
 
   return (
-    <ul className="flex  gap-4 mb-4">
+    <ul className="flex gap-4 mb-4 flex-wrap">
       {sheets.map((sheet) => {
         let style = {};
 
@@ -20,7 +20,7 @@ export const SheetPicker = () => {
         }
 
         return (
-          <li key={sheet} style={style}>
+          <li key={sheet} style={style} className="border border-gray-300 p-2 bg-gray-300 rounded-md">
             <a href={`/chamber/${sheet}`}>{sheet}</a>
           </li>
         );

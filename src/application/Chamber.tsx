@@ -9,6 +9,7 @@ import { trpc } from "../utils/trpc";
 import { useCallback, useEffect, useState } from "react";
 import { Item } from "../server/routers/appRouter";
 import { Button } from "./RecordBoat";
+import Link from "next/link";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -83,7 +84,9 @@ export function Chamber({ namespace }: { namespace: string }) {
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-tr from-gray-100 pt-0 to-yellow-50 min-h-screen w-full">
-      <SheetPicker />
+      <Link className="" href="/">
+        Back
+      </Link>
       <ResponsiveGridLayout
         draggableHandle=".drag-handle"
         className="layout w-full  "
