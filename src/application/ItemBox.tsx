@@ -130,7 +130,12 @@ export const ItemBox = ({
     isLoading: isLoadingTranscribe,
   } = trpc.transcribe.useMutation({
     onSuccess: (data) => {
-      console.log(data.text);
+      if (!data) return;
+
+      console.log("data.text: ", data.text);
+      setItem({
+        text: data.text,
+      });
     },
   });
 
@@ -284,6 +289,10 @@ export const ItemBox = ({
                         alert("recording.wavOrBlobUrl is blob");
                         return;
                       }
+                      if (item.text && !confirm("Overwrite existing text?")) {
+                        return;
+                      }
+
                       transcribe({ wavUrl: recording.wavOrBlobUrl });
                     }}
                   >
@@ -401,7 +410,6 @@ export const ItemBox = ({
 };
 
 import { useMutation } from "@tanstack/react-query";
-import type { JSONContent } from "@tiptap/core";
 
 import clsx from "clsx";
 import useKeypress from "./utils/useKeyPress";
